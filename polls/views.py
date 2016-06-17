@@ -1,5 +1,3 @@
-from django.shortcuts import render
-
 # Create your views here.
 
 from django.http import HttpResponse
@@ -10,7 +8,6 @@ import cnn.cnn_recognition_run as recog
 
 @csrf_exempt
 def index(request):
-    
     if request.method == 'GET':
         template = loader.get_template('polls/index.html')
         context = {}
@@ -20,5 +17,4 @@ def index(request):
             file_.write(request.body)
         recgnizer = recog.recognizer()
         rec_answer = recgnizer.recognize_image()
-        print rec_answer
         return HttpResponse(rec_answer)

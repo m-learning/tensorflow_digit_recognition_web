@@ -5,7 +5,6 @@ Created on Jun 17, 2016
 '''
 
 from django.conf.urls import url
-from django.views.generic.base import TemplateView
 
 from . import views
 
