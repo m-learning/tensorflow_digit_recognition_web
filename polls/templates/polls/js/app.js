@@ -63,6 +63,7 @@ resultDiv.style.fontSize = size * width + 'px'
 var resultCanvas = document.getElementById('canvas-result')
 resultCanvas.width = resultCanvas.height = size
 resultCanvas.style.width = resultCanvas.style.height = size + 'px'
+document.getElementById('span-dimension').innerHTML = size + ' x ' + size
 
 var lineWidth = 1
 
@@ -154,21 +155,21 @@ function draw (x, y) {
                 imageData[i][j - w] = 1
             }
             
-            if (i + w < size - 1) {
+            if (i + w < size) {
                 imageData[i + w][j] = 1
             }
             if (i - w >= 0) {
                 imageData[i - w][j] = 1
             }
             
-            if (j + w < size && i + w < size - 1) {
+            if (j + w < size && i + w < size) {
                 imageData[i + w][j + w] = 1
             }
             if (j + w < size && i - w >= 0) {
                 imageData[i - w][j + w] = 1
             }
             
-            if (j - w >= 0 && i + w < size - 1) {
+            if (j - w >= 0 && i + w < size) {
                 imageData[i + w][j - w] = 1
             }
             if (j - w >= 0 && i - w >= 0) {
