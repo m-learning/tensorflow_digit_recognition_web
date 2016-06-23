@@ -96,7 +96,7 @@ resultButton.addEventListener('click', function () {
     resultCanvas.toBlob(function (blob) {
         var xhr = new XMLHttpRequest()
         window.xhr = xhr
-        xhr.open('POST', 'WhatNumber', true)
+        xhr.open('POST', '.', true)
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4) {
                 var result = xhr.responseText

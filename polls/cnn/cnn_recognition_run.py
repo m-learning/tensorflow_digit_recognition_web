@@ -91,22 +91,19 @@ class recognizer:
         
         # Evaluate model
         recognize_image = tf.argmax(pred, 1)
-        
+        # Initializing saver to read trained data
         saver = tf.train.Saver()
         tf.initialize_all_variables()
         tr_files = training_file()
         model_path = tr_files.get_files_directory()
                 
-            # dig_bytes = open(image_path, "rb").read()
-            # print mnist.test.images[15]
-        
         with tf.Session() as sess:
             print 'Start session'
             # Initialize variables
             saver.restore(sess, model_path)
             print "Model restored from file: %s" % model_path
             image_rec = read_image_file('/storage/ann/digits/torecogn')
-            # Calculate accuracy for 256 mnist test images
+            # Recognize image
             resp_dgt = sess.run(recognize_image, feed_dict={self.x: image_rec,
                                               self.keep_prob: 0.75})
             print "Recognized image:", resp_dgt[0]
