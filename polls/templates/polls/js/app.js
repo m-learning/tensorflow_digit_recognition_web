@@ -1,7 +1,7 @@
 (function () {
 
 var size = 28
-var width = Math.floor(innerHeight/30)
+var width = Math.floor(Math.min(innerHeight, innerWidth)/(size + 2))
 
 var imageData = []
 
@@ -63,6 +63,13 @@ resultDiv.style.fontSize = size * width + 'px'
 var resultCanvas = document.getElementById('canvas-result')
 resultCanvas.width = resultCanvas.height = size
 resultCanvas.style.width = resultCanvas.style.height = size + 'px'
+document.getElementById('span-dimension').innerHTML = size + ' x ' + size
+
+var lineWidth = 1
+
+document.getElementById('select').addEventListener('change', function () {
+    lineWidth = this.value
+})
 
 var c = canvas.getContext('2d')
 
@@ -138,6 +145,39 @@ function draw (x, y) {
     if (j < 0) j = 0
     
     imageData[i][j] = 1
+    
+    for (var x = 1; x < lineWidth; x++) {
+        (function (w) {
+            if (j + w < size) {
+                imageData[i][j + w] = 1
+            }
+            if (j - w >= 0) {
+                imageData[i][j - w] = 1
+            }
+            
+            if (i + w < size) {
+                imageData[i + w][j] = 1
+            }
+            if (i - w >= 0) {
+                imageData[i - w][j] = 1
+            }
+            
+            if (j + w < size && i + w < size) {
+                imageData[i + w][j + w] = 1
+            }
+            if (j + w < size && i - w >= 0) {
+                imageData[i - w][j + w] = 1
+            }
+            
+            if (j - w >= 0 && i + w < size) {
+                imageData[i + w][j - w] = 1
+            }
+            if (j - w >= 0 && i - w >= 0) {
+                imageData[i - w][j - w] = 1
+            }
+            
+        })(x)
+    }
     
     repaint()
     showResult()
