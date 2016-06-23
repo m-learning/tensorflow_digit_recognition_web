@@ -5,8 +5,8 @@ Created on Jun 16, 2016
 '''
 
 from cnn_image_reader import read_image_file
-from parameters_saver import parameters_file_conv_saved as model_path_saved
 import tensorflow as tf
+from src.cnn.mnist.cnn_files import training_file
 
 
 # Network Parameters
@@ -94,7 +94,8 @@ class recognizer:
         
         saver = tf.train.Saver()
         tf.initialize_all_variables()
-        model_path = model_path_saved
+        tr_files = training_file()
+        model_path = tr_files.get_files_directory()
                 
             # dig_bytes = open(image_path, "rb").read()
             # print mnist.test.images[15]

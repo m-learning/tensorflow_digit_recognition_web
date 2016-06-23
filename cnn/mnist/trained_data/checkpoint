@@ -1,0 +1,2 @@
+model_checkpoint_path: "/home/levan/git/tensorflow_ann_modules/cnn/mnist/trained_data/conv_model.ckpt"
+all_model_checkpoint_paths: "/home/levan/git/tensorflow_ann_modules/cnn/mnist/trained_data/conv_model.ckpt"
