@@ -10,8 +10,9 @@ import os
 
 PATH_CNN_DIRECTORY = '/cnn/mnist/'
 PATH_FOR_PARAMETERS = 'trained_data/'
-PATH_FOR_TRAINING = 'training_data/'
+PATH_TO_RECOGNIZE = 'to_recognize/'
 WEIGHTS_FILE = 'conv_model.ckpt'
+TO_RECOGNIZE_FILE = 'torecogn'
 
 class training_file:
     
@@ -24,6 +25,22 @@ class training_file:
         for _ in range(2):
             dirs = os.path.split(dirs[0])
         current_dir = dirs[0]
+        
+        return current_dir
+    
+    def get_to_recognize_directory(self):
+        
+        current_dir = self.get_current()
+        
+        current_dir += PATH_CNN_DIRECTORY 
+        current_dir += PATH_TO_RECOGNIZE
+        
+        return current_dir   
+    
+    def get_to_recognize_file(self):
+        
+        current_dir = self.get_to_recognize_directory()
+        current_dir += TO_RECOGNIZE_FILE 
         
         return current_dir        
     

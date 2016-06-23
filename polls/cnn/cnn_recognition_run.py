@@ -96,13 +96,14 @@ class recognizer:
         tf.initialize_all_variables()
         tr_files = training_file()
         model_path = tr_files.get_files_directory()
+        image_directory = tr_files.get_to_recognize_file()
                 
         with tf.Session() as sess:
             print 'Start session'
             # Initialize variables
             saver.restore(sess, model_path)
             print "Model restored from file: %s" % model_path
-            image_rec = read_image_file('/storage/ann/digits/torecogn')
+            image_rec = read_image_file(image_directory)
             # Recognize image
             resp_dgt = sess.run(recognize_image, feed_dict={self.x: image_rec,
                                               self.keep_prob: 0.75})

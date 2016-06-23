@@ -3,3 +3,4 @@
 **/.pydevproject
 **/db.sqlite3
 **/.pyc
+**/to_recognize
