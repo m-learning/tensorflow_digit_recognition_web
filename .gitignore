@@ -2,5 +2,5 @@
 **/.project
 **/.pydevproject
 **/db.sqlite3
-**/.pyc
+**/*.pyc
 **/to_recognize
