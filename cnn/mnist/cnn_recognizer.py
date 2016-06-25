@@ -15,7 +15,7 @@ n_classes = 10  # MNIST total classes (0-9 digits)
 # Convolutional NN for MNIST image recognition
 class image_recognizer:
     
-        # Create some wrappers for simplicity
+    # Convolutional layer
     def conv2d(self, x, W, b, strides=1):
         # Conv2D wrapper, with bias and relu activation
         x = tf.nn.conv2d(x, W, strides=[1, strides, strides, 1], padding='SAME')
@@ -23,6 +23,7 @@ class image_recognizer:
         return tf.nn.relu(x)
     
     
+    #Pooling layer
     def maxpool2d(self, x, k=2):
         # MaxPool2D wrapper
         return tf.nn.max_pool(x, ksize=[1, k, k, 1], strides=[1, k, k, 1],

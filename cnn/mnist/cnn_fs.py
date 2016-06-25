@@ -15,7 +15,7 @@ PATH_TO_RECOGNIZE = 'to_recognize/'
 WEIGHTS_FILE = 'conv_model.ckpt'
 TO_RECOGNIZE_FILE = 'torecogn'
 
-#File manager
+# File manager
 class parameters_file:
     
     # Gets current directory of script
@@ -30,6 +30,7 @@ class parameters_file:
         
         return current_dir
     
+    # Gets directory path for images to recognize
     def get_to_recognize_directory(self):
         
         current_dir = self.get_current()
@@ -39,6 +40,7 @@ class parameters_file:
         
         return current_dir   
     
+    # Gets file path for images to recognize
     def get_to_recognize_file(self):
         
         current_dir = self.get_to_recognize_directory()
