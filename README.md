@@ -1,7 +1,7 @@
 MNIST Digit Recognition
 ==========================
 
-Digit recognition application trained on **MNIST** throw _TensorFlow_ framework
+Digit recognition application trained on **MNIST** thru _TensorFlow_ framework
 
 # Use it!
 =========

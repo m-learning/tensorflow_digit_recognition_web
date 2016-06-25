@@ -58,6 +58,7 @@ class image_recognizer:
         
         return out
     
+    #Generates CNN network model
     def get_pred(self):
         
         # Store layers weight & bias

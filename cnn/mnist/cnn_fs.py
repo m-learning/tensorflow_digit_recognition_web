@@ -8,7 +8,7 @@ Files for training data
 
 import os
 
-
+# Constants for files
 PATH_CNN_DIRECTORY = '/datas/mnist/'
 PATH_FOR_PARAMETERS = 'trained_data/'
 PATH_TO_RECOGNIZE = 'to_recognize/'
