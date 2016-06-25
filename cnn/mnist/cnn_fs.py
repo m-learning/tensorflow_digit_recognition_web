@@ -24,8 +24,7 @@ class parameters_file:
         current_dir = os.path.dirname(os.path.realpath(__file__))
         
         dirs = os.path.split(current_dir)
-        for _ in range(1):
-            dirs = os.path.split(dirs[0])
+        dirs = os.path.split(dirs[0])
         current_dir = dirs[0]
         
         return current_dir
