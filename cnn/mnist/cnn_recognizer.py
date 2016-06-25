@@ -85,6 +85,7 @@ class image_recognizer:
         
         return pred
     
+    # Runs CNN with trained parameters to recognize digit
     def recognize_image(self):
         
         pred = self.get_pred()
