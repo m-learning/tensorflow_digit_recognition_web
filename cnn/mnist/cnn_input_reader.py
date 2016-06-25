@@ -14,6 +14,7 @@ IMAGE_SIZE = 28
 
 n_input = 784  # MNIST data input (img shape: 28*28)
 
+# Reads and convers file for recognition
 def getBestShift(img):
     cy, cx = ndimage.measurements.center_of_mass(img)
 

@@ -12,6 +12,7 @@ from cnn_input_reader import read_input_file
 n_input = 784  # MNIST data input (img shape: 28*28)
 n_classes = 10  # MNIST total classes (0-9 digits)
 
+# Convolutional NN for MNIST image recognition
 class image_recognizer:
     
         # Create some wrappers for simplicity

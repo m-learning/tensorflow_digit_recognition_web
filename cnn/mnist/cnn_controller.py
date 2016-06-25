@@ -11,8 +11,10 @@ from cnn_recognizer import image_recognizer
 
 app = Flask(__name__)
 
+# Controller for image recognition
 class cnn_server:
     
+    # Runs recognizer
     def cnn_run(self, request):
         
         fls = request.data

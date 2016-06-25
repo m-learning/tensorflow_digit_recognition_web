@@ -15,6 +15,7 @@ PATH_TO_RECOGNIZE = 'to_recognize/'
 WEIGHTS_FILE = 'conv_model.ckpt'
 TO_RECOGNIZE_FILE = 'torecogn'
 
+#File manager
 class parameters_file:
     
     # Gets current directory of script
