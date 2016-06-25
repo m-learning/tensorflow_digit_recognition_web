@@ -4,16 +4,15 @@ Created on Jun 16, 2016
 @author: Levan Tsinadze
 '''
 
-from cnn_image_reader import read_image_file
 import tensorflow as tf
-from src.cnn.mnist.cnn_files import training_file
-
+from cnn_fs import parameters_file
+from cnn_input_reader import read_input_file
 
 # Network Parameters
 n_input = 784  # MNIST data input (img shape: 28*28)
 n_classes = 10  # MNIST total classes (0-9 digits)
 
-class recognizer:
+class image_recognizer:
     
         # Create some wrappers for simplicity
     def conv2d(self, x, W, b, strides=1):
@@ -94,7 +93,7 @@ class recognizer:
         # Initializing saver to read trained data
         saver = tf.train.Saver()
         tf.initialize_all_variables()
-        tr_files = training_file()
+        tr_files = parameters_file()
         model_path = tr_files.get_files_directory()
         image_directory = tr_files.get_to_recognize_file()
                 
@@ -103,7 +102,7 @@ class recognizer:
             # Initialize variables
             saver.restore(sess, model_path)
             print "Model restored from file: %s" % model_path
-            image_rec = read_image_file(image_directory)
+            image_rec = read_input_file(image_directory)
             # Recognize image
             resp_dgt = sess.run(recognize_image, feed_dict={self.x: image_rec,
                                               self.keep_prob: 0.75})

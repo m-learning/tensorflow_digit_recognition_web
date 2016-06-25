@@ -4,17 +4,13 @@ Created on Jun 17, 2016
 @author: Levan Tsinadze
 '''
 import cv2
-import sys
-
-import numpy as np
 import math
 from scipy import ndimage
 
+import numpy as np
+
+
 IMAGE_SIZE = 28
-FILE_PATH = '/storage/ann/digits/'
-
-image_path = FILE_PATH + sys.argv[2]
-
 
 n_input = 784  # MNIST data input (img shape: 28*28)
 
@@ -34,7 +30,7 @@ def shift(img, sx, sy):
     shifted = cv2.warpAffine(img, M, (cols, rows))
     return shifted
 
-def read_image_file(image_file_path):
+def read_input_file(image_file_path):
     
     image_rec = np.zeros((1, n_input))
         
@@ -88,6 +84,3 @@ def read_image_file(image_file_path):
     image_rec[0] = flatten
 
     return image_rec
-
-def read_image():
-    return read_image_file(image_path)
