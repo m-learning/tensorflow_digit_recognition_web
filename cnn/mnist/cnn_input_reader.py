@@ -9,10 +9,9 @@ from scipy import ndimage
 
 import numpy as np
 
-
 IMAGE_SIZE = 28
 
-n_input = 784  # MNIST data input (img shape: 28*28)
+n_input = 784
 
 # Reads and converts file for recognition
 def getBestShift(img):
@@ -31,6 +30,7 @@ def shift(img, sx, sy):
     shifted = cv2.warpAffine(img, M, (cols, rows))
     return shifted
 
+# Reads image file to tensor
 def read_input_file(image_file_path):
     
     image_rec = np.zeros((1, n_input))
