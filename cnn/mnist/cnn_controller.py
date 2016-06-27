@@ -60,11 +60,17 @@ def get_port_info():
         
     return port_nm
     
-
-if __name__ == "__main__":
+def get_host_and_port():
     
     # Retrieves host and port from arguments
     host_nm = get_host_info()
     port_nm = get_port_info()
+    
+    return (host_nm, port_nm)
+
+if __name__ == "__main__":
+    
+    # Retrieves host and port from arguments
+    (host_nm, port_nm) = get_host_and_port()
     # Binds server on host and port
     app.run(host=host_nm, port=port_nm, threaded=True)

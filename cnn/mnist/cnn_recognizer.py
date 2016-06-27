@@ -23,7 +23,7 @@ class image_recognizer:
         return tf.nn.relu(x)
     
     
-    #Pooling layer
+    # Pooling layer
     def maxpool2d(self, x, k=2):
         # MaxPool2D wrapper
         return tf.nn.max_pool(x, ksize=[1, k, k, 1], strides=[1, k, k, 1],
@@ -58,7 +58,7 @@ class image_recognizer:
         
         return out
     
-    #Generates CNN network model
+    # Generates CNN network model
     def get_pred(self):
         
         # Store layers weight & bias
@@ -90,6 +90,7 @@ class image_recognizer:
     # Runs CNN with trained parameters to recognize digit
     def recognize_image(self):
         
+        # Convolutional network
         pred = self.get_pred()
         
         # Evaluate model
