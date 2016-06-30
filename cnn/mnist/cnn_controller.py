@@ -31,14 +31,15 @@ class cnn_server:
 
 @app.route('/', methods=['GET', 'POST'])
 def cnn_recognize():
+    
     if request.method == 'POST':
-        
         srv = cnn_server()
         resp = srv.cnn_run(request)
-        
-        return resp
+        resp = resp
     elif request.method == 'GET':
-        return render_template("index.html")
+        resp = render_template("index.html")
+    
+    return resp
         
 # Retrieves host name from arguments
 def get_host_info():

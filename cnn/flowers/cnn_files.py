@@ -90,16 +90,22 @@ class training_file:
       current_dir += LABELS_FILE
       
       return current_dir
+    
+    # Gets directory for test images
+    def get_or_init_test_dir(self):
+      
+      current_dir = self.get_data_general_directory()
+      current_dir += TEST_IMAGES_DIR
+      if not os.path.exists(current_dir):
+        os.mkdir(current_dir)  
+      
+      return current_dir
       
     # Gets or initializes test image
     def get_or_init_test_path(self):
         
-      current_dir = self.get_data_general_directory()
-      
-      current_dir += TEST_IMAGES_DIR
+      current_dir = self.get_or_init_test_dir()
       current_dir += TEST_IMAGE_NAME
-      if not os.path.exists(current_dir):
-        os.mkdir(current_dir)  
       
       return current_dir
     
