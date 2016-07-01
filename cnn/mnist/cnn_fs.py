@@ -9,9 +9,9 @@ Files for training data
 import os
 
 # Constants for files
-PATH_CNN_DIRECTORY = '/datas/mnist/'
-PATH_FOR_PARAMETERS = 'trained_data/'
-PATH_TO_RECOGNIZE = 'to_recognize/'
+PATH_CNN_DIRECTORY = os.path.join('datas', 'mnist')
+PATH_FOR_PARAMETERS = 'trained_data'
+PATH_TO_RECOGNIZE = 'to_recognize'
 WEIGHTS_FILE = 'conv_model.ckpt'
 TO_RECOGNIZE_FILE = 'torecogn'
 
@@ -33,9 +33,7 @@ class parameters_file:
     def get_to_recognize_directory(self):
         
         current_dir = self.get_current()
-        
-        current_dir += PATH_CNN_DIRECTORY 
-        current_dir += PATH_TO_RECOGNIZE
+        current_dir = os.path.join(current_dir, PATH_CNN_DIRECTORY, PATH_TO_RECOGNIZE)
         
         return current_dir   
     
@@ -43,7 +41,7 @@ class parameters_file:
     def get_to_recognize_file(self):
         
         current_dir = self.get_to_recognize_directory()
-        current_dir += TO_RECOGNIZE_FILE 
+        current_dir = os.path.join(current_dir, TO_RECOGNIZE_FILE)
         
         return current_dir        
     
@@ -51,9 +49,7 @@ class parameters_file:
     def get_files_directory(self):
         
         current_dir = self.get_current()
-        
-        current_dir += PATH_CNN_DIRECTORY 
-        current_dir += PATH_FOR_PARAMETERS
-        current_dir += WEIGHTS_FILE
+        current_dir = os.path.join(current_dir, PATH_CNN_DIRECTORY,
+                                   PATH_FOR_PARAMETERS, WEIGHTS_FILE)
         
         return current_dir
