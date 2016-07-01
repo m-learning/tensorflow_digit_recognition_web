@@ -4,3 +4,5 @@
 **/db.sqlite3
 **/*.pyc
 **/to_recognize
+/datas/flowers/test_images/
+/datas/flomen/test_images/

@@ -1,0 +1,8 @@
+roses
+tulips
+cars
+dandelion
+persons
+bikes
+sunflowers
+daisy

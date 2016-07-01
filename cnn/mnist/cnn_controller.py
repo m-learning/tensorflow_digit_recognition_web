@@ -60,7 +60,8 @@ def get_port_info():
         port_nm = 8080
         
     return port_nm
-    
+
+# Initializes host address and port number    
 def get_host_and_port():
     
     # Retrieves host and port from arguments

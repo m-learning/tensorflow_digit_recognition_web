@@ -73,6 +73,7 @@ class image_recognizer:
             'out': tf.Variable(tf.random_normal([1024, n_classes]))
         }
         
+        # Initializes biases
         self.biases = {
             'bc1': tf.Variable(tf.random_normal([32])),
             'bc2': tf.Variable(tf.random_normal([64])),

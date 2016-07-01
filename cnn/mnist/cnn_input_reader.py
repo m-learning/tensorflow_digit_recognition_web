@@ -23,7 +23,7 @@ def getBestShift(img):
 
     return shiftx, shifty
 
-
+# Shifts image in one pixel
 def shift(img, sx, sy):
     rows, cols = img.shape
     M = np.float32([[1, 0, sx], [0, 1, sy]])
