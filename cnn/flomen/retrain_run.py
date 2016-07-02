@@ -6,6 +6,9 @@ Runs retrained neural network for recognition
 @author: Levan Tsinadze
 '''
 
+import sys
+import os
+
 import numpy as np
 import tensorflow as tf
 from cnn_files import training_file
@@ -24,16 +27,20 @@ class image_recognizer:
           _ = tf.import_graph_def(graph_def, name='')
   
   # Generates forward propagation for recognition
-  def run_inference_on_image(self,):
+  def run_inference_on_image(self, arg_path=None):
       
       answer = None
   
       tr_file = training_file()
-      test_image_path = tr_file.get_or_init_test_path()
-      if not tf.gfile.Exists(test_image_path):
-          tr_file.get_or_init_test_path
-          tf.logging.fatal('File does not exist %s', test_image_path)
-          return answer
+      if arg_path == None:
+        test_image_path = tr_file.get_or_init_test_path()
+        if not tf.gfile.Exists(test_image_path):
+            tr_file.get_or_init_test_path
+            tf.logging.fatal('File does not exist %s', test_image_path)
+            return answer
+      else:
+        test_dir = tr_file.get_or_init_test_dir()
+        test_image_path = os.path.join(test_dir, arg_path)
   
       # Reads image to recognize
       image_data = tf.gfile.FastGFile(test_image_path, 'rb').read()
@@ -65,5 +72,11 @@ class image_recognizer:
 
 
 if __name__ == '__main__':
+  
+    #Gets image path from arguments
     img_recognizer = image_recognizer()
-    img_recognizer.run_inference_on_image()
+    if len(sys.argv) > 1:
+      test_img_path = sys.argv[1]
+    else:
+      test_img_path = None
+    img_recognizer.run_inference_on_image(test_img_path)

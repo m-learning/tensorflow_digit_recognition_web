@@ -8,6 +8,7 @@ Files for training data
 
 import os
 
+# Files and directory constant parameters
 PATH_CNN_DIRECTORY = os.path.join('datas', 'flowers')
 PATH_FOR_PARAMETERS = 'trained_data'
 WEIGHTS_FILE = 'output_graph.pb'
