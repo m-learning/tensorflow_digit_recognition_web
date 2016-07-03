@@ -68,12 +68,13 @@ class image_recognizer:
               print('%s (score = %.5f)' % (human_string, score))
   
           answer = labels[top_k[0]]
+          
           return answer
 
 
 if __name__ == '__main__':
   
-    #Gets image path from arguments
+    # Gets image path from arguments
     img_recognizer = image_recognizer()
     if len(sys.argv) > 1:
       test_img_path = sys.argv[1]

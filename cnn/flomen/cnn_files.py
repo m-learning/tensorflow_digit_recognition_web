@@ -7,6 +7,8 @@ Files for training data
 '''
 
 import os
+import shutil
+import requests
 
 # Files and directory constant parameters
 PATH_CNN_DIRECTORY = os.path.join('datas', 'flomen')
@@ -82,3 +84,12 @@ class training_file:
       current_dir = os.path.join(current_dir, TEST_IMAGE_NAME)
       
       return current_dir
+    
+    # Downloads file from passed URL address
+    def get_file_to_recognize(self, file_url):
+      
+      response = requests.get(file_url, stream=True)
+      test_img_path = self.get_or_init_test_path()
+      with open(test_img_path, 'wb') as out_file:
+        shutil.copyfileobj(response.raw, out_file)
+      del response
