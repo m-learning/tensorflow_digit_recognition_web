@@ -20,6 +20,16 @@ TEST_IMAGE_NAME = 'test_image'
 
 # Files and directories for parameters (trained), training, validation and test
 class training_file:
+  
+    # Joins path from method
+    def join_path(self, path_func, other_path):
+      
+      result = None
+      
+      init_path = path_func()
+      result = os.path.join(init_path, other_path)
+      
+      return result
     
     # Gets current directory of script
     def get_current(self):
@@ -34,18 +44,13 @@ class training_file:
     
     # Gets or creates directories
     def get_data_general_directory(self):
-      
-      current_dir = self.get_current()
-      current_dir = os.path.join(current_dir, PATH_CNN_DIRECTORY)
-      
-      return current_dir
+      return self.join_path(self.get_current, PATH_CNN_DIRECTORY)
     
     # Gets or creates directory for trained parameters
     def init_files_directory(self):
         
-      current_dir = self.get_data_general_directory()
+      current_dir = self.join_path(self.get_data_general_directory, PATH_FOR_PARAMETERS)
       
-      current_dir = os.path.join(current_dir, PATH_FOR_PARAMETERS)
       if not os.path.exists(current_dir):
           os.makedirs(current_dir)
       
@@ -53,25 +58,17 @@ class training_file:
     
     # Gets training data  / parameters directory path
     def get_or_init_files_path(self):
-        
-      current_dir = self.init_files_directory()
-      current_dir = os.path.join(current_dir, WEIGHTS_FILE)
-      
-      return current_dir
+      return self.join_path(self.init_files_directory, WEIGHTS_FILE)
       
     # Gets training data  / parameters directory path
     def get_or_init_labels_path(self):
-        
-      current_dir = self.init_files_directory()
-      current_dir = os.path.join(current_dir, LABELS_FILE)
-      
-      return current_dir
+      return self.join_path(self.init_files_directory, LABELS_FILE)
     
     # Gets directory for test images
     def get_or_init_test_dir(self):
       
-      current_dir = self.get_data_general_directory()
-      current_dir = os.path.join(current_dir, TEST_IMAGES_DIR)
+      current_dir = self.join_path(self.get_data_general_directory, TEST_IMAGES_DIR)
+      
       if not os.path.exists(current_dir):
         os.mkdir(current_dir)  
       
@@ -79,11 +76,7 @@ class training_file:
       
     # Gets or initializes test image
     def get_or_init_test_path(self):
-        
-      current_dir = self.get_or_init_test_dir()
-      current_dir = os.path.join(current_dir, TEST_IMAGE_NAME)
-      
-      return current_dir
+      return self.join_path(self.get_or_init_test_dir, TEST_IMAGE_NAME)
     
     # Downloads file from passed URL address
     def get_file_to_recognize(self, file_url):

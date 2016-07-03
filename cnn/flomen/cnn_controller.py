@@ -4,6 +4,7 @@ Controller module for recognition
 @author: Levan Tsinadze
 '''
 
+import tensorflow as tf
 from flask import Flask, request, render_template, json
 from sys import argv
 from cnn_files import training_file
@@ -12,22 +13,21 @@ from retrain_run import image_recognizer
 
 app = Flask(__name__)
 
+img_recognizer = None
+
 # Controller for image recognition
-class cnn_server:
-    
+class cnn_server(object):
+  
     # Runs recognizer
     def cnn_run(self, request):
         
         img_url = request.data
-        print img_url
         tr_fl = training_file()
         tr_fl.get_file_to_recognize(img_url)
-        img_recognizer = image_recognizer()
-        answer = img_recognizer.run_inference_on_image()
+        answer = img_recognizer.recognize_image_by_sess()
         anwer_txt = {}
         for key, value in answer.iteritems():
             anwer_txt[key] = str(value)
-        print anwer_txt
         resp = json.dumps(anwer_txt)
         
         return resp
@@ -35,6 +35,7 @@ class cnn_server:
 @app.route('/', methods=['GET', 'POST'])
 def cnn_recognize():
     
+    print img_recognizer
     if request.method == 'POST':
         srv = cnn_server()
         resp = srv.cnn_run(request)
@@ -75,7 +76,13 @@ def get_host_and_port():
 
 if __name__ == "__main__":
     
+    
+    img_recognizer = image_recognizer()
+    img_recognizer.create_graph()
     # Retrieves host and port from arguments
     (host_nm, port_nm) = get_host_and_port()
-    # Binds server on host and port
-    app.run(host=host_nm, port=port_nm, threaded=True)
+    
+    with tf.Session() as sess:
+      img_recognizer.set_session(sess)
+      # Binds server on host and port
+      app.run(host=host_nm, port=port_nm, threaded=True)

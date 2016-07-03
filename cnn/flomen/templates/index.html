@@ -1,18 +1,7 @@
+<!DOCTYPE html>
 <html>
 <head>
 <title>Images</title>
-<!--link rel="stylesheet" type="text/css" href="css/index.css"-->
-<style type="text/css">
-.noselect {
-	-webkit-touch-callout: none; /* iOS Safari */
-	-webkit-user-select: none; /* Chrome/Safari/Opera */
-	-khtml-user-select: none; /* Konqueror */
-	-moz-user-select: none; /* Firefox */
-	-ms-user-select: none; /* Internet Explorer/Edge */
-	user-select: none; /* Non-prefixed version, currently
-                                  not supported by any browser */
-}
-</style>
 <script type="text/javascript">
     var sendImage = function(img_url) {
 
@@ -57,13 +46,13 @@
                 var ansTxt = '<table>'
                 answerOrd.forEach(function(elm) {
                     ansTxt += '<tr>'
-                    ansTxt += '<td>'
+                    ansTxt += '<td><b>'
                     ansTxt += elm.type
                     ansTxt += ':  '
-                    ansTxt += '</td>'
-                    ansTxt += '<td>'
+                    ansTxt += '</b></td>'
+                    ansTxt += '<td><b> (score = '
                     ansTxt += elm.score
-                    ansTxt += '</td>'
+                    ansTxt += ')</b></td>'
                     ansTxt += '</tr>'
                 })
                 ansTxt += '</table>'
@@ -91,20 +80,19 @@
 </script>
 </head>
 <body
-	style="margin: 0; border: 0; padding: 0; background-color: #f0f0f0"
-	class="noselect">
-	<table>
-		<tr>
-			<td style="vertical-align: middle" width="100%"><input
-				type="text" name="img_url" id="img_url" /></td>
+	style="margin: 0; border: 0; padding: 0; background-color: #f0f0f0;">
+	<table style="margin-left: auto; margin-right: auto;">
+		<tr style="">
+			<td style="vertical-align: top">
+				<form action="#">
+					<br>Image URL <input type="text" name="img_url" id="img_url"
+						size="150" /><br> <br> <input type="button"
+						value="recognize" onclick="recognizeImage()" />
+				</form>
+			</td>
 		</tr>
 		<tr>
-			<td><input type="button" value="recognize"
-				onclick="recognizeImage()"></td>
-		</tr>
-		<tr>
-			<td><div id="image_result" class="noselect"
-					style="margin: 10px; text-align: center; vertical-align: middle;"></div></td>
+			<td style="vertical-align: middle"><div id="image_result"></div></td>
 		</tr>
 	</table>
 </body>
