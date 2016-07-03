@@ -13,14 +13,52 @@
                                   not supported by any browser */
 }
 </style>
+<script type="text/javascript">
+    var sendImage = function(img_url) {
+
+        xhr.onreadystatechange = function() {
+            if (xhttp.readyState == 4 && xhttp.status == 200) {
+                document.getElementById("image_result").innerHTML = xhttp.responseText;
+            } else {
+                resultDiv.innerHTML = ('Internal server error - ' + xhttp.readyState)
+            }
+        }
+
+        var xhr = new XMLHttpRequest()
+        window.xhr = xhr
+        xhr.open('POST', '.', true)
+    }
+
+    var recognizeImage = function() {
+        var img_url_element = document.getElementById('img_url')
+        if (img_url_element) {
+            var img_url = img_url_element.value
+            if (img_url) {
+                sendImage(img_url)
+            } else {
+                alert('Could not find image url value')
+            }
+        } else {
+            alert('Could not find image url')
+        }
+    }
+</script>
 </head>
-<body style="margin: 0; border: 0; padding: 0; background-color: #f0f0f0" class="noselect">
+<body
+	style="margin: 0; border: 0; padding: 0; background-color: #f0f0f0"
+	class="noselect">
 	<table>
 		<tr>
-			<td style="vertical-align: middle"><input type="text" name="img_url" id="img_url" /></td>
+			<td style="vertical-align: middle"><input type="text"
+				name="img_url" id="img_url" /></td>
 		</tr>
 		<tr>
-			<td><input type="button" value="recognize" onclick="recognizeImage()"></td>
+			<td><input type="button" value="recognize"
+				onclick="recognizeImage()"></td>
+		</tr>
+		<tr>
+			<td><div id="image_result" class="noselect"
+					style="margin: 10px; text-align: center; vertical-align: middle;"></div></td>
 		</tr>
 	</table>
 </body>
