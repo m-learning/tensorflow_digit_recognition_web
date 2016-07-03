@@ -19,11 +19,16 @@ class cnn_server:
     def cnn_run(self, request):
         
         img_url = request.data
+        print img_url
         tr_fl = training_file()
         tr_fl.get_file_to_recognize(img_url)
         img_recognizer = image_recognizer()
         answer = img_recognizer.run_inference_on_image()
-        resp = json.dumps(answer)
+        anwer_txt = {}
+        for key, value in answer.iteritems():
+            anwer_txt[key] = str(value)
+        print anwer_txt
+        resp = json.dumps(anwer_txt)
         
         return resp
 

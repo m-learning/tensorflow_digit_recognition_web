@@ -62,11 +62,11 @@ class image_recognizer:
           f = open(labels_path, 'rb')
           lines = f.readlines()
           labels = [str(w).replace("\n", "") for w in lines]
-          answer = []
+          answer = {}
           for node_id in top_k:
               human_string = labels[node_id]
               score = predictions[node_id]
-              answer.append((human_string, score))
+              answer[human_string] = score
               print('%s (score = %.5f)' % (human_string, score))
           
           return answer
