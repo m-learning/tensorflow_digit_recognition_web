@@ -15,6 +15,7 @@ n_input = 784
 
 # Reads and converts file for recognition
 def getBestShift(img):
+    
     cy, cx = ndimage.measurements.center_of_mass(img)
 
     rows, cols = img.shape
@@ -25,9 +26,11 @@ def getBestShift(img):
 
 # Shifts image in one pixel
 def shift(img, sx, sy):
+    
     rows, cols = img.shape
     M = np.float32([[1, 0, sx], [0, 1, sy]])
     shifted = cv2.warpAffine(img, M, (cols, rows))
+    
     return shifted
 
 # Reads image file to tensor

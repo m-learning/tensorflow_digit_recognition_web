@@ -17,39 +17,43 @@ TO_RECOGNIZE_FILE = 'torecogn'
 
 # File manager
 class parameters_file:
+  
+  # Joins path from method
+  def join_path(self, path_func, other_path):
     
-    # Gets current directory of script
-    def get_current(self):
-        
-        current_dir = os.path.dirname(os.path.realpath(__file__))
-        
-        dirs = os.path.split(current_dir)
-        dirs = os.path.split(dirs[0])
-        current_dir = dirs[0]
-        
-        return current_dir
+    result = None
     
-    # Gets directory path for images to recognize
-    def get_to_recognize_directory(self):
-        
-        current_dir = self.get_current()
-        current_dir = os.path.join(current_dir, PATH_CNN_DIRECTORY, PATH_TO_RECOGNIZE)
-        
-        return current_dir   
+    init_path = path_func()
+    result = os.path.join(init_path, other_path)
     
-    # Gets file path for images to recognize
-    def get_to_recognize_file(self):
-        
-        current_dir = self.get_to_recognize_directory()
-        current_dir = os.path.join(current_dir, TO_RECOGNIZE_FILE)
-        
-        return current_dir        
+    return result
+  
+  # Gets current directory of script
+  def get_current(self):
+      
+    current_dir = os.path.dirname(os.path.realpath(__file__))
     
-    # Gets training data  / parameters directory path
-    def get_files_directory(self):
-        
-        current_dir = self.get_current()
-        current_dir = os.path.join(current_dir, PATH_CNN_DIRECTORY,
-                                   PATH_FOR_PARAMETERS, WEIGHTS_FILE)
-        
-        return current_dir
+    dirs = os.path.split(current_dir)
+    dirs = os.path.split(dirs[0])
+    current_dir = dirs[0]
+    
+    return current_dir
+  
+  # Gets directory path for images to recognize
+  def get_to_recognize_directory(self):
+      
+    current_dir = self.join_path(self.get_current, PATH_CNN_DIRECTORY, PATH_TO_RECOGNIZE)
+    
+    if not os.path.exists(current_dir):
+      os.makedirs(current_dir)
+    
+    return current_dir   
+  
+  # Gets file path for images to recognize
+  def get_to_recognize_file(self):
+    return self.join_path(self.get_to_recognize_directory, TO_RECOGNIZE_FILE)
+  
+  # Gets training data  / parameters directory path
+  def get_files_directory(self):
+    return self.join_path(self.get_current, PATH_CNN_DIRECTORY,
+                               PATH_FOR_PARAMETERS, WEIGHTS_FILE)
