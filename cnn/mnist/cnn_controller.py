@@ -45,9 +45,9 @@ def cnn_recognize():
 def get_host_info():
     
   if len(argv) > 1:
-      host_nm = argv[1]
+    host_nm = argv[1]
   else:
-      host_nm = '0.0.0.0'
+    host_nm = '0.0.0.0'
   
   return host_nm
 
@@ -55,9 +55,9 @@ def get_host_info():
 def get_port_info():
     
   if len(argv) > 2:
-      port_nm = argv[1]
+    port_nm = argv[1]
   else:
-      port_nm = 8080
+    port_nm = 8080
       
   return port_nm
 

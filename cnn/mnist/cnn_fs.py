@@ -19,12 +19,12 @@ TO_RECOGNIZE_FILE = 'torecogn'
 class parameters_file:
   
   # Joins path from method
-  def join_path(self, path_func, other_path):
+  def join_path(self, path_func, *other_path):
     
     result = None
     
     init_path = path_func()
-    result = os.path.join(init_path, other_path)
+    result = os.path.join(init_path, *other_path)
     
     return result
   
