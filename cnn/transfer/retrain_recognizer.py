@@ -11,12 +11,12 @@ import os
 
 import tensorflow as tf
 from cnn_files import training_file
-from conv_neural_net import conv_net
+from cnn.transfer.conv_neural_net import conv_net
 # Recognizes image thru trained neural networks
 class image_recognizer:
   
-  def __init__(self):
-    self.tr_file = training_file()
+  def __init__(self, tr_file):
+    self.tr_file = tr_file
     self.labels_path = self.tr_file.get_or_init_labels_path()
     self.model_path = self.tr_file.get_or_init_files_path()
 
@@ -44,11 +44,11 @@ class image_recognizer:
     if arg_path == None:
       test_image_path = self.tr_file.get_or_init_test_path()
       if not tf.gfile.Exists(test_image_path):
-          tr_file.get_or_init_test_path
+          self.tr_file.get_or_init_test_path()
           tf.logging.fatal('File does not exist %s', test_image_path)
           return None
     else:
-      test_dir = tr_file.get_or_init_test_dir()
+      test_dir = self.tr_file.get_or_init_test_dir()
       test_image_path = os.path.join(test_dir, arg_path)
     # Reads image to recognize
     image_data = tf.gfile.FastGFile(test_image_path, 'rb').read()

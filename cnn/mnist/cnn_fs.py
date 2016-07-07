@@ -8,41 +8,24 @@ Files for training data
 
 import os
 
+from cnn.utils.file_utils import files_and_path_utils
+
 # Constants for files
-PATH_CNN_DIRECTORY = os.path.join('datas', 'mnist')
 PATH_FOR_PARAMETERS = 'trained_data'
 PATH_TO_RECOGNIZE = 'to_recognize'
 WEIGHTS_FILE = 'conv_model.ckpt'
 TO_RECOGNIZE_FILE = 'torecogn'
 
 # File manager
-class parameters_file:
+class parameters_file(files_and_path_utils):
   
-  # Joins path from method
-  def join_path(self, path_func, *other_path):
-    
-    result = None
-    
-    init_path = path_func()
-    result = os.path.join(init_path, *other_path)
-    
-    return result
-  
-  # Gets current directory of script
-  def get_current(self):
-      
-    current_dir = os.path.dirname(os.path.realpath(__file__))
-    
-    dirs = os.path.split(current_dir)
-    dirs = os.path.split(dirs[0])
-    current_dir = dirs[0]
-    
-    return current_dir
+  def __init__(self):
+    super(parameters_file, self).__init__('mnist')
   
   # Gets directory path for images to recognize
   def get_to_recognize_directory(self):
       
-    current_dir = self.join_path(self.get_current, PATH_CNN_DIRECTORY, PATH_TO_RECOGNIZE)
+    current_dir = self.join_path(self.get_current, self.path_to_cnn_directory, PATH_TO_RECOGNIZE)
     
     if not os.path.exists(current_dir):
       os.makedirs(current_dir)

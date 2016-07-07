@@ -14,4 +14,4 @@ from cnn.utils.file_utils import cnn_file_utils
 class training_file(cnn_file_utils):
 
     def __init__(self):
-      super(training_file, self).__init__('flowers')
+      super(self, training_file).__init__('flowers')
