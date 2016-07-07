@@ -31,6 +31,7 @@ class cnn_server(object):
     
     return resp
 
+# Web method for recognition
 @app.route('/', methods=['GET', 'POST'])
 def cnn_recognize():
     
