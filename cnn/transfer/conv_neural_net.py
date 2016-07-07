@@ -7,6 +7,10 @@ Runs neural network for recognition
 '''
 
 import numpy as np
+
+RINAL_RESULTS = 'final_result:0'
+DECODE_CONTENTS = 'DecodeJpeg/contents:0'
+
 # Image recognizer neural network
 class conv_net(object):
   
@@ -15,19 +19,20 @@ class conv_net(object):
     self.labels_path = labels_path
     
     
-  # Runs image recognition
+  # Runs image recognition thru neural network
   def recognize_image(self, image_data):
     
-    softmax_tensor = self.sess.graph.get_tensor_by_name('final_result:0')
-    predictions = self.sess.run(softmax_tensor,
-                           {'DecodeJpeg/contents:0': image_data})
+    answer = {}
+    
+    softmax_tensor = self.sess.graph.get_tensor_by_name(RINAL_RESULTS)
+    image_dict = {DECODE_CONTENTS: image_data}
+    predictions = self.sess.run(softmax_tensor, image_dict)
     predictions = np.squeeze(predictions)
 
     top_k = predictions.argsort()[-5:][::-1]  # Getting top 5 predictions
     f = open(self.labels_path, 'rb')
     lines = f.readlines()
     labels = [str(w).replace("\n", "") for w in lines]
-    answer = {}
     for node_id in top_k:
         human_string = labels[node_id]
         score = predictions[node_id]

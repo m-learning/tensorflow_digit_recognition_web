@@ -22,7 +22,7 @@ class cnn_server(object):
   def cnn_run(self, request):
       
     img_url = request.data
-    tr_fl.get_file_to_recognize(img_url)
+    dirs_fls.get_file_to_recognize(img_url)
     answer = img_recognizer.recognize_image_by_sess()
     anwer_txt = {}
     for key, value in answer.iteritems():
@@ -43,13 +43,14 @@ def cnn_recognize():
       resp = render_template("index.html")
   
   return resp
-        
+
+# Runs controller for image recognition        
 if __name__ == "__main__":
   
-  global tr_fl
+  global dirs_fls
   global img_recognizer
-  tr_fl = training_file()
-  img_recognizer = image_recognizer(tr_fl)
+  dirs_fls = training_file()
+  img_recognizer = image_recognizer(dirs_fls)
   img_recognizer.create_graph()
   # Retrieves host and port from arguments
   (host_nm, port_nm) = controller_utils.get_host_and_port(argv)

@@ -33,10 +33,15 @@ class image_recognizer:
         _ = tf.import_graph_def(graph_def, name='')
         
     return graph_def
+  
+  # Gets net to recognize
+  def get_conv_net(self):
+    return conv_net(self.sess, self.labels_path)
 
   # Attaches session to object
   def set_session(self, sess):
     self.sess = sess
+    self.conv_net = self.get_conv_net()
   
   # Initializes image to recognize
   def get_image_data(self, arg_path=None):
@@ -62,8 +67,7 @@ class image_recognizer:
     
     image_data = self.get_image_data()
     if image_data != None:
-      cn_net = conv_net(self.sess, self.labels_path)
-      answer = cn_net.recognize_image(image_data)
+      answer = self.conv_net.recognize_image(image_data)
     
     return answer
   
