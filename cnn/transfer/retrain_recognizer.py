@@ -12,6 +12,7 @@ import os
 import tensorflow as tf
 from cnn_files import training_file
 from cnn.transfer.conv_neural_net import conv_net
+
 # Recognizes image thru trained neural networks
 class image_recognizer:
   

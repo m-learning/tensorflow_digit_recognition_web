@@ -1,7 +1,7 @@
 '''
 Created on Jul 6, 2016
 
-Utility class for training test and validation data
+Utility class for evaluation files and directories
 
 @author: Levan Tsinadze
 '''

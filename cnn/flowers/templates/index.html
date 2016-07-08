@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Images</title>
+<script type="text/javascript">
+    var sendImage = function(img_url) {
+
+        var xhr = new XMLHttpRequest()
+        window.xhr = xhr
+        xhr.open('POST', '.', true)
+        xhr.onreadystatechange = function() {
+            var resultDiv = document.getElementById("image_result")
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var answer = JSON.parse(xhr.responseText)
+                var answerOrd = []
+                var answerText
+                var answerObj
+                for ( var prop in answer) {
+                    answerText = answer[prop]
+                    if (answerText) {
+                        answerObj = {}
+                        answerObj['type'] = prop
+                        answerObj['score'] = parseFloat(answerText)
+                        answerOrd.push(answerObj)
+                    }
+                }
+                answerOrd.sort(function(a, b) {
+
+                    var reslt
+
+                    var a1st = -1 // negative value means left item should appear first
+                    var b1st = 1 // positive value means right item should appear first
+                    var equal = 0 // zero means objects are equal
+
+                    // compare your object's property values and determine their order
+                    if (a.score > b.score) {
+                        reslt = a1st
+                    } else if (a.score < b.score) {
+                        reslt = b1st
+                    } else {
+                        reslt = equal;
+                    }
+
+                    return reslt
+                })
+                var ansTxt = '<table>'
+                answerOrd.forEach(function(elm) {
+                    ansTxt += '<tr>'
+                    ansTxt += '<td><b>'
+                    ansTxt += elm.type
+                    ansTxt += ':  '
+                    ansTxt += '</b></td>'
+                    ansTxt += '<td><b> (score = '
+                    ansTxt += elm.score
+                    ansTxt += ')</b></td>'
+                    ansTxt += '</tr>'
+                })
+                ansTxt += '</table>'
+                resultDiv.innerHTML = ansTxt
+            } else {
+                resultDiv.innerHTML = ('Internal server error - ' + xhr.readyState)
+            }
+        }
+        xhr.send(img_url)
+    }
+
+    var recognizeImage = function() {
+        var img_url_element = document.getElementById('img_url')
+        if (img_url_element) {
+            var img_url = img_url_element.value
+            if (img_url) {
+                sendImage(img_url)
+            } else {
+                alert('Could not find image url value')
+            }
+        } else {
+            alert('Could not find image url')
+        }
+    }
+</script>
+</head>
+<body
+	style="margin: 0; border: 0; padding: 0; background-color: #f0f0f0;">
+	<table style="margin-left: auto; margin-right: auto;">
+		<tr style="">
+			<td style="vertical-align: top">
+				<form action="#">
+					<br>Image URL <input type="text" name="img_url" id="img_url"
+						size="150" /><br> <br> <input type="button"
+						value="recognize" onclick="recognizeImage()" />
+				</form>
+			</td>
+		</tr>
+		<tr>
+			<td style="vertical-align: middle"><div id="image_result"></div></td>
+		</tr>
+	</table>
+</body>
+</html>
