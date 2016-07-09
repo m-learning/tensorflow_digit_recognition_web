@@ -5,11 +5,11 @@ Controller module for recognition
 '''
 
 from flask import Flask, request, render_template, json
-from cnn_fs import parameters_file
+from cnn_files import parameters_file
 from cnn_recognizer import image_recognizer
 from sys import argv
 
-
+# Initializes web container
 app = Flask(__name__)
 
 # Controller for image recognition

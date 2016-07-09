@@ -10,6 +10,7 @@ import os
 
 from cnn.utils.file_utils import files_and_path_utils
 
+
 # Constants for files
 PATH_FOR_PARAMETERS = 'trained_data'
 PATH_TO_RECOGNIZE = 'to_recognize'
@@ -38,5 +39,5 @@ class parameters_file(files_and_path_utils):
   
   # Gets training data  / parameters directory path
   def get_files_directory(self):
-    return self.join_path(self.get_current, PATH_CNN_DIRECTORY,
+    return self.join_path(self.get_current, self.path_to_cnn_directory,
                                PATH_FOR_PARAMETERS, WEIGHTS_FILE)
