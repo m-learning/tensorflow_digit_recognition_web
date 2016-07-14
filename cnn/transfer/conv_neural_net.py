@@ -8,7 +8,7 @@ Runs neural network for recognition
 
 import numpy as np
 
-RINAL_RESULTS = 'final_result:0'
+FINAL_RESULTS = 'final_result:0'
 DECODE_CONTENTS = 'DecodeJpeg/contents:0'
 
 # Image recognizer neural network
@@ -24,7 +24,7 @@ class conv_net(object):
     
     answer = {}
     
-    softmax_tensor = self.sess.graph.get_tensor_by_name(RINAL_RESULTS)
+    softmax_tensor = self.sess.graph.get_tensor_by_name(FINAL_RESULTS)
     image_dict = {DECODE_CONTENTS: image_data}
     predictions = self.sess.run(softmax_tensor, image_dict)
     predictions = np.squeeze(predictions)

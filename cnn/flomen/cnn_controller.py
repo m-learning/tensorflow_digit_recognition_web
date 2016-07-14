@@ -18,6 +18,19 @@ app = Flask(__name__)
 # Controller for image recognition
 class cnn_server(object):
   
+    # Runs recognizer
+  def cnn_run_binary(self, request):
+      
+    img_url = request.data
+    image_data = dirs_fls.get_file_bytes_to_recognize(img_url)
+    answer = img_recognizer.recognize_image_by_sess(image_data)
+    anwer_txt = {}
+    for key, value in answer.iteritems():
+        anwer_txt[key] = str(value)
+    resp = json.dumps(anwer_txt)
+    
+    return resp
+  
   # Runs recognizer
   def cnn_run(self, request):
       
@@ -38,7 +51,7 @@ def cnn_recognize():
   print img_recognizer
   if request.method == 'POST':
       srv = cnn_server()
-      resp = srv.cnn_run(request)
+      resp = srv.cnn_run_binary(request)
       resp = resp
   elif request.method == 'GET':
       resp = render_template("index.html")

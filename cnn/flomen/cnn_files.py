@@ -6,10 +6,6 @@ Files for training data
 @author: Levan Tsinadze
 '''
 
-import os
-import shutil
-import requests
-
 from cnn.utils.file_utils import cnn_file_utils
 
 # Files and directories for parameters (trained), training, validation and test

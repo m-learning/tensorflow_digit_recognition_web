@@ -20,7 +20,7 @@ def get_host_info(argv):
 def get_port_info(argv):
     
   if len(argv) > 2:
-      port_nm = argv[1]
+      port_nm = argv[2]
   else:
       port_nm = 8080
       

@@ -10,7 +10,6 @@ import sys
 import os
 
 import tensorflow as tf
-from cnn_files import training_file
 from cnn.transfer.conv_neural_net import conv_net
 
 # Recognizes image thru trained neural networks
@@ -23,8 +22,6 @@ class image_recognizer:
 
   # Initializes trained neural network graph
   def create_graph(self):
-    
-    graph_def = None
     
     """Creates a graph from saved GraphDef file and returns a saver."""
     # Creates graph from saved graph_def.pb.
@@ -62,20 +59,19 @@ class image_recognizer:
     return image_data
   
   # Generates forward propagation for recognition
-  def recognize_image_by_sess(self):
+  def recognize_image_by_sess(self, image_data=None):
     
-    answer = {}
-    
-    image_data = self.get_image_data()
-    if image_data != None:
+    if image_data is None:
+      image_data = self.get_image_data()
+    if image_data is not None:
       answer = self.conv_net.recognize_image(image_data)
+    else:
+      answer = {}
     
     return answer
   
   # Generates forward propagation for recognition
   def recognize_image_by_data(self, image_data):
-    
-    answer = {}
     
     with tf.Session() as sess:
       cn_net = conv_net(sess, self.labels_path)
@@ -90,7 +86,7 @@ class image_recognizer:
     answer = {}
 
     image_data = self.get_image_data(arg_path)
-    if image_data != None:
+    if image_data is not None:
       answer = self.recognize_image_by_data(image_data)
     
     return answer

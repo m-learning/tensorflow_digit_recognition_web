@@ -91,6 +91,15 @@ class cnn_file_utils(files_and_path_utils):
   # Gets or initializes test image
   def get_or_init_test_path(self):
     return self.join_path(self.get_or_init_test_dir, TEST_IMAGE_NAME)
+  
+  # Reads data binary from URL address
+  def get_file_bytes_to_recognize(self, file_url):
+    
+    response = requests.get(file_url, stream=True)
+    buff = response.raw.read()
+    del response
+    
+    return buff
     
   # Downloads file from passed URL address
   def get_file_to_recognize(self, file_url):
