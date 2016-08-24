@@ -52,7 +52,6 @@ def cnn_recognize():
   if request.method == 'POST':
       srv = cnn_server()
       resp = srv.cnn_run_binary(request)
-      resp = resp
   elif request.method == 'GET':
       resp = render_template("index.html")
   

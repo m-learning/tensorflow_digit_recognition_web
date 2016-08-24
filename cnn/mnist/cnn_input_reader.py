@@ -3,11 +3,12 @@ Created on Jun 17, 2016
 
 @author: Levan Tsinadze
 '''
-import cv2
 import math
 from scipy import ndimage
 
+import cv2
 import numpy as np
+
 
 IMAGE_SIZE = 28
 
