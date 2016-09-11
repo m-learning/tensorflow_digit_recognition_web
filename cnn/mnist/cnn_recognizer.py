@@ -4,8 +4,8 @@ Created on Jun 16, 2016
 @author: Levan Tsinadze
 '''
 
-from cnn_fs import parameters_file
-from cnn_input_reader import read_input_file
+from cnn.mnist.cnn_files import parameters_file
+from cnn.mnist.cnn_input_reader import read_input_file
 import tensorflow as tf
 
 
