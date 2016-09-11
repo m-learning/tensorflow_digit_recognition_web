@@ -6,11 +6,12 @@ Runs retrained neural network for recognition
 @author: Levan Tsinadze
 '''
 
-import sys
 import os
+import sys
 
-import tensorflow as tf
 from cnn.transfer.conv_neural_net import conv_net
+import tensorflow as tf
+
 
 # Recognizes image thru trained neural networks
 class image_recognizer:

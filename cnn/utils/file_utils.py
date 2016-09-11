@@ -7,9 +7,11 @@ Utility class for evaluation files and directories
 '''
 
 import os
-import types
 import shutil
+import types
+
 import requests
+
 
 # General parent directory for files
 DATAS_DIR_NAME = 'datas'

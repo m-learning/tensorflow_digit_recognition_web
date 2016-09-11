@@ -8,6 +8,7 @@ Runs neural network for recognition
 
 import numpy as np
 
+
 FINAL_RESULTS = 'final_result:0'
 DECODE_CONTENTS = 'DecodeJpeg/contents:0'
 

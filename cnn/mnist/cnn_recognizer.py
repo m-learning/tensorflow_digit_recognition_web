@@ -4,9 +4,10 @@ Created on Jun 16, 2016
 @author: Levan Tsinadze
 '''
 
-import tensorflow as tf
 from cnn_fs import parameters_file
 from cnn_input_reader import read_input_file
+import tensorflow as tf
+
 
 # Network Parameters
 n_input = 784  # MNIST data input (img shape: 28*28)

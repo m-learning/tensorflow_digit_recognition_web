@@ -4,10 +4,13 @@ Controller module for recognition
 @author: Levan Tsinadze
 '''
 
-from flask import Flask, request, render_template, json
-from cnn_files import parameters_file
-from cnn_recognizer import image_recognizer
 from sys import argv
+
+from flask import Flask, request, render_template, json
+
+from cnn.mnist.cnn_files import parameters_file
+from cnn.mnist.cnn_recognizer import image_recognizer
+
 
 # Initializes web container
 app = Flask(__name__)
