@@ -40,7 +40,6 @@ var resultButton = document.getElementById('button-result')
 resultButton.addEventListener('click', function () {
     resultCanvas.toBlob(function (blob) {
         var xhr = new XMLHttpRequest()
-        window.xhr = xhr
         xhr.open('POST', 'WhatNumber', true)
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4) {
