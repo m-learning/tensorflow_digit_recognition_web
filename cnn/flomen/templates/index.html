@@ -2,14 +2,66 @@
 <html>
 <head>
 <title>Images</title>
-<script type="text/javascript">
-    var sendImage = function(img_url) {
+<style>
+body {
+    border: 0;
+    padding: 0;
+    margin: 20px 0px;
+    background-color: #f0f0f0;
+}
 
+tr {
+    margin: 110px;
+}
+</style>
+</head>
+<body >
+	<table style="width:80%; margin: auto;">
+		<tr>
+			<td style="text-align: right; width: 100px;">Image URL:</td>
+			<td>
+			    <form>
+			        <input type="text" id="input-url" style="width:100%" />
+		        </form>
+			</td>
+		</tr>
+	    <tr>
+    		<td style="text-align: right; width: 100px; padding: 10px;">
+		        <button id="recognize-button">Recognize</button>
+			</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td colspan="2" style="vertical-align: top;">
+			    <div id="result-div" style="margin-left:30px;"></div>
+		    </td>
+		</tr>
+		<tr>
+			<td colspan="2" style="vertical-align: top; text-align: center;">
+			    <div id="preview-div"></div>
+		    </td>
+		</tr>
+	</table>
+<script type="text/javascript">
+(function () {
+    var button = document.getElementById('recognize-button')
+    button.addEventListener('click', recognizeImage)
+    
+    var input = document.getElementById('input-url')
+    input.addEventListener('keyup', function (e) {
+        if (e.keyCode == 13) {
+            recognizeImage()
+        }
+    })
+    
+    var resultDiv = document.getElementById("result-div")
+    
+    function sendImage (url) {
+        resultDiv.innerHTML = '<h1>Loading ... </h1>'
+        
         var xhr = new XMLHttpRequest()
-        window.xhr = xhr
-        xhr.open('POST', '.', true)
+        xhr.open('POST', '/', true)
         xhr.onreadystatechange = function() {
-            var resultDiv = document.getElementById("image_result")
             if (xhr.readyState == 4 && xhr.status == 200) {
                 var answer = JSON.parse(xhr.responseText)
                 var answerOrd = []
@@ -53,47 +105,39 @@
                     ansTxt += '<td><b> (score = '
                     ansTxt += elm.score
                     ansTxt += ')</b></td>'
+                    ansTxt += '<td><div style="width:' + (elm.score * 600) + 'px; background-color:#444; height: 20px;"></div></td>'
                     ansTxt += '</tr>'
                 })
                 ansTxt += '</table>'
                 resultDiv.innerHTML = ansTxt
             } else {
-                resultDiv.innerHTML = ('Internal server error - ' + xhr.readyState)
+                resultDiv.innerHTML = '<h1>Could not recognize image</h1>'
             }
         }
-        xhr.send(img_url)
+        xhr.send(url)
+        
+        var previewDiv = document.getElementById('preview-div')
+        previewDiv.innerHTML = ''
+        var img = new Image()
+        img.onload = function () {
+            img.width = Math.min(img.width, 800) 
+            previewDiv.appendChild(img)
+        }
+        img.onerror = function () {
+            previewDiv.innerHTML = '<h1>Could not load image</h1>'
+        }
+        img.src = url
     }
 
-    var recognizeImage = function() {
-        var img_url_element = document.getElementById('img_url')
-        if (img_url_element) {
-            var img_url = img_url_element.value
-            if (img_url) {
-                sendImage(img_url)
-            } else {
-                alert('Could not find image url value')
-            }
+    function recognizeImage () {
+        var url = document.getElementById('input-url').value
+        if (url) {
+            sendImage(url)
         } else {
-            alert('Could not find image url')
+            resultDiv.innerHTML = '<h1>Image URL is empty!</h1>'
         }
     }
+})()
 </script>
-</head>
-<body
-	style="margin: 0; border: 0; padding: 0; background-color: #f0f0f0;">
-	<table style="margin-left: auto; margin-right: auto;">
-		<tr style="">
-			<td style="vertical-align: top">
-				<form action="#">
-					<br>Image URL <input type="text" name="img_url" id="img_url"
-						size="150" /><br> <br> <input type="button"
-						value="recognize" onclick="recognizeImage()" />
-				</form>
-			</td>
-		</tr>
-		<tr>
-			<td style="vertical-align: middle"><div id="image_result"></div></td>
-		</tr>
-	</table>
 </body>
 </html>
