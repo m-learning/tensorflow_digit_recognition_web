@@ -16,9 +16,7 @@ body {
 		<tr>
 			<td style="text-align: right; width: 100px;">Image URL:</td>
 			<td>
-			    <form>
-			        <input type="text" id="input-url" style="width:100%" />
-		        </form>
+		        <input type="text" id="input-url" style="width:100%" />
 			</td>
 		</tr>
 	    <tr>
@@ -56,7 +54,7 @@ body {
     function recognizeImage (url) {
         previewDiv.innerHTML = ''
         
-        var url = document.getElementById('input-url').value
+        var url = document.getElementById('input-url').value.trim()
         if (!url) {
             resultDiv.innerHTML = '<h1>Image URL is empty!</h1>'
             return
