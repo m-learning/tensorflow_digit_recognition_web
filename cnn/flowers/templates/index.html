@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Images</title>
+<title>Image Recognition</title>
 <style>
 body {
     border: 0;
@@ -51,8 +51,17 @@ body {
     })
     
     var resultDiv = document.getElementById("result-div")
+    var previewDiv = document.getElementById('preview-div')
     
-    function sendImage (url) {
+    function recognizeImage (url) {
+        previewDiv.innerHTML = ''
+        
+        var url = document.getElementById('input-url').value
+        if (!url) {
+            resultDiv.innerHTML = '<h1>Image URL is empty!</h1>'
+            return
+        }
+        
         resultDiv.innerHTML = '<h1>Loading ... </h1>'
         
         var xhr = new XMLHttpRequest()
@@ -112,8 +121,6 @@ body {
         }
         xhr.send(url)
         
-        var previewDiv = document.getElementById('preview-div')
-        previewDiv.innerHTML = ''
         var img = new Image()
         img.onload = function () {
             img.width = Math.min(img.width, 800) 
@@ -123,15 +130,6 @@ body {
             previewDiv.innerHTML = '<h1>Could not load image</h1>'
         }
         img.src = url
-    }
-
-    function recognizeImage () {
-        var url = document.getElementById('input-url').value
-        if (url) {
-            sendImage(url)
-        } else {
-            resultDiv.innerHTML = '<h1>Image URL is empty!</h1>'
-        }
     }
 })()
 </script>
