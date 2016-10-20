@@ -25,6 +25,9 @@ TEST_IMAGE_NAME = 'test_image'
 
 # Utility class for files and directories
 class files_and_path_utils(object):
+  """
+    Utility class for file management
+  """
   
   def __init__(self, parent_cnn_dir):
     self.path_to_cnn_directory = os.path.join(DATAS_DIR_NAME, parent_cnn_dir)

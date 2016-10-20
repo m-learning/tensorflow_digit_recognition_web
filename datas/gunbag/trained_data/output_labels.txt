@@ -1,0 +1,3 @@
+bags
+knives
+guns
