@@ -28,6 +28,12 @@ def get_port_info(argv):
 
 # Initializes host address and port number    
 def get_host_and_port(argv):
+  """Configures host and port for conreoller
+    Args:
+      argv - module arguments to mparse
+    Return:
+      host and port for conreoller
+  """
     
   # Retrieves host and port from arguments or sets defaults
   host_nm = get_host_info(argv)

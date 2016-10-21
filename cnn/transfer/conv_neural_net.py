@@ -14,6 +14,8 @@ DECODE_CONTENTS = 'DecodeJpeg/contents:0'
 
 # Image recognizer neural network
 class conv_net(object):
+  """Image recognizer class through Inception-V3 model
+  """
   
   def __init__(self, sess, labels_path):
     self.sess = sess
@@ -22,6 +24,12 @@ class conv_net(object):
     
   # Runs image recognition thru neural network
   def recognize_image(self, image_data):
+    """Runs image recognizer
+      Args:
+        image_data - image parameters
+      Return:
+        answer - recognition results
+    """
     
     answer = {}
     

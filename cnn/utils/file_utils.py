@@ -25,8 +25,7 @@ TEST_IMAGE_NAME = 'test_image'
 
 # Utility class for files and directories
 class files_and_path_utils(object):
-  """
-    Utility class for file management
+  """Utility class for file management
   """
   
   def __init__(self, parent_cnn_dir):
@@ -34,6 +33,14 @@ class files_and_path_utils(object):
     
   # Joins path from method
   def join_path(self, path_inst, *other_path):
+    """Joins passed file paths
+      Args:
+        paths_inst - function to get path string
+                     or path string itself
+        *other_path - paths to join varargs
+      Return:
+        result - joined paths
+    """
     
     if isinstance(path_inst, types.StringType):
       init_path = path_inst
@@ -57,6 +64,7 @@ class files_and_path_utils(object):
 
 # Utility class for training and testing files and directories
 class cnn_file_utils(files_and_path_utils):
+  """Utility class for network files management"""
   
   def __init__(self, parent_cnn_dir):
     super(cnn_file_utils, self).__init__(parent_cnn_dir)
