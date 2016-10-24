@@ -13,8 +13,8 @@ from cnn.transfer.conv_neural_net import conv_net
 import tensorflow as tf
 
 
-# Recognizes image thru trained neural networks
 class image_recognizer:
+  """Recognizes image thru trained neural networks"""
   
   def __init__(self, tr_file):
     self.tr_file = tr_file

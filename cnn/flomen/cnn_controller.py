@@ -15,11 +15,16 @@ import cnn.utils.cnn_controller_utils as controller_utils
 
 app = Flask(__name__)
 
-# Controller for image recognition
 class cnn_server(object):
+  """Controller for image recognition"""
   
-    # Runs recognizer
   def cnn_run_binary(self, request):
+    """Runs recognizer
+      Args:
+        request - HTTP request
+      Return:
+        resp - recognition response
+    """
       
     img_url = request.data
     image_data = dirs_fls.get_file_bytes_to_recognize(img_url)
@@ -31,8 +36,13 @@ class cnn_server(object):
     
     return resp
   
-  # Runs recognizer
   def cnn_run(self, request):
+    """Runs recognizer
+      Args:
+        request - HTTP request
+      Return:
+        resp - recognition response
+    """
       
     img_url = request.data
     dirs_fls.get_file_to_recognize(img_url)
@@ -44,10 +54,13 @@ class cnn_server(object):
     
     return resp
 
-# Web method for recognition
 @app.route('/', methods=['GET', 'POST'])
 def cnn_recognize():
-    
+  """Web method for recognition
+    Return:
+      resp - recognition response
+  """
+      
   print img_recognizer
   if request.method == 'POST':
       srv = cnn_server()

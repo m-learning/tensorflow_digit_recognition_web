@@ -15,11 +15,16 @@ from cnn.mnist.cnn_recognizer import image_recognizer
 # Initializes web container
 app = Flask(__name__)
 
-# Controller for image recognition
 class cnn_server:
+  """Controller for image recognition"""
     
-  # Runs recognizer
   def cnn_run(self, request):
+    """Runs recognizer
+      Args:
+        request - HTTP request
+      Return:
+        resp - recognition response
+    """
       
     fls = request.data
     tr_fls = parameters_file()
@@ -32,10 +37,13 @@ class cnn_server:
     
     return resp
 
-# Web method for recognition
 @app.route('/', methods=['GET', 'POST'])
 def cnn_recognize():
-    
+  """Web method for recognition
+    Return:
+      resp - recognition response
+  """
+      
   if request.method == 'POST':
       srv = cnn_server()
       resp = srv.cnn_run(request)
