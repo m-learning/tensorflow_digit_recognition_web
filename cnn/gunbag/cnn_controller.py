@@ -8,7 +8,7 @@ import tensorflow as tf
 from flask import Flask, request, render_template, json
 from sys import argv
 from cnn_files import training_file
-from cnn.transfer.retrain_recognizer import image_recognizer
+from cnn.transfer.general_recognizer import image_recognizer
 
 import cnn.utils.cnn_controller_utils as controller_utils
 

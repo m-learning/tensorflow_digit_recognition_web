@@ -6,12 +6,24 @@ Runs retrained neural network for recognition
 @author: Levan Tsinadze
 '''
 
+import io
 import os
 import sys
+from tensorflow.python.framework.errors import InvalidArgumentError
+import traceback
 
 from cnn.transfer.conv_neural_net import conv_net
 import tensorflow as tf
 
+
+try:
+  from PIL import Image
+except ImportError:
+  print "Importing Image from PIL threw exception"
+  import Image
+
+IMAGE_RGB_FORMAT = 'RGB'
+IMAGE_SAVE_FORMAT = 'jpeg'
 
 class image_recognizer:
   """Recognizes image thru trained neural networks"""
@@ -59,13 +71,62 @@ class image_recognizer:
     
     return image_data
   
+  def to_byte_array(self, jpg_im):
+    """Converts image to byte Array
+      Args:
+        jpg_im - image
+      Return:
+        img_array - byte array of image
+    """
+    
+    img_bytes = io.BytesIO()
+    jpg_im.save(img_bytes, format=IMAGE_SAVE_FORMAT)
+    im_arr = img_bytes.getvalue()
+    
+    return im_arr
+  
+  def convert_and_recognize_image(self, image_data=None):
+    """Converts image to JPG and recognizes with exception
+      Args: 
+        image_data - image
+      Return:
+        answer - prediction result
+    """
+    try:
+      im = Image.open(io.BytesIO(image_data))
+      jpg_im = im.convert(IMAGE_RGB_FORMAT)
+      im_arr = self.to_byte_array(jpg_im)
+      answer = self.conv_net.recognize_image(im_arr)
+    except:
+      traceback.print_exc()
+      answer = None
+    
+    return answer    
+    
+  
+  def recognize_image_quietly(self, image_data=None):
+    """Recognizes image with exception
+      Args: 
+        image_data - image
+      Return:
+        answer - prediction result
+    """
+    
+    try:
+      answer = self.conv_net.recognize_image(image_data)
+    except InvalidArgumentError:
+      traceback.print_exc()
+      answer = self.convert_and_recognize_image(image_data)
+    
+    return answer
+  
   # Generates forward propagation for recognition
   def recognize_image_by_sess(self, image_data=None):
     
     if image_data is None:
       image_data = self.get_image_data()
     if image_data is not None:
-      answer = self.conv_net.recognize_image(image_data)
+      answer = self.recognize_image_quietly(image_data)
     else:
       answer = {}
     
