@@ -6,8 +6,14 @@ Utility class for recognizer controller
 @author: Levan Tsinadze
 '''
 
-# Retrieves host name from arguments or sets defaults
 def get_host_info(argv):
+  """Retrieves host address 
+     from arguments or sets defaults
+    Args:
+      argv - runtime parameters
+    Return:
+      port_nm - host address
+  """
     
   if len(argv) > 1:
       host_nm = argv[1]
@@ -16,8 +22,14 @@ def get_host_info(argv):
   
   return host_nm
 
-# Retrieves port number from arguments or sets defaults
 def get_port_info(argv):
+  """Retrieves port number 
+     from arguments or sets defaults
+    Args:
+      argv - runtime parameters
+    Return:
+      port_nm - port number
+  """
     
   if len(argv) > 2:
       port_nm = argv[2]
@@ -35,7 +47,6 @@ def get_host_and_port(argv):
       host and port for conreoller
   """
     
-  # Retrieves host and port from arguments or sets defaults
   host_nm = get_host_info(argv)
   port_nm = get_port_info(argv)
   

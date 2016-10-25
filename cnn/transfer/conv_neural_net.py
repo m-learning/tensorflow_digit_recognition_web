@@ -12,7 +12,6 @@ import numpy as np
 FINAL_RESULTS = 'final_result:0'
 DECODE_CONTENTS = 'DecodeJpeg/contents:0'
 
-# Image recognizer neural network
 class conv_net(object):
   """Image recognizer class through Inception-V3 model
   """

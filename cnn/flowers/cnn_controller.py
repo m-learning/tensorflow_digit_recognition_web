@@ -4,13 +4,13 @@ Controller module for recognition
 @author: Levan Tsinadze
 '''
 
-import tensorflow as tf
 from flask import Flask, request, render_template, json
 from sys import argv
-from cnn_files import training_file
-from cnn.transfer import general_recognizer.image_recognizer
 
+from cnn.transfer.general_recognizer import image_recognizer
 import cnn.utils.cnn_controller_utils as controller_utils
+from cnn_files import training_file
+import tensorflow as tf
 
 
 app = Flask(__name__)
@@ -59,7 +59,7 @@ if __name__ == "__main__":
   global dirs_fls
   global img_recognizer
   dirs_fls = training_file()
-  img_recognizer = general_recognizer(dirs_fls)
+  img_recognizer = image_recognizer(dirs_fls)
   img_recognizer.create_graph()
   # Retrieves host and port from arguments
   (host_nm, port_nm) = controller_utils.get_host_and_port(argv)

@@ -4,13 +4,13 @@ Controller module for recognition
 @author: Levan Tsinadze
 '''
 
-import tensorflow as tf
 from flask import Flask, request, render_template, json
 from sys import argv
-from cnn_files import training_file
-from cnn.transfer.general_recognizer import image_recognizer
 
+from cnn.transfer.general_recognizer import image_recognizer
 import cnn.utils.cnn_controller_utils as controller_utils
+from cnn_files import training_file
+import tensorflow as tf
 
 
 app = Flask(__name__)

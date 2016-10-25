@@ -7,10 +7,9 @@ Utility class for evaluation files and directories
 '''
 
 import os
+import requests
 import shutil
 import types
-
-import requests
 
 
 # General parent directory for files
@@ -23,7 +22,6 @@ LABELS_FILE = 'output_labels.txt'
 TEST_IMAGES_DIR = 'test_images'
 TEST_IMAGE_NAME = 'test_image'
 
-# Utility class for files and directories
 class files_and_path_utils(object):
   """Utility class for file management
   """
@@ -114,8 +112,13 @@ class cnn_file_utils(files_and_path_utils):
     
     return buff
     
-  # Downloads file from passed URL address
   def get_file_to_recognize(self, file_url):
+    """Downloads file from passed URL address
+      Args:
+        file_url - file URL address
+      Return:
+        response - file as byte array
+    """
     
     response = requests.get(file_url, stream=True)
     test_img_path = self.get_or_init_test_path()

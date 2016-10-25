@@ -10,7 +10,6 @@ import io
 import os
 import sys
 from tensorflow.python.framework.errors import InvalidArgumentError
-import traceback
 
 from cnn.transfer.conv_neural_net import conv_net
 import tensorflow as tf
@@ -45,17 +44,25 @@ class image_recognizer:
         
     return graph_def
   
-  # Gets net to recognize
   def get_conv_net(self):
+    """Gets net to recognize"""
     return conv_net(self.sess, self.labels_path)
 
-  # Attaches session to object
   def set_session(self, sess):
+    """Attaches session to object
+      Args:
+        sess - TensorFlow session
+    """
     self.sess = sess
     self.conv_net = self.get_conv_net()
   
-  # Initializes image to recognize
   def get_image_data(self, arg_path=None):
+    """Initializes image to recognize
+      Args:
+        arg_path - arguments path
+      Return:
+        image_data - image for prediction
+    """
     
     if arg_path == None:
       test_image_path = self.tr_file.get_or_init_test_path()
@@ -92,14 +99,10 @@ class image_recognizer:
       Return:
         answer - prediction result
     """
-    try:
-      im = Image.open(io.BytesIO(image_data))
-      jpg_im = im.convert(IMAGE_RGB_FORMAT)
-      im_arr = self.to_byte_array(jpg_im)
-      answer = self.conv_net.recognize_image(im_arr)
-    except:
-      traceback.print_exc()
-      answer = None
+    im = Image.open(io.BytesIO(image_data))
+    jpg_im = im.convert(IMAGE_RGB_FORMAT)
+    im_arr = self.to_byte_array(jpg_im)
+    answer = self.conv_net.recognize_image(im_arr)
     
     return answer    
     
@@ -115,7 +118,6 @@ class image_recognizer:
     try:
       answer = self.conv_net.recognize_image(image_data)
     except InvalidArgumentError:
-      traceback.print_exc()
       answer = self.convert_and_recognize_image(image_data)
     
     return answer

@@ -4,9 +4,8 @@ Controller module for recognition
 @author: Levan Tsinadze
 '''
 
-from sys import argv
-
 from flask import Flask, request, render_template, json
+from sys import argv
 
 from cnn.mnist.cnn_files import parameters_file
 from cnn.mnist.cnn_recognizer import image_recognizer
@@ -52,8 +51,11 @@ def cnn_recognize():
   
   return resp
         
-# Retrieves host name from arguments
 def get_host_info():
+  """Retrieves host name from arguments
+    Return:
+      host_nm - host address of recognizer
+  """
     
   if len(argv) > 1:
     host_nm = argv[1]
@@ -62,8 +64,11 @@ def get_host_info():
   
   return host_nm
 
-# Retrieves port number from arguments
 def get_port_info():
+  """Retrieves port number from arguments
+    Return:
+      host_nm - port number of server
+  """
     
   if len(argv) > 2:
     port_nm = argv[1]
@@ -72,8 +77,12 @@ def get_port_info():
       
   return port_nm
 
-# Initializes host address and port number    
 def get_host_and_port():
+  """Initializes host address and port number
+    Return:
+      host_nm - host address of recognizer
+      port_nm - port number of server
+  """
   
   # Retrieves host and port from arguments
   host_nm = get_host_info()
