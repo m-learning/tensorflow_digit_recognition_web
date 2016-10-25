@@ -1,4 +1,5 @@
 bags
 knives
-firearms
+grenades
 background
+firearms
