@@ -71,8 +71,8 @@ def cnn_recognize():
   
   return resp
 
-# Runs controller for image recognition        
 if __name__ == "__main__":
+  """Runs controller for image recognition"""
   
   global dirs_fls
   global img_recognizer
