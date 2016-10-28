@@ -12,6 +12,7 @@ import sys
 from tensorflow.python.framework.errors import InvalidArgumentError
 
 from cnn.transfer.conv_neural_net import conv_net
+from cnn.utils.pillow_resizing import pillow_resizer
 import tensorflow as tf
 
 
@@ -23,6 +24,8 @@ except ImportError:
 
 IMAGE_RGB_FORMAT = 'RGB'
 IMAGE_SAVE_FORMAT = 'jpeg'
+
+resizer = pillow_resizer(299)
 
 class image_recognizer:
   """Recognizes image thru trained neural networks"""
@@ -92,6 +95,35 @@ class image_recognizer:
     
     return im_arr
   
+  def binarize_and_run(self, im):
+    """Converts image to binary format 
+       and runs prediction
+      Args:
+        im - image
+      Returns:
+        answer - prediction result
+    """
+    
+    im_arr = self.to_byte_array(im)
+    answer = self.conv_net.recognize_image(im_arr)
+    
+    return answer
+    
+    
+  
+  def convert_image(self, image_data=None):
+    """Converts passed image to JPG format
+      Args:
+        image_data binary image
+      Returns:
+        jpg_im - converted image
+    """
+    
+    im = Image.open(io.BytesIO(image_data))
+    jpg_im = im.convert(IMAGE_RGB_FORMAT)
+    
+    return jpg_im
+  
   def convert_and_recognize_image(self, image_data=None):
     """Converts image to JPG and recognizes with exception
       Args: 
@@ -101,10 +133,36 @@ class image_recognizer:
     """
     im = Image.open(io.BytesIO(image_data))
     jpg_im = im.convert(IMAGE_RGB_FORMAT)
-    im_arr = self.to_byte_array(jpg_im)
-    answer = self.conv_net.recognize_image(im_arr)
+    answer = self.binarize_and_run(jpg_im)
     
-    return answer    
+    return answer
+  
+  def resize_image(self, image_data):
+    """Resizes image for recognition
+      Args:
+        image_data - binary image
+      Returns:
+        img - resized image
+    """
+    
+    im = Image.open(io.BytesIO(image_data))
+    img = resizer.resize_thumbnail(im)
+    
+    return img
+  
+  def resize_and_recognize(self, image_data):
+    """Resizes image and recognizes
+      Args:
+        image_data - binary image
+      Returns:
+        answer - prediction result
+    """
+    
+    img = self.resize_image(image_data)
+    answer = self.binarize_and_run(img)
+    
+    return answer
+    
     
   
   def recognize_image_quietly(self, image_data=None):
@@ -116,7 +174,7 @@ class image_recognizer:
     """
     
     try:
-      answer = self.conv_net.recognize_image(image_data)
+      answer = self.resize_and_recognize(image_data)
     except InvalidArgumentError:
       answer = self.convert_and_recognize_image(image_data)
     
