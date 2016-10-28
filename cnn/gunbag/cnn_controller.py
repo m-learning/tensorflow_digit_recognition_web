@@ -1,8 +1,8 @@
-'''
+"""
 Created on Jun 25, 2016
 Controller module for recognition
 @author: Levan Tsinadze
-'''
+"""
 
 from flask import Flask, request, render_template, json
 from sys import argv

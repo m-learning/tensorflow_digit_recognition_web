@@ -1,10 +1,15 @@
-'''
+"""
 Created on Jul 7, 2016
 
 Utility class for recognizer controller
 
 @author: Levan Tsinadze
-'''
+"""
+
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
 
 def get_host_info(argv):
   """Retrieves host address 

@@ -1,8 +1,12 @@
-'''
+"""
 Created on Jun 25, 2016
 Controller module for recognition
 @author: Levan Tsinadze
-'''
+"""
+
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
 
 from flask import Flask, request, render_template, json
 from sys import argv
