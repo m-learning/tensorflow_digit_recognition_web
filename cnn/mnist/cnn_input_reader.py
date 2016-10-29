@@ -37,6 +37,13 @@ def shift(img, sx, sy):
 
 
 def get_global_bounding_rect(contours):
+	"""Reads input data as tensor
+		Args:
+			contours - arguments of image
+		Return:
+			average min_x, min_y, max_w, max_h
+		  instances
+	"""
 	min_x = sys.maxint
 	min_y = sys.maxint
 	max_w = 0

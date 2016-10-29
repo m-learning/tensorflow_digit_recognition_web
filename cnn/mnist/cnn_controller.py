@@ -4,9 +4,8 @@ Controller module for recognition
 @author: Levan Tsinadze
 '''
 
-from sys import argv
-
 from flask import Flask, request, render_template, json
+from sys import argv
 
 from cnn.mnist.cnn_files import parameters_file
 from cnn.mnist.cnn_recognizer import image_recognizer
@@ -15,11 +14,16 @@ from cnn.mnist.cnn_recognizer import image_recognizer
 # Initializes web container
 app = Flask(__name__)
 
-# Controller for image recognition
 class cnn_server:
+  """Controller for image recognition"""
     
-  # Runs recognizer
   def cnn_run(self, request):
+    """Runs recognizer
+      Args:
+        request - HTTP request
+      Return:
+        resp - recognition response
+    """
       
     fls = request.data
     tr_fls = parameters_file()
@@ -32,10 +36,13 @@ class cnn_server:
     
     return resp
 
-# Web method for recognition
 @app.route('/', methods=['GET', 'POST'])
 def cnn_recognize():
-    
+  """Web method for recognition
+    Return:
+      resp - recognition response
+  """
+      
   if request.method == 'POST':
       srv = cnn_server()
       resp = srv.cnn_run(request)
@@ -44,8 +51,11 @@ def cnn_recognize():
   
   return resp
         
-# Retrieves host name from arguments
 def get_host_info():
+  """Retrieves host name from arguments
+    Return:
+      host_nm - host address of recognizer
+  """
     
   if len(argv) > 1:
     host_nm = argv[1]
@@ -54,8 +64,11 @@ def get_host_info():
   
   return host_nm
 
-# Retrieves port number from arguments
 def get_port_info():
+  """Retrieves port number from arguments
+    Return:
+      host_nm - port number of server
+  """
     
   if len(argv) > 2:
     port_nm = argv[1]
@@ -64,8 +77,12 @@ def get_port_info():
       
   return port_nm
 
-# Initializes host address and port number    
 def get_host_and_port():
+  """Initializes host address and port number
+    Return:
+      host_nm - host address of recognizer
+      port_nm - port number of server
+  """
   
   # Retrieves host and port from arguments
   host_nm = get_host_info()

@@ -1,25 +1,31 @@
-'''
+"""
 Created on Jun 25, 2016
 Controller module for recognition
 @author: Levan Tsinadze
-'''
+"""
 
-import tensorflow as tf
 from flask import Flask, request, render_template, json
 from sys import argv
-from cnn_files import training_file
-from cnn.transfer.retrain_recognizer import image_recognizer
 
+from cnn.transfer.general_recognizer import image_recognizer
 import cnn.utils.cnn_controller_utils as controller_utils
+from cnn_files import training_file
+import tensorflow as tf
 
 
 app = Flask(__name__)
 
-# Controller for image recognition
 class cnn_server(object):
+  """Controller for image recognition"""
   
-    # Runs recognizer
+  
   def cnn_run_binary(self, request):
+    """Runs recognizer
+      Args:
+        request - HTTP request
+      Return:
+        resp - recognition response
+    """
       
     img_url = request.data
     image_data = dirs_fls.get_file_bytes_to_recognize(img_url)
@@ -31,8 +37,13 @@ class cnn_server(object):
     
     return resp
   
-  # Runs recognizer
   def cnn_run(self, request):
+    """Runs recognizer
+      Args:
+        request - HTTP request
+      Return:
+        resp - recognition response
+    """
       
     img_url = request.data
     dirs_fls.get_file_to_recognize(img_url)
@@ -44,9 +55,12 @@ class cnn_server(object):
     
     return resp
 
-# Web method for recognition
 @app.route('/', methods=['GET', 'POST'])
 def cnn_recognize():
+  """Web method for recognition
+    Return:
+      resp - recognition response
+  """
     
   print img_recognizer
   if request.method == 'POST':
@@ -57,8 +71,8 @@ def cnn_recognize():
   
   return resp
 
-# Runs controller for image recognition        
 if __name__ == "__main__":
+  """Runs controller for image recognition"""
   
   global dirs_fls
   global img_recognizer

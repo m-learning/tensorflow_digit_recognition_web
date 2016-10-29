@@ -1,25 +1,34 @@
-'''
+"""
 Created on Jun 25, 2016
 Controller module for recognition
 @author: Levan Tsinadze
-'''
+"""
 
-import tensorflow as tf
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
 from flask import Flask, request, render_template, json
 from sys import argv
-from cnn_files import training_file
-from cnn.transfer.retrain_recognizer import image_recognizer
 
+from cnn.transfer.general_recognizer import image_recognizer
 import cnn.utils.cnn_controller_utils as controller_utils
+from cnn_files import training_file
+import tensorflow as tf
 
 
 app = Flask(__name__)
 
-# Controller for image recognition
 class cnn_server(object):
+  """Controller for image recognition"""
   
-  # Runs recognizer
   def cnn_run(self, request):
+    """Runs recognizer
+      Args:
+        request - HTTP request
+      Return:
+        resp - recognition response
+    """
       
     img_url = request.data
     dirs_fls.get_file_to_recognize(img_url)
@@ -34,7 +43,11 @@ class cnn_server(object):
 # Web method for recognition
 @app.route('/', methods=['GET', 'POST'])
 def cnn_recognize():
-    
+  """Web method for recognition
+    Return:
+      resp - recognition response
+  """
+      
   print img_recognizer
   if request.method == 'POST':
       srv = cnn_server()
