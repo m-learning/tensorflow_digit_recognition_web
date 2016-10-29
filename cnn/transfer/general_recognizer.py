@@ -137,7 +137,8 @@ class image_recognizer:
     """
     im = Image.open(io.BytesIO(image_data))
     jpg_im = im.convert(IMAGE_RGB_FORMAT)
-    answer = self.binarize_and_run(jpg_im)
+    img = resizer.resize_thumbnail(jpg_im)
+    answer = self.binarize_and_run(img)
     
     return answer
   

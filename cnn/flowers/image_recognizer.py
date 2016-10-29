@@ -10,8 +10,8 @@ from cnn.transfer.general_recognizer import image_recognizer
 from cnn_files import training_file
 
 
-# Runs image recognizer
 if __name__ == '__main__':
+  """Starts image recognizer service"""
   
   dirs_fls = training_file()
   img_recognizer = image_recognizer(dirs_fls)
