@@ -112,7 +112,7 @@ class image_recognizer:
       image_rec = read_input_file(image_directory)
       # Recognize image
       resp_dgt = sess.run(recognize_image, feed_dict={self.x: image_rec,
-                                        self.keep_prob: 0.75})
+                                        self.keep_prob: 1})
       print "Recognized image:", resp_dgt[0]
     
     return resp_dgt[0]
