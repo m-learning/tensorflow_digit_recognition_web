@@ -1,10 +1,14 @@
-'''
+"""
 Created on Jun 28, 2016
 
 Runs retrained neural network for recognition
 
 @author: Levan Tsinadze
-'''
+"""
+
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
 
 import io
 import os
@@ -19,7 +23,7 @@ import tensorflow as tf
 try:
   from PIL import Image
 except ImportError:
-  print "Importing Image from PIL threw exception"
+  print("Importing Image from PIL threw exception")
   import Image
 
 IMAGE_RGB_FORMAT = 'RGB'
@@ -175,7 +179,7 @@ class image_recognizer:
     
     try:
       answer = self.resize_and_recognize(image_data)
-    except InvalidArgumentError:
+    except (InvalidArgumentError, IOError):
       answer = self.convert_and_recognize_image(image_data)
     
     return answer
@@ -197,7 +201,7 @@ class image_recognizer:
     
     with tf.Session() as sess:
       cn_net = conv_net(sess, self.labels_path)
-      print cn_net
+      print(cn_net)
       answer = cn_net.recognize_image(image_data)
     
     return answer

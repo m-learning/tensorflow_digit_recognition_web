@@ -51,7 +51,7 @@ class conv_net(object):
     """Runs image recognizer
       Args:
         image_data - image parameters
-      Return:
+      Returns:
         answer - recognition results
     """
     

@@ -40,7 +40,7 @@ class files_and_path_utils(object):
         paths_inst - function to get path string
                      or path string itself
         *other_path - paths to join varargs
-      Return:
+      Returns:
         result - joined paths
     """
     
@@ -120,7 +120,7 @@ class cnn_file_utils(files_and_path_utils):
     """Downloads file from passed URL address
       Args:
         file_url - file URL address
-      Return:
+      Returns:
         response - file as byte array
     """
     

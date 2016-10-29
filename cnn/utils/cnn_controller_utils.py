@@ -16,7 +16,7 @@ def get_host_info(argv):
      from arguments or sets defaults
     Args:
       argv - runtime parameters
-    Return:
+    Returns:
       port_nm - host address
   """
     
@@ -32,7 +32,7 @@ def get_port_info(argv):
      from arguments or sets defaults
     Args:
       argv - runtime parameters
-    Return:
+    Returns:
       port_nm - port number
   """
     
@@ -48,7 +48,7 @@ def get_host_and_port(argv):
   """Configures host and port for conreoller
     Args:
       argv - module arguments to mparse
-    Return:
+    Returns:
       host and port for conreoller
   """
     
