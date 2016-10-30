@@ -4,12 +4,17 @@ Controller module for recognition
 @author: Levan Tsinadze
 """
 
-from flask import Flask, request, render_template, json
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
 from sys import argv
 
+from flask import Flask, request, render_template, json
+
+from cnn.gunbag.cnn_files import training_file
 from cnn.transfer.general_recognizer import image_recognizer
 import cnn.utils.cnn_controller_utils as controller_utils
-from cnn_files import training_file
 import tensorflow as tf
 
 
@@ -62,7 +67,7 @@ def cnn_recognize():
       resp - recognition response
   """
     
-  print img_recognizer
+  print(img_recognizer)
   if request.method == 'POST':
       srv = cnn_server()
       resp = srv.cnn_run_binary(request)
