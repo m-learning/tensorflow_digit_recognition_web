@@ -39,7 +39,6 @@ class image_recognizer:
     self.labels_path = self.tr_file.get_or_init_labels_path()
     self.model_path = self.tr_file.get_or_init_files_path()
 
-  # Initializes trained neural network graph
   def create_graph(self):
     """Creates a graph from saved GraphDef file and returns a saver."""
     
@@ -113,8 +112,6 @@ class image_recognizer:
     
     return answer
     
-    
-  
   def convert_image(self, image_data=None):
     """Converts passed image to JPG format
       Args:
@@ -185,8 +182,13 @@ class image_recognizer:
     
     return answer
   
-  # Generates forward propagation for recognition
   def recognize_image_by_sess(self, image_data=None):
+    """Generates forward propagation for recognition
+      Args:
+        image_data - image parameters
+      Returns:
+        answer - prediction result
+    """
     
     if image_data is None:
       image_data = self.get_image_data()
@@ -197,8 +199,13 @@ class image_recognizer:
     
     return answer
   
-  # Generates forward propagation for recognition
   def recognize_image_by_data(self, image_data):
+    """Generates forward propagation for recognition
+      Args:
+        image_data - image parameters
+      Returns:
+        answer - prediction result
+    """
     
     with tf.Session() as sess:
       cn_net = conv_net(sess, self.labels_path)
@@ -207,8 +214,13 @@ class image_recognizer:
     
     return answer
   
-  # Generates forward propagation for recognition
   def recognize_image(self, arg_path=None):
+    """Generates forward propagation for recognition
+      Args:
+        arg_path - command line parameters
+      Returns:
+        answer - prediction result
+    """
       
     answer = {}
 
@@ -218,8 +230,13 @@ class image_recognizer:
     
     return answer
   
-  # Initializes graph and generates forward propagation for recognition
   def run_inference_on_image(self, arg_path=None):
+    """Initializes graph and generates forward propagation for recognition
+      Args:
+        arg_path - command line parameters
+      Returns:
+        answer - prediction result
+    """
       
     answer = {}
 
@@ -232,11 +249,12 @@ class image_recognizer:
     return answer
 
 if __name__ == '__main__':
+  """Runs image recognition on specified file"""
   
-    # Gets image path from arguments
-    img_recognizer = image_recognizer()
-    if len(sys.argv) > 1:
-      test_img_path = sys.argv[1]
-    else:
-      test_img_path = None
-    img_recognizer.run_inference_on_image(test_img_path)
+  # Gets image path from arguments
+  img_recognizer = image_recognizer()
+  if len(sys.argv) > 1:
+    test_img_path = sys.argv[1]
+  else:
+    test_img_path = None
+  img_recognizer.run_inference_on_image(test_img_path)

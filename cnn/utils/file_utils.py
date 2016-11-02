@@ -93,8 +93,11 @@ class cnn_file_utils(files_and_path_utils):
   def get_or_init_labels_path(self):
     return self.join_path(self.init_files_directory, LABELS_FILE)
 
-  # Gets directory for test images
   def get_or_init_test_dir(self):
+    """Gets directory for test images
+      Returns:
+        test image directory
+    """
     
     current_dir = self.join_path(self.get_data_general_directory, TEST_IMAGES_DIR)
     
@@ -103,12 +106,20 @@ class cnn_file_utils(files_and_path_utils):
     
     return current_dir
     
-  # Gets or initializes test image
   def get_or_init_test_path(self):
+    """Gets or initializes test image
+      Returns:
+        test image full path
+    """
     return self.join_path(self.get_or_init_test_dir, TEST_IMAGE_NAME)
   
-  # Reads data binary from URL address
   def get_file_bytes_to_recognize(self, file_url):
+    """Reads data binary from URL address
+      Args:
+        file_url - file URL address
+      Returns:
+        buff - file bytes buffer
+    """
     
     response = requests.get(file_url, stream=True)
     buff = response.raw.read()
