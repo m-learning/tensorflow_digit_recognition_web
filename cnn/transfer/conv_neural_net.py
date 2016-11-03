@@ -17,7 +17,7 @@ FINAL_RESULTS = 'final_result:0'
 DECODE_CONTENTS = 'DecodeJpeg/contents:0'
 DROPOUT_KEY = 'final_training_ops/dropout/Placeholder:0'
 
-FULL_KEEP_PROB = 1.0
+KEEP_ALL_PROB = 1.0
 
 softmax_tensor = None
 label_array = None
@@ -65,7 +65,7 @@ class conv_net(object):
     init_softmax_tensor(self.sess)
     init_labels(self.labels_path)
     image_dict = {DECODE_CONTENTS: image_data,
-                  DROPOUT_KEY: FULL_KEEP_PROB}
+                  DROPOUT_KEY: KEEP_ALL_PROB}
     predictions = self.sess.run(softmax_tensor, image_dict)
     predictions = np.squeeze(predictions)
     # Getting top 5 predictions
