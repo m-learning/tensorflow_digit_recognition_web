@@ -6,7 +6,7 @@ Runs retrain neural network for recognition
 @author: Levan Tsinadze
 '''
 
-from cnn.transfer.general_recognizer import image_recognizer
+from cnn.transfer.recognizer_interface import image_recognizer
 from cnn_files import training_file
 
 
