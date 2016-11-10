@@ -11,9 +11,10 @@ from __future__ import division
 from __future__ import print_function
 
 import os
-import requests
 import shutil
 import types
+
+import requests
 
 
 # General parent directory for files
@@ -27,8 +28,7 @@ TEST_IMAGES_DIR = 'test_images'
 TEST_IMAGE_NAME = 'test_image'
 
 class files_and_path_utils(object):
-  """Utility class for file management
-  """
+  """Utility class for file management"""
   
   def __init__(self, parent_cnn_dir):
     self.path_to_cnn_directory = os.path.join(DATAS_DIR_NAME, parent_cnn_dir)

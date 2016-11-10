@@ -13,6 +13,7 @@ from __future__ import print_function
 import io
 import os
 import sys
+
 from tensorflow.python.framework.errors import InvalidArgumentError
 
 from cnn.transfer.conv_neural_net import conv_net

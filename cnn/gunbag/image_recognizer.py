@@ -13,6 +13,6 @@ from cnn_files import training_file
 if __name__ == '__main__':
   """Starts image recognizer service"""
   
-  dirs_fls = training_file()
-  img_recognizer = image_recognizer(dirs_fls)
+  dirs_files = training_file()
+  img_recognizer = image_recognizer(dirs_files)
   img_recognizer.run_inference_on_image()
