@@ -13,6 +13,7 @@ from sys import argv
 from flask import Flask, request, render_template, json
 
 from cnn.flomen.cnn_files import training_file
+from cnn.transfer import cnn_flags as flags
 from cnn.transfer.recognizer_interface import image_recognizer
 import cnn.utils.cnn_controller_utils as controller_utils
 import tensorflow as tf
@@ -81,6 +82,7 @@ if __name__ == "__main__":
   global dirs_fls
   global img_recognizer
   dirs_fls = training_file()
+  flags.parse_and_retrieve(dirs_fls)
   img_recognizer = image_recognizer(dirs_fls)
   img_recognizer.create_graph()
   # Retrieves host and port from arguments

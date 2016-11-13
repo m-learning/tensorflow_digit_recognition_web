@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Image Recognition</title>
+<style>
+body {
+    border: 0;
+    padding: 0;
+    margin: 20px 0px;
+    background-color: #f0f0f0;
+}
+</style>
+</head>
+<body >
+	<table style="width:80%; margin: auto;">
+		<tr>
+			<td style="text-align: right; width: 100px;">Image URL:</td>
+			<td>
+		        <input type="text" id="input-url" style="width:100%" />
+			</td>
+		</tr>
+	    <tr>
+    		<td style="text-align: right; width: 100px; padding: 10px;">
+		        <button id="recognize-button">Recognize</button>
+			</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td colspan="2" style="vertical-align: top;">
+			    <div id="result-div" style="margin-left:30px;"></div>
+		    </td>
+		</tr>
+		<tr>
+			<td colspan="2" style="vertical-align: top; text-align: center;">
+			    <div id="preview-div"></div>
+		    </td>
+		</tr>
+	</table>
+<script type="text/javascript">
+(function () {
+    var button = document.getElementById('recognize-button')
+    button.addEventListener('click', recognizeImage)
+    
+    var input = document.getElementById('input-url')
+    input.addEventListener('keyup', function (e) {
+        if (e.keyCode == 13) {
+            recognizeImage()
+        }
+    })
+    
+    var resultDiv = document.getElementById("result-div")
+    var previewDiv = document.getElementById('preview-div')
+    
+    function recognizeImage (url) {
+        previewDiv.innerHTML = ''
+        
+        var url = document.getElementById('input-url').value.trim()
+        if (!url) {
+            resultDiv.innerHTML = '<h1>Image URL is empty!</h1>'
+            return
+        }
+        
+        resultDiv.innerHTML = '<h1>Loading ... </h1>'
+        
+        var xhr = new XMLHttpRequest()
+        xhr.open('POST', '/', true)
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var answer = JSON.parse(xhr.responseText)
+                var answerOrd = []
+                var answerText
+                var answerObj
+                for ( var prop in answer) {
+                    answerText = answer[prop]
+                    if (answerText) {
+                        answerObj = {}
+                        answerObj['type'] = prop
+                        answerObj['score'] = parseFloat(answerText)
+                        answerOrd.push(answerObj)
+                    }
+                }
+                answerOrd.sort(function(a, b) {
+
+                    var reslt
+
+                    var a1st = -1 // negative value means left item should appear first
+                    var b1st = 1 // positive value means right item should appear first
+                    var equal = 0 // zero means objects are equal
+
+                    // compare your object's property values and determine their order
+                    if (a.score > b.score) {
+                        reslt = a1st
+                    } else if (a.score < b.score) {
+                        reslt = b1st
+                    } else {
+                        reslt = equal;
+                    }
+
+                    return reslt
+                })
+                var ansTxt = '<table>'
+                answerOrd.forEach(function(elm) {
+                    ansTxt += '<tr>'
+                    ansTxt += '<td><b>'
+                    ansTxt += elm.type
+                    ansTxt += ':  '
+                    ansTxt += '</b></td>'
+                    ansTxt += '<td><b> (score = '
+                    ansTxt += elm.score
+                    ansTxt += ')</b></td>'
+                    ansTxt += '<td><div style="width:' + (elm.score * 600) + 'px; background-color:#444; height: 20px;"></div></td>'
+                    ansTxt += '</tr>'
+                })
+                ansTxt += '</table>'
+                resultDiv.innerHTML = ansTxt
+            } else {
+                resultDiv.innerHTML = '<h1>Could not recognize image</h1>'
+            }
+        }
+        xhr.send(url)
+        
+        var img = new Image()
+        img.onload = function () {
+            img.width = Math.min(img.width, 800) 
+            previewDiv.appendChild(img)
+        }
+        img.onerror = function () {
+            previewDiv.innerHTML = '<h1>Could not load image</h1>'
+        }
+        img.src = url
+    }
+})()
+</script>
+</body>
+</html>

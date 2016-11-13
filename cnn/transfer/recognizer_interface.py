@@ -16,6 +16,7 @@ import sys
 
 from tensorflow.python.framework.errors import InvalidArgumentError
 
+from cnn.transfer import cnn_flags as flags
 from cnn.transfer.conv_neural_net import conv_net
 from cnn.utils.pillow_resizing import pillow_resizer
 import tensorflow as tf
@@ -37,8 +38,8 @@ class image_recognizer:
   
   def __init__(self, tr_file):
     self.tr_file = tr_file
-    self.labels_path = self.tr_file.get_or_init_labels_path()
-    self.model_path = self.tr_file.get_or_init_files_path()
+    self.labels_path = flags.output_graph
+    self.model_path = flags.output_graph
 
   def create_graph(self):
     """Creates a graph from saved GraphDef file and returns a saver."""
