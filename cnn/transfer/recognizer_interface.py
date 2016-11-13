@@ -59,7 +59,7 @@ class image_recognizer:
   def set_session(self, sess):
     """Attaches session to object
       Args:
-        sess - TensorFlow session
+        sess - current TensorFlow session
     """
     self.sess = sess
     self.conv_net = self.get_conv_net()

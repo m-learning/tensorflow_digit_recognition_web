@@ -25,7 +25,7 @@ label_array = None
 def init_softmax_tensor(sess):
   """Initializes final tensor to run
     Args:
-      sess - TensorFlow session
+      sess - current TensorFlow session
   """
   
   if softmax_tensor is None:

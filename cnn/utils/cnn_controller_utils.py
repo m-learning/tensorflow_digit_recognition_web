@@ -10,8 +10,10 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
+from cnn.transfer import cnn_flags as flags
 
-def get_host_info(argv):
+
+def get_host_info():
   """Retrieves host address 
      from arguments or sets defaults
     Args:
@@ -19,15 +21,9 @@ def get_host_info(argv):
     Returns:
       port_nm - host address
   """
-    
-  if len(argv) > 1:
-      host_nm = argv[1]
-  else:
-      host_nm = '0.0.0.0'
-  
-  return host_nm
+  return flags.host_nm
 
-def get_port_info(argv):
+def get_port_info():
   """Retrieves port number 
      from arguments or sets defaults
     Args:
@@ -35,16 +31,10 @@ def get_port_info(argv):
     Returns:
       port_nm - port number
   """
-    
-  if len(argv) > 2:
-      port_nm = argv[2]
-  else:
-      port_nm = 8080
-      
-  return port_nm
+  return flags.port_nm
 
 # Initializes host address and port number    
-def get_host_and_port(argv):
+def get_host_and_port():
   """Configures host and port for conreoller
     Args:
       argv - module arguments to mparse
@@ -52,7 +42,7 @@ def get_host_and_port(argv):
       host and port for conreoller
   """
     
-  host_nm = get_host_info(argv)
-  port_nm = get_port_info(argv)
+  host_nm = get_host_info()
+  port_nm = get_port_info()
   
   return (host_nm, port_nm)

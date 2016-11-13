@@ -8,8 +8,6 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
-from sys import argv
-
 from flask import Flask, request, render_template, json
 
 from cnn.gunbag.cnn_files import training_file
@@ -87,7 +85,7 @@ if __name__ == "__main__":
   img_recognizer = image_recognizer(dirs_fls)
   img_recognizer.create_graph()
   # Retrieves host and port from arguments
-  (host_nm, port_nm) = controller_utils.get_host_and_port(argv)
+  (host_nm, port_nm) = controller_utils.get_host_and_port()
   
   with tf.Session() as sess:
     img_recognizer.set_session(sess)

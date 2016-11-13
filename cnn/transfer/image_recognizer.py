@@ -1,7 +1,7 @@
 '''
 Created on Jun 28, 2016
 
-Runs retrain neural network for recognition
+Runs retrained neural network for recognition
 
 @author: Levan Tsinadze
 '''
