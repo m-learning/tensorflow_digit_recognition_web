@@ -47,9 +47,11 @@ class cnn_server(object):
     """
     
     if uploaded:
-      image_data = request.files['image-rec']
-      print('Image is - ')
-      print(image_data)
+      upload_file = request.files['image-rec']
+      if upload_file.filename:
+        image_data = upload_file.read()
+      else:
+        upload_file = None
     else:
       img_url = request.data
       image_data = dirs_fls.get_file_bytes_to_recognize(img_url)
