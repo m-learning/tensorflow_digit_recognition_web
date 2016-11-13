@@ -29,7 +29,7 @@ def retrieve_args(argument_flags, tr_files):
   if argument_flags.output_graph:
     output_graph = tr_files.join_path(argument_flags.output_graph,
                                       file_utils.WEIGHTS_FILE)
-    output_labels = tr_files.join_path(output_graph,
+    output_labels = tr_files.join_path(argument_flags.output_graph,
                                        file_utils.LABELS_FILE)
   else:
     output_graph = tr_files.get_or_init_files_path()  # Where to save the trained graph

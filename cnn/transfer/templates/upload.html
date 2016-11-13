@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Image Recognition</title>
+<style>
+body {
+	border: 0;
+	padding: 0;
+	margin: 20px 0px;
+	background-color: #f0f0f0;
+}
+</style>
+</head>
+<body>
+	<table style="width: 80%; margin: auto;">
+		<tr>
+			<td>
+				<form action="/files" method="post" enctype="multipart/form-data">
+					<input type="file" name="image-rec" accept="image/*" />
+					<div>
+						<input type="submit" value="upload" />
+					</div>
+				</form>
+			</td>
+		</tr>
+	</table>
+</body>

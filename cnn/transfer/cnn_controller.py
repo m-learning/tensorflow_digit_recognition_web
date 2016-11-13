@@ -22,17 +22,14 @@ app = Flask(__name__)
 class cnn_server(object):
   """Controller for image recognition"""
   
-  
-  def cnn_run_binary(self, request):
-    """Runs recognizer
+  def recognize_by_image_data(self, image_data):
+    """Recognizes binary image
       Args:
-        request - HTTP request
-      Return:
+        image_data - binary image file
+      Returns:
         resp - recognition response
     """
-      
-    img_url = request.data
-    image_data = dirs_fls.get_file_bytes_to_recognize(img_url)
+    
     answer = img_recognizer.recognize_image_by_sess(image_data)
     anwer_txt = {}
     for key, value in answer.iteritems():
@@ -40,6 +37,27 @@ class cnn_server(object):
     resp = json.dumps(anwer_txt)
     
     return resp
+  
+  def cnn_run_binary(self, request, uploaded=False):
+    """Runs recognizer
+      Args:
+        request - HTTP request
+      Return:
+        resp - recognition response
+    """
+    
+    if uploaded:
+      image_data = request.files['image-rec']
+      print('Image is - ')
+      print(image_data)
+    else:
+      img_url = request.data
+      image_data = dirs_fls.get_file_bytes_to_recognize(img_url)
+    resp = self.recognize_by_image_data(image_data)
+    
+    return resp
+  
+  
   
   def cnn_run(self, request):
     """Runs recognizer
@@ -58,6 +76,22 @@ class cnn_server(object):
     resp = json.dumps(anwer_txt)
     
     return resp
+
+@app.route('/files', methods=['GET', 'POST'])
+def cnn_recognizeby_file():
+  """Web method for recognition
+    Return:
+      resp - recognition response
+  """
+    
+  print(img_recognizer)
+  if request.method == 'POST':
+      srv = cnn_server()
+      resp = srv.cnn_run_binary(request, uploaded=True)
+  elif request.method == 'GET':
+      resp = render_template("upload.html")
+  
+  return resp
 
 @app.route('/', methods=['GET', 'POST'])
 def cnn_recognize():
