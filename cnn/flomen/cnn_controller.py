@@ -13,7 +13,7 @@ from flask import Flask, request, render_template, json
 from cnn.flomen.cnn_files import training_file
 from cnn.transfer import cnn_flags as flags
 from cnn.transfer.recognizer_interface import image_recognizer
-import cnn.utils.cnn_controller_utils as controller_utils
+from cnn.utils import cnn_controller_utils as controller_utils
 import tensorflow as tf
 
 

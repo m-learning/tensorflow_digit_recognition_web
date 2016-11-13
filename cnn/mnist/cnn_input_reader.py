@@ -1,8 +1,13 @@
-'''
+"""
 Created on Jun 17, 2016
-
+Image processing before recognition
 @author: Levan Tsinadze
-'''
+"""
+
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
 import math
 from scipy import ndimage
 
@@ -70,7 +75,7 @@ def read_input_file(image_file_path):
 	gray = cv2.resize(255 - gray, (28, 28))
 	# better black and white version
 	(thresh, gray) = cv2.threshold(gray, 128, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)
-	print thresh
+	print(thresh)
 
 	# while np.sum(gray[0]) == 0:
 	# 	gray = gray[1:]
@@ -85,7 +90,7 @@ def read_input_file(image_file_path):
 	# 	gray = np.delete(gray, -1, 1)
 
 	gray_copy = copy.copy(gray)
-	contours, hierarchy = cv2.findContours(gray_copy, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+	contours, _ = cv2.findContours(gray_copy, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 	del gray_copy
 
 	x1, y1, x2, y2 = get_global_bounding_rect(contours)

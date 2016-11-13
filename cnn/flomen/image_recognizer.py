@@ -1,13 +1,17 @@
-'''
+"""
 Created on Jun 28, 2016
 
 Runs retrain neural network for recognition
 
 @author: Levan Tsinadze
-'''
+"""
 
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
+from cnn.flomen.cnn_files import training_file
 from cnn.transfer.recognizer_interface import image_recognizer
-from cnn_files import training_file
 
 
 if __name__ == '__main__':

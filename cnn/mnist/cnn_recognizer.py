@@ -1,8 +1,12 @@
-'''
+"""
 Created on Jun 16, 2016
-
+Network layers and parameters
 @author: Levan Tsinadze
-'''
+"""
+
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
 
 from cnn.mnist.cnn_files import parameters_file
 from cnn.mnist.cnn_input_reader import read_input_file
@@ -105,14 +109,14 @@ class image_recognizer:
     image_directory = tr_files.get_to_recognize_file()
             
     with tf.Session() as sess:
-      print 'Start session'
+      print('Start session')
       # Initialize variables
       saver.restore(sess, model_path)
-      print "Model restored from file: %s" % model_path
+      print("Model restored from file: %s" % model_path)
       image_rec = read_input_file(image_directory)
       # Recognize image
       resp_dgt = sess.run(recognize_image, feed_dict={self.x: image_rec,
                                         self.keep_prob: 1})
-      print "Recognized image:", resp_dgt[0]
+      print("Recognized image:", resp_dgt[0])
     
     return resp_dgt[0]

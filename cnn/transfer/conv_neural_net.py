@@ -1,7 +1,7 @@
 """
 Created on Jul 3, 2016
 
-Runs neural network for recognition
+Model of neural network for image recognition
 
 @author: Levan Tsinadze
 """

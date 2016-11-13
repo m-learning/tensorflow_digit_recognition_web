@@ -31,11 +31,11 @@ def retrieve_args(argument_flags, tr_files):
                                       file_utils.WEIGHTS_FILE)
     output_labels = tr_files.join_path(output_graph,
                                        file_utils.LABELS_FILE)
-    print('Output graph path was set - ' , output_graph)
-    print('Output labels path was set - ' , output_labels)
   else:
     output_graph = tr_files.get_or_init_files_path()  # Where to save the trained graph
     output_labels = tr_files.get_or_init_labels_path()  # Where to save the trained graph's labels
+  print('Output graph path was set as - ' , output_graph)
+  print('Output labels path was set as - ' , output_labels)
     
   host_nm = argument_flags.host
   port_nm = argument_flags.port     

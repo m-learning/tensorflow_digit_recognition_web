@@ -38,7 +38,7 @@ class image_recognizer:
   
   def __init__(self, tr_file):
     self.tr_file = tr_file
-    self.labels_path = flags.output_graph
+    self.labels_path = flags.output_labels
     self.model_path = flags.output_graph
 
   def create_graph(self):
@@ -198,7 +198,7 @@ class image_recognizer:
       answer = self.recognize_image_quietly(image_data)
     else:
       answer = {}
-    
+      
     return answer
   
   def recognize_image_by_data(self, image_data):
