@@ -44,19 +44,19 @@ body {
             var form = document.getElementById('file-uploader-form');
             var button = document.getElementById('recognize-button')
             var input = document.getElementById('input-file')
-            button.addEventListener('click', function(){
+            button.addEventListener('click', function() {
                 fileUploader()
             })
-//             input.addEventListener('keyup', function(e) {
-//                 if (e.keyCode == 13) {
-//                     recognizeImage()
-//                 }
-//             })
+            //             input.addEventListener('keyup', function(e) {
+            //                 if (e.keyCode == 13) {
+            //                     recognizeImage()
+            //                 }
+            //             })
             var resultDiv = document.getElementById("result-div")
             var previewDiv = document.getElementById('preview-div')
 
             function recognizeImage(formData) {
-                
+
                 previewDiv.innerHTML = ''
 
                 resultDiv.innerHTML = '<h1>Loading ... </h1>'
@@ -119,9 +119,9 @@ body {
                 }
                 xhr.send(formData)
             }
-            
-            var fileUploader = function(){
-                
+
+            var fileUploader = function() {
+
                 var files = input.files
                 var formData = new FormData()
                 for (var i = 0; i < files.length; i++) {
@@ -131,7 +131,7 @@ body {
                     if (!file.type.match('image.*')) {
                         continue;
                     }
-                    
+
                     var img = new Image()
                     img.onload = function() {
                         img.width = Math.min(img.width, 800)
@@ -140,7 +140,6 @@ body {
                     img.onerror = function() {
                         previewDiv.innerHTML = '<h1>Could not load image</h1>'
                     }
-                    console.log(file)
                     img.src = URL.createObjectURL(file)
 
                     // Add the file to the request.
@@ -150,11 +149,10 @@ body {
             }
 
             form.onsubmit = function(event) {
-                
+
                 event.preventDefault()
                 fileUploader()
             }
-            console.log(form)
         })()
     </script>
 </body>
