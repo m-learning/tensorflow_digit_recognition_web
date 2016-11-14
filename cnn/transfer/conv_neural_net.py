@@ -33,16 +33,16 @@ def init_softmax_tensor(sess):
     softmax_tensor = sess.graph.get_tensor_by_name(FINAL_RESULTS)
     
 def init_labels(labels_path):
-    """Initializes labels array
-      Args:
-        labels_path - path to labels file
-    """
-    
-    if label_array is None:
-      global label_array
-      f = open(labels_path, 'rb')
-      lines = f.readlines()
-      label_array = [str(w).replace("\n", "") for w in lines]
+  """Initializes labels array
+    Args:
+      labels_path - path to labels file
+  """
+  
+  if label_array is None:
+    global label_array
+    f = open(labels_path, 'rb')
+    lines = f.readlines()
+    label_array = [str(w).replace("\n", "") for w in lines]
 
 class conv_net(object):
   """Image recognizer class through Inception-V3 model"""

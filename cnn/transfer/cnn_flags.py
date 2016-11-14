@@ -40,7 +40,7 @@ def retrieve_args(argument_flags, tr_files):
   host_nm = argument_flags.host
   port_nm = argument_flags.port     
 
-def parse_and_retrieve(tr_files=None):
+def parse_and_retrieve(cnn_files_const=None):
   """Retrieves command line arguments"""
   
   arg_parser = argparse.ArgumentParser()
@@ -56,4 +56,8 @@ def parse_and_retrieve(tr_files=None):
                           default=8080,
                           help='Port number for service.')
   (argument_flags, _) = arg_parser.parse_known_args()
+  if cnn_files_const is not None:
+    tr_files = cnn_files_const()
+  else:
+    tr_files = None
   retrieve_args(argument_flags, tr_files)

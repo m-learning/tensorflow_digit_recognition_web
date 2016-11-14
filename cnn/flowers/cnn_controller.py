@@ -8,10 +8,11 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
-from flask import Flask, request, render_template, json
+from flask import Flask, request
 
 from cnn.flowers.cnn_files import training_file
 from cnn.transfer import cnn_flags as flags
+from cnn.transfer import cnn_interface_controller as controller
 from cnn.transfer.recognizer_interface import image_recognizer
 from cnn.utils import cnn_controller_utils as controller_utils
 import tensorflow as tf
@@ -19,52 +20,32 @@ import tensorflow as tf
 
 app = Flask(__name__)
 
-class cnn_server(object):
-  """Controller for image recognition"""
-  
-  def cnn_run(self, request):
-    """Runs recognizer
-      Args:
-        request - HTTP request
-      Return:
-        resp - recognition response
-    """
-      
-    img_url = request.data
-    dirs_fls.get_file_to_recognize(img_url)
-    answer = img_recognizer.recognize_image_by_sess()
-    anwer_txt = {}
-    for key, value in answer.iteritems():
-        anwer_txt[key] = str(value)
-    resp = json.dumps(anwer_txt)
-    
-    return resp
+@app.route('/files', methods=['GET', 'POST'])
+def cnn_recognizeby_file():
+  """Web method for recognition
+    Return:
+      resp - recognition response
+  """
 
-# Web method for recognition
+  resp = controller.recognize_uploaded_image(request, img_recognizer)
+  return resp  
+
 @app.route('/', methods=['GET', 'POST'])
 def cnn_recognize():
   """Web method for recognition
     Return:
       resp - recognition response
   """
-      
-  print(img_recognizer)
-  if request.method == 'POST':
-      srv = cnn_server()
-      resp = srv.cnn_run(request)
-  elif request.method == 'GET':
-      resp = render_template("index.html")
   
+  resp = controller.recognize_url_image(request, img_recognizer)
   return resp
 
 # Runs controller for image recognition        
 if __name__ == "__main__":
   
-  global dirs_fls
   global img_recognizer
-  dirs_fls = training_file()
-  flags.parse_and_retrieve(dirs_fls)
-  img_recognizer = image_recognizer(dirs_fls)
+  flags.parse_and_retrieve(training_file)
+  img_recognizer = image_recognizer(training_file)
   img_recognizer.create_graph()
   # Retrieves host and port from arguments
   (host_nm, port_nm) = controller_utils.get_host_and_port()

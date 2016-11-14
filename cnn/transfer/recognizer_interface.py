@@ -36,10 +36,14 @@ resizer = pillow_resizer(299)
 class image_recognizer:
   """Recognizes image thru trained neural networks"""
   
-  def __init__(self, tr_file):
-    self.tr_file = tr_file
+  def __init__(self, cnn_files_const):
+    self._tr_file = cnn_files_const()
     self.labels_path = flags.output_labels
     self.model_path = flags.output_graph
+  
+  @property 
+  def cnn_files(self):
+    return self._tr_file
 
   def create_graph(self):
     """Creates a graph from saved GraphDef file and returns a saver."""
@@ -73,13 +77,13 @@ class image_recognizer:
     """
     
     if arg_path == None:
-      test_image_path = self.tr_file.get_or_init_test_path()
+      test_image_path = self._tr_file.get_or_init_test_path()
       if not tf.gfile.Exists(test_image_path):
-          self.tr_file.get_or_init_test_path()
+          self._tr_file.get_or_init_test_path()
           tf.logging.fatal('File does not exist %s', test_image_path)
           return None
     else:
-      test_dir = self.tr_file.get_or_init_test_dir()
+      test_dir = self._tr_file.get_or_init_test_dir()
       test_image_path = os.path.join(test_dir, arg_path)
     # Reads image to recognize
     image_data = tf.gfile.FastGFile(test_image_path, 'rb').read()

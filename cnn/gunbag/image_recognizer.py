@@ -18,5 +18,5 @@ if __name__ == '__main__':
   """Starts image recognizer service"""
   
   dirs_files = training_file()
-  img_recognizer = image_recognizer(dirs_files)
-  img_recognizer.run_inference_on_image()
+  recognizer = image_recognizer(dirs_files)
+  recognizer.run_inference_on_image()
