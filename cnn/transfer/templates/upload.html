@@ -13,17 +13,148 @@ body {
 </head>
 <body>
 	<table style="width: 80%; margin: auto;">
+		<forms id="file-uploader-form" action="/files" method="post"
+			enctype="multipart/form-data">
 		<tr>
-			<td>
-				<form action="/files" method="post" enctype="multipart/form-data">
-					<p>
-						<input type="file" name="image-rec" accept="image/*" />
-					</p>
-					<div>
-						<input type="submit" value="upload" />
-					</div>
-				</form>
+			<td style="text-align: right; width: 100px;">Image File:</td>
+			<td><input type="file" name="image-rec" id="input-file"
+				style="width: 100%" /></td>
+		</tr>
+		<tr>
+			<td style="text-align: right; width: 100px; padding: 10px;">
+				<button type="submit" id="recognize-button">Recognize</button>
+			</td>
+			<td></td>
+		</tr>
+		</forms>
+		<tr>
+			<td colspan="2" style="vertical-align: top;">
+				<div id="result-div" style="margin-left: 30px;"></div>
 			</td>
 		</tr>
+		<tr>
+			<td colspan="2" style="vertical-align: top; text-align: center;">
+				<div id="preview-div"></div>
+			</td>
+		</tr>
+
 	</table>
+	<script type="text/javascript">
+        (function() {
+            var form = document.getElementById('file-uploader-form');
+            var button = document.getElementById('recognize-button')
+            var input = document.getElementById('input-file')
+            button.addEventListener('click', function(){
+                fileUploader()
+            })
+//             input.addEventListener('keyup', function(e) {
+//                 if (e.keyCode == 13) {
+//                     recognizeImage()
+//                 }
+//             })
+            var resultDiv = document.getElementById("result-div")
+            var previewDiv = document.getElementById('preview-div')
+
+            function recognizeImage(formData) {
+                
+                previewDiv.innerHTML = ''
+
+                resultDiv.innerHTML = '<h1>Loading ... </h1>'
+
+                var xhr = new XMLHttpRequest()
+                xhr.open('POST', '/files', true)
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        var answer = JSON.parse(xhr.responseText)
+                        var answerOrd = []
+                        var answerText
+                        var answerObj
+                        for ( var prop in answer) {
+                            answerText = answer[prop]
+                            if (answerText) {
+                                answerObj = {}
+                                answerObj['type'] = prop
+                                answerObj['score'] = parseFloat(answerText)
+                                answerOrd.push(answerObj)
+                            }
+                        }
+                        answerOrd.sort(function(a, b) {
+
+                            var reslt
+
+                            var a1st = -1 // negative value means left item should appear first
+                            var b1st = 1 // positive value means right item should appear first
+                            var equal = 0 // zero means objects are equal
+
+                            // compare your object's property values and determine their order
+                            if (a.score > b.score) {
+                                reslt = a1st
+                            } else if (a.score < b.score) {
+                                reslt = b1st
+                            } else {
+                                reslt = equal;
+                            }
+
+                            return reslt
+                        })
+                        var ansTxt = '<table>'
+                        answerOrd.forEach(function(elm) {
+                            ansTxt += '<tr>'
+                            ansTxt += '<td><b>'
+                            ansTxt += elm.type
+                            ansTxt += ':  '
+                            ansTxt += '</b></td>'
+                            ansTxt += '<td><b> (score = '
+                            ansTxt += elm.score
+                            ansTxt += ')</b></td>'
+                            ansTxt += '<td><div style="width:' + (elm.score * 600)
+                                    + 'px; background-color:#444; height: 20px;"></div></td>'
+                            ansTxt += '</tr>'
+                        })
+                        ansTxt += '</table>'
+                        resultDiv.innerHTML = ansTxt
+                    } else {
+                        resultDiv.innerHTML = '<h1>Could not recognize image</h1>'
+                    }
+                }
+                xhr.send(formData)
+            }
+            
+            var fileUploader = function(){
+                
+                var files = input.files
+                var formData = new FormData()
+                for (var i = 0; i < files.length; i++) {
+                    var file = files[i];
+
+                    // Check the file type.
+                    if (!file.type.match('image.*')) {
+                        continue;
+                    }
+                    
+                    var img = new Image()
+                    img.onload = function() {
+                        img.width = Math.min(img.width, 800)
+                        previewDiv.appendChild(img)
+                    }
+                    img.onerror = function() {
+                        previewDiv.innerHTML = '<h1>Could not load image</h1>'
+                    }
+                    console.log(file)
+                    img.src = URL.createObjectURL(file)
+
+                    // Add the file to the request.
+                    formData.append('image-rec', file, file.name);
+                }
+                recognizeImage(formData)
+            }
+
+            form.onsubmit = function(event) {
+                
+                event.preventDefault()
+                fileUploader()
+            }
+            console.log(form)
+        })()
+    </script>
 </body>
