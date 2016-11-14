@@ -52,7 +52,6 @@ if __name__ == "__main__":
   img_recognizer.create_graph()
   # Retrieves host and port from arguments
   (host_nm, port_nm) = controller_utils.get_host_and_port()
-  
   with tf.Session() as sess:
     img_recognizer.set_session(sess)
     # Binds server on host and port

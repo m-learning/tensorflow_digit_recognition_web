@@ -1,6 +1,6 @@
 """
 Created on Nov 13, 2016
-Flags for image recognition
+Flags for image recognition service
 @author: Levan Tsinadze
 """
 
