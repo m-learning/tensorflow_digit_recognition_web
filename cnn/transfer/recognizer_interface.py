@@ -19,6 +19,7 @@ from tensorflow.python.framework.errors import InvalidArgumentError
 from cnn.transfer import cnn_flags as flags
 from cnn.transfer.conv_neural_net import conv_net
 from cnn.utils.pillow_resizing import pillow_resizer
+from cnn.utils import image_utils as crop
 import tensorflow as tf
 
 
@@ -154,7 +155,11 @@ class image_recognizer:
     """
     
     im = Image.open(io.BytesIO(image_data))
-    img = resizer.resize_thumbnail(im)
+    if flags.box_images:
+      img_to_resize = crop.crop_image(im)
+    else:
+      img_to_resize = im
+    img = resizer.resize_thumbnail(img_to_resize)
     
     return img
   

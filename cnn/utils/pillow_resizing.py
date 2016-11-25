@@ -12,7 +12,7 @@ from resizeimage import resizeimage
 
 
 class pillow_resizer(object):
-  """Image resizing with image "Pillow" resize utilities"""
+  """Image resizing with "Pillow" resize utilities"""
   
   def __init__(self, height, width=None):
     self.height = height
