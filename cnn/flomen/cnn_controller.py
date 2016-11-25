@@ -14,7 +14,6 @@ from cnn.flomen.cnn_files import training_file
 from cnn.transfer import cnn_flags as flags
 from cnn.transfer import cnn_interface_controller as controller
 from cnn.transfer.recognizer_interface import image_recognizer
-from cnn.utils import cnn_controller_utils as controller_utils
 import tensorflow as tf
 
 
@@ -48,8 +47,7 @@ if __name__ == "__main__":
   img_recognizer = image_recognizer(training_file)
   img_recognizer.create_graph()
   # Retrieves host and port from arguments
-  (host_nm, port_nm) = controller_utils.get_host_and_port()
   with tf.Session() as sess:
     img_recognizer.set_session(sess)
     # Binds server on host and port
-    app.run(host=host_nm, port=port_nm, threaded=True)
+    app.run(host=flags.host_nm, port=flags.port_nm, threaded=True)

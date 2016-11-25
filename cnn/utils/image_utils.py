@@ -4,7 +4,11 @@ Utility module for image processing
 @author: Levan Tsinadze
 """
 
-def crop_image(self, im):
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
+def crop_image(im):
   """Document image croping"""
   
   [x, y] = im.size

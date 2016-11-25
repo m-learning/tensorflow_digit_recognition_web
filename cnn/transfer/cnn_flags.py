@@ -15,9 +15,9 @@ from cnn.utils import file_utils
 
 output_graph = None  # Where to save the trained graph
 output_labels = None  # Where to save the trained graph's labels
-host_nm = None
-port_nm = None
-box_images = None
+host_nm = None  # Host name
+port_nm = None  # Port number
+box_images = None  # Crop images
 
 def retrieve_args(argument_flags, tr_files):
   """Adds configuration from command line arguments

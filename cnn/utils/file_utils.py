@@ -11,10 +11,9 @@ from __future__ import division
 from __future__ import print_function
 
 import os
+import requests
 import shutil
 import types
-
-import requests
 
 
 # General parent directory for files

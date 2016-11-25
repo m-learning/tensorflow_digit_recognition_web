@@ -15,7 +15,7 @@ from cnn.transfer.recognizer_interface import image_recognizer
 
 
 if __name__ == '__main__':
-  """Starts image recognizer service"""
+  """Starts image recognition service"""
   
   dirs_files = training_file()
   img_recognizer = image_recognizer(dirs_files)

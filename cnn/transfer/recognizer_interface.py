@@ -146,6 +146,21 @@ class image_recognizer:
     
     return answer
   
+  def crop_image(self, im):
+    """Crops passed image if required
+      Args:
+        im - image to crop
+      Returns:
+        cropped_im - cropped image
+    """
+    
+    if flags.box_images:
+      cropped_im = crop.crop_image(im)
+    else:
+      cropped_im = im
+      
+    return cropped_im
+  
   def resize_image(self, image_data):
     """Resizes image for recognition
       Args:
@@ -155,11 +170,8 @@ class image_recognizer:
     """
     
     im = Image.open(io.BytesIO(image_data))
-    if flags.box_images:
-      img_to_resize = crop.crop_image(im)
-    else:
-      img_to_resize = im
-    img = resizer.resize_thumbnail(img_to_resize)
+    cropped_im = self.crop_image(im)
+    img = resizer.resize_thumbnail(cropped_im)
     
     return img
   
