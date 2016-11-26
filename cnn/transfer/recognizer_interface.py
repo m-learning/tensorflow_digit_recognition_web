@@ -135,7 +135,7 @@ class image_recognizer:
     """Converts image to JPG and recognizes with exception
       Args: 
         image_data - image
-      Return:
+      Returns:
         answer - prediction result
     """
     im = Image.open(io.BytesIO(image_data))
@@ -193,7 +193,7 @@ class image_recognizer:
     """Recognizes image with exception
       Args: 
         image_data - image
-      Return:
+      Returns:
         answer - prediction result
     """
     

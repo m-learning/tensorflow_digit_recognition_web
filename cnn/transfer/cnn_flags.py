@@ -18,6 +18,7 @@ output_labels = None  # Where to save the trained graph's labels
 host_nm = None  # Host name
 port_nm = None  # Port number
 box_images = None  # Crop images
+log_image_path = None
 
 def retrieve_args(argument_flags, tr_files):
   """Adds configuration from command line arguments
@@ -25,7 +26,7 @@ def retrieve_args(argument_flags, tr_files):
      arg_parser - runtime parameters parser
   """
     
-  global output_graph, output_labels, host_nm, port_nm, box_images
+  global output_graph, output_labels, host_nm, port_nm, box_images, log_image_path
     
   if argument_flags.output_graph:
     output_graph = tr_files.join_path(argument_flags.output_graph,
@@ -42,6 +43,11 @@ def retrieve_args(argument_flags, tr_files):
     box_images = argument_flags.box_images
   else:
     box_images = False
+  
+  if box_images and argument_flags.log_image_path:
+    log_image_path = argument_flags.log_image_path
+  else:
+    log_image_path = None
     
   host_nm = argument_flags.host
   port_nm = argument_flags.port     
@@ -69,6 +75,9 @@ def parse_and_retrieve(cnn_files_const=None):
                           dest='box_images',
                           action='store_false',
                           help='Do not Crop images.')
+  arg_parser.add_argument('--log_image_path',
+                          type=str,
+                          help='Path to write cropped and resized images.')
   (argument_flags, _) = arg_parser.parse_known_args()
   if cnn_files_const is not None:
     tr_files = cnn_files_const()

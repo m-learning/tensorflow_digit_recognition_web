@@ -45,7 +45,7 @@ def init_labels(labels_path):
     label_array = [str(w).replace("\n", "") for w in lines]
 
 class conv_net(object):
-  """Image recognizer class through Inception-V3 network model"""
+  """Image recognizer through Inception-V3 network model"""
   
   def __init__(self, sess, labels_path):
     self.sess = sess
@@ -53,7 +53,7 @@ class conv_net(object):
     
     
   def recognize_image(self, image_data):
-    """Runs image recognizer
+    """Runs image recognition
       Args:
         image_data - image parameters
       Returns:

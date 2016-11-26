@@ -8,13 +8,22 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
+from cnn.transfer import cnn_flags as flags
+
+def write_image(img):
+  """Writes cropped image
+    Args:
+      img - cropped image
+  """
+  if flags.log_image_path:
+    img.save(flags.log_image_path)
 
 def crop_image(im):
   """Document image croping
     Args:
       im - image to resize
     Returns:
-      croped_image - cropped image
+      cropped_image - cropped image
   """
   
   [x, y] = im.size
@@ -23,6 +32,8 @@ def crop_image(im):
   right = x
   bottom = (y + y / 2.6) / 2
   box = [left, top, right, bottom]
-  croped_image = im.crop(box)
+  cropped_image = im.crop(box)
+  write_image(cropped_image)
+  im.close()
   
-  return croped_image 
+  return cropped_image 

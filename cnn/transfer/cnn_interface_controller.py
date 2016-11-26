@@ -12,7 +12,7 @@ from flask import render_template, json
 
 
 class cnn_server(object):
-  """Controller for image recognition"""
+  """Abstract controller for image recognition"""
   
   def __init__(self, img_recognizer):
     self.img_recognizer = img_recognizer
