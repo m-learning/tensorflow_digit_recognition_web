@@ -1,7 +1,7 @@
 """
 Created on Jul 6, 2016
 
-Utility class for evaluation files and directories
+Utility module for evaluation files and directories
 
 @author: Levan Tsinadze
 """
@@ -26,13 +26,31 @@ LABELS_FILE = 'output_labels.txt'
 TEST_IMAGES_DIR = 'test_images'
 TEST_IMAGE_NAME = 'test_image'
 
+def ensure_dir_exists(dir_name):
+  """Makes sure the folder exists on disk.
+
+  Args:
+    dir_name: Path string to the folder we want to create.
+  """
+  if not os.path.exists(dir_name):
+    os.makedirs(dir_name)
+    
+def join(path1, path2):
+  """Joins passed passes
+    Args:
+      path1 - first (parent) path
+      path2 - second (child) path
+    Returns:
+      joined pathFS
+  """
+  return os.path.join(path1, path2)
+
 class files_and_path_utils(object):
   """Utility class for file management"""
   
   def __init__(self, parent_cnn_dir):
     self.path_to_cnn_directory = os.path.join(DATAS_DIR_NAME, parent_cnn_dir)
     
-  # Joins path from method
   def join_path(self, path_inst, *other_path):
     """Joins passed file paths
       Args:
@@ -51,8 +69,11 @@ class files_and_path_utils(object):
     
     return result
   
-  # Gets current directory of script
   def get_current(self):
+    """Gets current directory of script
+      Returns:
+        current_dir - project data files parent directoryFS
+    """
       
     current_dir = os.path.dirname(os.path.realpath(__file__))
     
@@ -63,7 +84,6 @@ class files_and_path_utils(object):
     return current_dir
   
 
-# Utility class for training and testing files and directories
 class cnn_file_utils(files_and_path_utils):
   """Utility class for network files management"""
   

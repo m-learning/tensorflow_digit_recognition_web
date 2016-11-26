@@ -9,6 +9,9 @@ from __future__ import division
 from __future__ import print_function
 
 from cnn.transfer import cnn_flags as flags
+from cnn.utils import file_utils as files
+
+CROPPED_IMAGE_FILE = 'cropped_image.jpg'
 
 def write_image(img):
   """Writes cropped image
@@ -16,7 +19,9 @@ def write_image(img):
       img - cropped image
   """
   if flags.log_image_path:
-    img.save(flags.log_image_path)
+    files.ensure_dir_exists(flags.log_image_path)
+    file_path = files.join(flags.log_image_path, CROPPED_IMAGE_FILE)
+    img.save(file_path)
 
 def crop_image(im):
   """Document image croping

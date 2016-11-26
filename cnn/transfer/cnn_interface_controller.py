@@ -1,6 +1,8 @@
 """
 Created on Nov 14, 2016
+
 Abstract controller module for recognition
+
 @author: Levan Tsinadze
 """
 

@@ -1,6 +1,8 @@
 """
 Created on Oct 29, 2016
 
+Image resizing utility module
+
 @author: Levan Tsinadze
 """
 

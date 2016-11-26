@@ -34,7 +34,7 @@ IMAGE_SAVE_FORMAT = 'jpeg'
 resizer = pillow_resizer(299)
 
 class image_recognizer:
-  """Recognizes image thru trained neural networks"""
+  """Recognizes image through trained neural networks"""
   
   def __init__(self, cnn_files_const):
     self._tr_file = cnn_files_const()
