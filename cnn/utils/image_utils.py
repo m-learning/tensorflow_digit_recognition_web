@@ -10,7 +10,12 @@ from __future__ import print_function
 
 
 def crop_image(im):
-  """Document image croping"""
+  """Document image croping
+    Args:
+      im - image to resize
+    Returns:
+      croped_image - cropped image
+  """
   
   [x, y] = im.size
   left = (x - x / 5) / 2

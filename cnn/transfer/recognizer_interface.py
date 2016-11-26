@@ -13,13 +13,12 @@ from __future__ import print_function
 import io
 import os
 import sys
-
 from tensorflow.python.framework.errors import InvalidArgumentError
 
 from cnn.transfer import cnn_flags as flags
 from cnn.transfer.conv_neural_net import conv_net
-from cnn.utils.pillow_resizing import pillow_resizer
 from cnn.utils import image_utils as crop
+from cnn.utils.pillow_resizing import pillow_resizer
 import tensorflow as tf
 
 
@@ -232,7 +231,6 @@ class image_recognizer:
     
     with tf.Session() as sess:
       cn_net = conv_net(sess, self.labels_path)
-      print(cn_net)
       answer = cn_net.recognize_image(image_data)
     
     return answer

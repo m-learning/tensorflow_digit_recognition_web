@@ -26,7 +26,7 @@ def cnn_recognizeby_file():
       recognition response
   """
 
-  return controller.recognize_uploaded_image(request, img_recognizer)
+  return controller.recognize_uploaded_image(request, recognizer)
 
 @app.route('/', methods=['GET', 'POST'])
 def cnn_recognize():
@@ -35,17 +35,17 @@ def cnn_recognize():
       recognition response
   """
   
-  return controller.recognize_url_image(request, img_recognizer)
+  return controller.recognize_url_image(request, recognizer)
 
 if __name__ == "__main__":
   """Runs controller for image recognition"""
   
-  global img_recognizer
+  global recognizer
   flags.parse_and_retrieve(training_file)
-  img_recognizer = image_recognizer(training_file)
-  img_recognizer.create_graph()
+  recognizer = image_recognizer(training_file)
+  recognizer.create_graph()
   # Retrieves host and port from arguments
   with tf.Session() as sess:
-    img_recognizer.set_session(sess)
+    recognizer.set_session(sess)
     # Binds server on host and port
     app.run(host=flags.host_nm, port=flags.port_nm, threaded=True)

@@ -86,7 +86,6 @@ def recognize_image(request, img_recognizer,
       Returns:
         resp - HTTP response for image recognition
   """
-  print(img_recognizer)
   if request.method == 'POST':
       srv = cnn_server(img_recognizer)
       resp = srv.cnn_run_binary(request, uploaded=uploaded)
