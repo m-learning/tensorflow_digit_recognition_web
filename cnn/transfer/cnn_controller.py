@@ -44,7 +44,6 @@ if __name__ == "__main__":
   flags.parse_and_retrieve(training_file)
   recognizer = image_recognizer(training_file)
   recognizer.create_graph()
-  # Retrieves host and port from arguments
   with tf.Session() as sess:
     recognizer.set_session(sess)
     # Binds server on host and port

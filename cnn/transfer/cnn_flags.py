@@ -34,8 +34,8 @@ def retrieve_args(argument_flags, tr_files):
     output_labels = tr_files.join_path(argument_flags.output_graph,
                                        file_utils.LABELS_FILE)
   else:
-    output_graph = tr_files.get_or_init_files_path()  # Where to save the trained graph
-    output_labels = tr_files.get_or_init_labels_path()  # Where to save the trained graph's labels
+    output_graph = tr_files.get_or_init_files_path()
+    output_labels = tr_files.get_or_init_labels_path()
   print('Output graph path was set as - ' , output_graph)
   print('Output labels path was set as - ' , output_labels)
   

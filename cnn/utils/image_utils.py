@@ -38,7 +38,6 @@ def crop_image(im):
   bottom = (y + y / 2.6) / 2
   box = [left, top, right, bottom]
   cropped_image = im.crop(box)
-  write_image(cropped_image)
   im.close()
   
   return cropped_image 

@@ -171,6 +171,7 @@ class image_recognizer:
     im = Image.open(io.BytesIO(image_data))
     cropped_im = self.crop_image(im)
     img = resizer.resize_full(cropped_im)
+    crop.write_image(img)
     
     return img
   

@@ -16,9 +16,9 @@ from flask import render_template, json
 class cnn_server(object):
   """Abstract controller for image recognition"""
   
-  def __init__(self, img_recognizer):
-    self.img_recognizer = img_recognizer
-    self.cnn_fles = img_recognizer.cnn_files
+  def __init__(self, recognizer):
+    self.recognizer = recognizer
+    self.cnn_fles = recognizer.cnn_files
   
   def recognize_by_image_data(self, image_data):
     """Recognizes binary image
@@ -28,7 +28,7 @@ class cnn_server(object):
         resp - recognition response
     """
     
-    answer = self.img_recognizer.recognize_image_by_sess(image_data)
+    answer = self.recognizer.recognize_image_by_sess(image_data)
     anwer_txt = {}
     for key, value in answer.iteritems():
         anwer_txt[key] = str(value)
@@ -69,7 +69,7 @@ class cnn_server(object):
       
     img_url = request.data
     self.cnn_fles.get_file_to_recognize(img_url)
-    answer = self.img_recognizer.recognize_image_by_sess()
+    answer = self.recognizer.recognize_image_by_sess()
     anwer_txt = {}
     for key, value in answer.iteritems():
         anwer_txt[key] = str(value)
@@ -77,44 +77,44 @@ class cnn_server(object):
     
     return resp
   
-def recognize_image(request, img_recognizer,
+def recognize_image(request, recognizer,
                     template_name="index.html", uploaded=False):
   """Image recognition request
       Args:
         request - HTTP request
-        img_recognizer - interface for image recognition
+        recognizer - interface for image recognition
         template_name - template to render for GET request
         uploaded - is image uploaded or should be requested
       Returns:
         resp - HTTP response for image recognition
   """
   if request.method == 'POST':
-      srv = cnn_server(img_recognizer)
+      srv = cnn_server(recognizer)
       resp = srv.cnn_run_binary(request, uploaded=uploaded)
   elif request.method == 'GET':
       resp = render_template(template_name)
   
   return resp
 
-def recognize_uploaded_image(request, img_recognizer):
+def recognize_uploaded_image(request, recognizer):
   """Image recognition request for file upload
       Args:
         request - HTTP request
-        img_recognizer - interface for image recognition
+        recognizer - interface for image recognition
       Returns:
         resp - HTTP response for image recognition
   """
-  return recognize_image(request, img_recognizer,
+  return recognize_image(request, recognizer,
                          template_name='upload.html',
                          uploaded=True)
   
-def recognize_url_image(request, img_recognizer):
+def recognize_url_image(request, recognizer):
   """Image recognition request for file URL address
       Args:
         request - HTTP request
-        img_recognizer - interface for image recognition
+        recognizer - interface for image recognition
       Returns:
         resp - HTTP response for image recognition
   """
-  return recognize_image(request, img_recognizer)  
+  return recognize_image(request, recognizer)  
   
