@@ -22,22 +22,20 @@ app = Flask(__name__)
 @app.route('/files', methods=['GET', 'POST'])
 def cnn_recognizeby_file():
   """Web method for recognition
-    Return:
-      resp - recognition response
+    Returns:
+      recognition response
   """
 
-  resp = controller.recognize_uploaded_image(request, img_recognizer)
-  return resp  
+  return controller.recognize_uploaded_image(request, img_recognizer)
 
 @app.route('/', methods=['GET', 'POST'])
 def cnn_recognize():
   """Web method for recognition
-    Return:
-      resp - recognition response
+    Returns:
+      recognition response
   """
   
-  resp = controller.recognize_url_image(request, img_recognizer)
-  return resp
+  return controller.recognize_url_image(request, img_recognizer)
 
 if __name__ == "__main__":
   """Runs controller for image recognition"""

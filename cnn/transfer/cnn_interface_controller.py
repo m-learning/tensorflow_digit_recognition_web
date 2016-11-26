@@ -38,7 +38,7 @@ class cnn_server(object):
     """Runs recognizer
       Args:
         request - HTTP request
-      Return:
+      Returns:
         resp - recognition response
     """
     
@@ -61,7 +61,7 @@ class cnn_server(object):
     """Runs recognizer
       Args:
         request - HTTP request
-      Return:
+      Returns:
         resp - recognition response
     """
       

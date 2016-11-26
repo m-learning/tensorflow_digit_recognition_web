@@ -40,3 +40,34 @@ class pillow_resizer(object):
         resized image
     """
     return resizeimage.resize_cover(img, self.size)
+  
+  def resize_contain(self, img):
+    """Resizes passed image with "contain" method
+      Args:
+        img - image to resize
+      Returns:
+        resized image
+    """
+    
+    resized_image = resizeimage.resize_contain(img, self.size)
+    img.close()
+    
+    return resized_image
+    
+  
+  def resize_full(self, img):
+    """Resizes passed image with "thumbnail" and "height" method
+      Args: 
+        img = image
+      Returns:
+        resized image
+    """
+    
+    resized_img = self.resize_thumbnail(img)
+    (width, height) = resized_img.size
+    if height != self.height or width != self.width:
+      full_resized_img = self.resize_contain(resized_img)
+    else:
+      full_resized_img = resized_img
+    
+    return  full_resized_img
