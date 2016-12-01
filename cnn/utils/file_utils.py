@@ -94,8 +94,11 @@ class cnn_file_utils(files_and_path_utils):
   def get_data_general_directory(self):
     return self.join_path(self.get_current, self.path_to_cnn_directory)
 
-  # Gets or creates directory for trained parameters
   def init_files_directory(self):
+    """Gets or creates directory for trained parameters
+      Args:
+        path of trained parameters
+    """
       
     current_dir = self.join_path(self.get_data_general_directory, PATH_FOR_PARAMETERS)
     
@@ -104,12 +107,18 @@ class cnn_file_utils(files_and_path_utils):
     
     return current_dir
 
-  # Initializes trained files path
   def get_or_init_files_path(self):
+    """Initializes trained files path
+      Returns:
+        trained files path
+    """
     return self.join_path(self.init_files_directory, WEIGHTS_FILE)
       
-  # Gets training data  / parameters directory path
   def get_or_init_labels_path(self):
+    """Gets training data  / parameters directory path
+      Returns:
+        training data / parameters directory path
+    """
     return self.join_path(self.init_files_directory, LABELS_FILE)
 
   def get_or_init_test_dir(self):

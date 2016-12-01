@@ -18,7 +18,7 @@ output_labels = None  # Where to save the trained graph's labels
 host_nm = None  # Host name
 port_nm = None  # Port number
 box_images = None  # Crop images
-log_image_path = None
+log_image_path = None  # Path to log images for recognition
 
 def retrieve_args(argument_flags, tr_files):
   """Adds configuration from command line arguments

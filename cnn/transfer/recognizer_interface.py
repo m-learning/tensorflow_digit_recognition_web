@@ -48,7 +48,6 @@ class image_recognizer:
   def create_graph(self):
     """Creates a graph from saved GraphDef file and returns a saver."""
     
-    # Creates graph from saved graph_def.pb.
     with tf.gfile.FastGFile(self.model_path, 'rb') as f:
         graph_def = tf.GraphDef()
         graph_def.ParseFromString(f.read())
@@ -138,6 +137,7 @@ class image_recognizer:
       Returns:
         answer - prediction result
     """
+    
     im = Image.open(io.BytesIO(image_data))
     jpg_im = im.convert(IMAGE_RGB_FORMAT)
     img = resizer.resize_thumbnail(jpg_im)

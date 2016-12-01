@@ -11,6 +11,7 @@ from __future__ import print_function
 from cnn.transfer import cnn_flags as flags
 from cnn.utils import file_utils as files
 
+
 CROPPED_IMAGE_FILE = 'cropped_image.jpg'
 
 def write_image(img):
@@ -32,10 +33,10 @@ def crop_image(im):
   """
   
   [x, y] = im.size
-  left = (x - x / 5) / 2
-  top = (y - y / 3.5) / 2
-  right = x
-  bottom = (y + y / 2.6) / 2
+  left = (x - x / 10) / 2
+  top = (y - y / 20) / 2
+  right = (x + x / 1.5) / 2
+  bottom = (y + y / 4) / 2
   box = [left, top, right, bottom]
   cropped_image = im.crop(box)
   im.close()

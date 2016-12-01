@@ -46,5 +46,4 @@ if __name__ == "__main__":
   recognizer.create_graph()
   with tf.Session() as sess:
     recognizer.set_session(sess)
-    # Binds server on host and port
     app.run(host=flags.host_nm, port=flags.port_nm, threaded=True)
