@@ -18,6 +18,7 @@ from tensorflow.python.framework.errors import InvalidArgumentError
 from cnn.transfer import cnn_flags as flags
 from cnn.transfer.conv_neural_net import conv_net
 from cnn.utils import image_utils as crop
+from cnn.utils import color_utils as color
 from cnn.utils.pillow_resizing import pillow_resizer
 import tensorflow as tf
 
@@ -171,9 +172,10 @@ class image_recognizer:
     im = Image.open(io.BytesIO(image_data))
     cropped_im = self.crop_image(im)
     img = resizer.resize_full(cropped_im)
-    crop.write_image(img)
+    mdf = color.sharpen_edges(img)
+    crop.write_image(mdf)
     
-    return img
+    return mdf
   
   def resize_and_recognize(self, image_data):
     """Resizes image and recognizes

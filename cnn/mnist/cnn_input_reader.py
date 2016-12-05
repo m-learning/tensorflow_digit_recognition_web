@@ -15,8 +15,14 @@ IMAGE_SIZE = 28
 n_input = 784
 
 
-# Reads image file to tensor
 def read_input_file(image_file_path):
+	"""Reads image file to tensor
+		Args:
+			image_file_path - image path
+		Returns:
+			img_array - array of image pixels
+	"""
+	
 	img = Image.open(image_file_path)
 	img = img.convert("L")  # convert into greyscale
 	img = img.point(lambda i: i < 150 and 255)  # better black and white
@@ -26,4 +32,6 @@ def read_input_file(image_file_path):
 	img.save(image_modified_file)
 	array = np.asarray(img.getdata(), dtype=np.float32)
 	array /= 255.0
-	return array.reshape(1, n_input)
+	img_array = array.reshape(1, n_input)
+	
+	return img_array

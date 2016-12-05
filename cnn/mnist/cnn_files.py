@@ -21,14 +21,17 @@ PATH_TO_RECOGNIZE = 'to_recognize'
 WEIGHTS_FILE = 'conv_model.ckpt'
 TO_RECOGNIZE_FILE = 'torecogn'
 
-# File manager
 class parameters_file(files_and_path_utils):
+  """Files and directories manager"""
   
   def __init__(self):
     super(parameters_file, self).__init__('mnist')
   
-  # Gets directory path for images to recognize
   def get_to_recognize_directory(self):
+    """Gets directory path for images to recognize
+      Returns:
+        current_dir - directory path
+    """
       
     current_dir = self.join_path(self.get_current, self.path_to_cnn_directory, PATH_TO_RECOGNIZE)
     
@@ -37,11 +40,17 @@ class parameters_file(files_and_path_utils):
     
     return current_dir   
   
-  # Gets file path for images to recognize
   def get_to_recognize_file(self):
+    """Gets file path for images to recognize
+      Returns:
+        file path
+    """
     return self.join_path(self.get_to_recognize_directory, TO_RECOGNIZE_FILE)
   
-  # Gets training data  / parameters directory path
   def get_files_directory(self):
+    """Gets training data  / parameters directory path
+      Returns:
+        training data and parameters path
+    """
     return self.join_path(self.get_current, self.path_to_cnn_directory,
                                PATH_FOR_PARAMETERS, WEIGHTS_FILE)

@@ -25,7 +25,7 @@ class cnn_server:
     """Runs recognizer
       Args:
         request - HTTP request
-      Return:
+      Returns:
         resp - recognition response
     """
       
@@ -43,7 +43,7 @@ class cnn_server:
 @app.route('/', methods=['GET', 'POST'])
 def cnn_recognize():
   """Web method for recognition
-    Return:
+    Returns:
       resp - recognition response
   """
       
@@ -57,7 +57,7 @@ def cnn_recognize():
         
 def get_host_info():
   """Retrieves host name from arguments
-    Return:
+    Returns:
       host_nm - host address of recognizer
   """
     
@@ -70,7 +70,7 @@ def get_host_info():
 
 def get_port_info():
   """Retrieves port number from arguments
-    Return:
+    Returns:
       host_nm - port number of server
   """
     
@@ -83,12 +83,11 @@ def get_port_info():
 
 def get_host_and_port():
   """Initializes host address and port number
-    Return:
+    Returns:
       host_nm - host address of recognizer
       port_nm - port number of server
   """
   
-  # Retrieves host and port from arguments
   host_nm = get_host_info()
   port_nm = get_port_info()
   
