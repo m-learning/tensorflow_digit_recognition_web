@@ -19,6 +19,7 @@ from cnn.transfer import cnn_flags as flags
 from cnn.transfer.conv_neural_net import conv_net
 from cnn.utils import image_utils as crop
 from cnn.utils import color_utils as color
+from cnn.utils import image_color_refiner as refiner
 from cnn.utils.pillow_resizing import pillow_resizer
 import tensorflow as tf
 
@@ -173,6 +174,7 @@ class image_recognizer:
     cropped_im = self.crop_image(im)
     img = resizer.resize_full(cropped_im)
     mdf = color.sharpen_edges(img)
+    refiner.color_refinement(mdf)
     crop.write_image(mdf)
     
     return mdf
