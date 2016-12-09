@@ -14,7 +14,7 @@ from flask import render_template, json
 
 
 class cnn_server(object):
-  """Abstract controller for image recognition"""
+  """Abstract controller for image recognition from HTTP request"""
   
   def __init__(self, recognizer):
     self.recognizer = recognizer

@@ -55,7 +55,7 @@ class conv_net(object):
   def recognize_image(self, image_data):
     """Runs image recognition
       Args:
-        image_data - image parameters
+        image_data - image for recognition
       Returns:
         answer - recognition results
     """

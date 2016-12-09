@@ -24,6 +24,7 @@ def retrieve_args(argument_flags, tr_files):
   """Adds configuration from command line arguments
     Args:
      arg_parser - runtime parameters parser
+     tr_files - files module
   """
     
   global output_graph, output_labels, host_nm, port_nm, box_images, log_image_path
