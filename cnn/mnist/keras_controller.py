@@ -102,9 +102,9 @@ if __name__ == "__main__":
   
   with tf.Graph().as_default():
     
-    init = tf.global_variables_initializer()
     with tf.Session() as sess:
       (x, _rec) = define_graph(_model)
+      init = tf.global_variables_initializer()
       sess.run(init)
       _model.sess = sess
       # Retrieves host and port from arguments
