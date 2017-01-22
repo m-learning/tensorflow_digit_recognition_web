@@ -37,7 +37,7 @@ class cnn_server:
     to_recognize_path = _files.get_to_recognize_file()
     with open(to_recognize_path, 'w') as file_:
         file_.write(fls)
-    rec_numb = recognize_image(_model, _files, x, _rec)
+    rec_numb = recognize_image(_model, _files, x, _rec, fls)
     resp = json.dumps(rec_numb)
     
     return resp

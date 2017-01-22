@@ -138,13 +138,12 @@ def define_graph(_model):
   x = tf.placeholder(tf.float32, [None, nb_input])
   _rs = tf.reshape(x, shape=[-1, 28, 28, 1])
   # Convolutional network
-  _net = _model.network_model
-  _pred = _net(_rs)
+  _pred = _model.run_model(_rs)
   _rec = K.argmax(_pred, 1) 
     
   return (x, _rec)
   
-def recognize_image(_model, _files, x, _rec):
+def recognize_image(_model, _files, x, _rec, image_data):
     
   # x = tf.placeholder(tf.float32, [None, nb_input])
   # x = tf.reshape(x, shape=[-1, 28, 28, 1])
@@ -158,7 +157,7 @@ def recognize_image(_model, _files, x, _rec):
           
   print('Start session')
   # Initialize variables
-  image_rec = read_input_file(image_directory)
+  image_rec = read_input_file(image_directory, image_data=image_data)
     # Recognize image
   resp_dgt = _model.sess.run(_rec, feed_dict={x: image_rec})
   print("Recognized image:", resp_dgt[0])
