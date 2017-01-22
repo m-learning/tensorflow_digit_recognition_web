@@ -7,8 +7,11 @@ Image processing before recognition
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
+
 from PIL import Image, ImageOps
+
 import numpy as np
+
 
 IMAGE_SIZE = 28
 

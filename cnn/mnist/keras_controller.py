@@ -9,14 +9,18 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
-from flask import Flask, request, render_template, json
 from sys import argv
 
-from cnn.mnist.keras_recognizer import mnist_model, recognize_image, _files
+from flask import Flask, request, render_template, json
+
+from cnn.mnist.keras_recognizer import mnist_model, define_graph, recognize_image, _files
+import tensorflow as tf
 
 
 # Initializes web container
 app = Flask(__name__)
+
+nb_input = 784
 
 class cnn_server:
   """Controller for image recognition"""
@@ -33,7 +37,7 @@ class cnn_server:
     to_recognize_path = _files.get_to_recognize_file()
     with open(to_recognize_path, 'w') as file_:
         file_.write(fls)
-    rec_numb = recognize_image(_model, _files)
+    rec_numb = recognize_image(_model, _files, x, _rec)
     resp = json.dumps(rec_numb)
     
     return resp
@@ -93,9 +97,17 @@ def get_host_and_port():
 
 if __name__ == "__main__":
   
-  global _model
+  global _model, x, _rec
   _model = mnist_model()
-  # Retrieves host and port from arguments
-  (host_nm, port_nm) = get_host_and_port()
-  # Binds server on host and port
-  app.run(host=host_nm, port=port_nm, threaded=True)
+  
+  with tf.Graph().as_default():
+    
+    init = tf.global_variables_initializer()
+    with tf.Session() as sess:
+      (x, _rec) = define_graph(_model)
+      sess.run(init)
+      _model.sess = sess
+      # Retrieves host and port from arguments
+      (host_nm, port_nm) = get_host_and_port()
+      # Binds server on host and port
+      app.run(host=host_nm, port=port_nm, threaded=True)

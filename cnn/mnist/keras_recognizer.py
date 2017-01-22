@@ -18,6 +18,7 @@ from cnn.mnist.cnn_files import parameters_file
 from cnn.mnist.cnn_input_reader import read_input_file
 import tensorflow as tf
 
+
 nb_input = 784
 nb_classes = 10
 nb_epoch = 12
@@ -44,20 +45,21 @@ class mnist_model(object):
     self._is_training = is_training
     self.model = None
     
-  def set_session(self, sess):
-    """Sets TensorFlow session
-      Args:
-        sess - TensorFlow current session
-    """
-    self._sess = sess
-  
   @property
   def sess(self):
     """Gets TensorFlow current session
       Returns:
         TensorFlow current session
     """
-    return self._sess 
+    return self._sess
+  
+  @sess.setter
+  def sess(self, _sess):
+    """Sets TensorFlow session
+      Args:
+        sess - TensorFlow current session
+    """
+    self._sess = _sess 
     
   def _add_dropout(self, prob=0.5):
     """Adds dropout layer to model
@@ -122,15 +124,35 @@ class mnist_model(object):
     pred = _network_model(x)
     
     return pred
+
+def define_graph(_model):
+  """Initializes graph operation for network
+    Args:
+      _model - network model
+    Returns:
+      tuple of -
+        x - input tensor
+        _pred - prediction operation
+  """
   
-def recognize_image(_model, _files):
-    
   x = tf.placeholder(tf.float32, [None, nb_input])
+  _rs = tf.reshape(x, shape=[-1, 28, 28, 1])
   # Convolutional network
-  pred = _model.network_model(x)
+  _net = _model.network_model
+  _pred = _net(_rs)
+  _rec = K.argmax(_pred, 1) 
+    
+  return (x, _rec)
+  
+def recognize_image(_model, _files, x, _rec):
+    
+  # x = tf.placeholder(tf.float32, [None, nb_input])
+  # x = tf.reshape(x, shape=[-1, 28, 28, 1])
+  # Convolutional network
+  # pred = _model.network_model(x)
   
   # Evaluate model
-  recognize_image = K.argmax(pred, 1)
+  # recognize_image = K.argmax(_pred, 1)
   # Initializing saver to read trained data
   image_directory = _files.get_to_recognize_file()
           
@@ -138,7 +160,7 @@ def recognize_image(_model, _files):
   # Initialize variables
   image_rec = read_input_file(image_directory)
     # Recognize image
-  resp_dgt = _model.sess.run(recognize_image, feed_dict={x: image_rec})
+  resp_dgt = _model.sess.run(_rec, feed_dict={x: image_rec})
   print("Recognized image:", resp_dgt[0])
   
   return resp_dgt[0]
