@@ -46,6 +46,28 @@ class parameters_file(files_and_path_utils):
         file path
     """
     return self.join_path(self.get_to_recognize_directory, TO_RECOGNIZE_FILE)
+
+  def init_files_directory(self):
+    """Gets or creates directory for trained parameters
+      Args:
+        path of trained parameters
+    """
+      
+    current_dir = self.join_path(self.get_data_general_directory, PATH_FOR_PARAMETERS)
+    
+    if not os.path.exists(current_dir):
+        os.makedirs(current_dir)
+    
+    return current_dir
+  
+  @property
+  def model_dir(self):
+    """Gets or creates directory for trained parameters
+      Returns:
+        current_dir - directory for trained parameters
+    """
+    
+    return self.init_files_directory()
   
   def get_files_directory(self):
     """Gets training data  / parameters directory path

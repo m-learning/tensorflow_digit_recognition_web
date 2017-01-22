@@ -82,7 +82,9 @@ class files_and_path_utils(object):
     current_dir = dirs[0]
     
     return current_dir
-  
+
+  def get_data_general_directory(self):
+    return self.join_path(self.get_current, self.path_to_cnn_directory)
 
 class cnn_file_utils(files_and_path_utils):
   """Utility class for network files management"""
@@ -90,10 +92,6 @@ class cnn_file_utils(files_and_path_utils):
   def __init__(self, parent_cnn_dir):
     super(cnn_file_utils, self).__init__(parent_cnn_dir)
   
-  # Gets or creates directories
-  def get_data_general_directory(self):
-    return self.join_path(self.get_current, self.path_to_cnn_directory)
-
   def init_files_directory(self):
     """Gets or creates directory for trained parameters
       Args:

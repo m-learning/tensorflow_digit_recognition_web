@@ -297,11 +297,18 @@ def create_mtcnn(sess, model_path):
   return (pnet_fun, rnet_fun, onet_fun)
 
 def detect_face(img, minsize, pnet, rnet, onet, threshold, factor):
- # im: input image
- # minsize: minimum of faces' size
- # pnet, rnet, onet: caffemodel 
- # threshold: threshold=[th1 th2 th3], th1-3 are three steps's threshold
- # fastresize: resize img from last scale (using in high-resolution images) if fastresize==true
+  """Detects faces in images
+    Args:  
+    im: input image
+     minsize: minimum of faces' size
+     pnet, rnet, onet: caffemodel 
+     threshold: threshold=[th1 th2 th3], th1-3 are three steps's threshold
+     fastresize: resize img from last scale (using in high-resolution images) if fastresize==true
+    Returns:
+     tuple of -
+       total_boxes - amount of faces
+       pins - detected faces on image
+  """
   factor_count = 0
   total_boxes = np.empty((0, 9))
   points = []

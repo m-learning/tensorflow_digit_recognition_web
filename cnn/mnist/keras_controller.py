@@ -1,11 +1,10 @@
 """
-Created on Jun 25, 2016
+Created on Jan 22, 2017
 
-Controller module for recognition
+Image recognizer controller
 
 @author: Levan Tsinadze
 """
-
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
@@ -13,8 +12,7 @@ from __future__ import print_function
 from flask import Flask, request, render_template, json
 from sys import argv
 
-from cnn.mnist.cnn_files import parameters_file
-from cnn.mnist.cnn_recognizer import image_recognizer
+from cnn.mnist.keras_recognizer import mnist_model, recognize_image, _files
 
 
 # Initializes web container
@@ -32,12 +30,10 @@ class cnn_server:
     """
       
     fls = request.data
-    _files = parameters_file()
     to_recognize_path = _files.get_to_recognize_file()
     with open(to_recognize_path, 'w') as file_:
         file_.write(fls)
-    recgnizer = image_recognizer()
-    rec_numb = recgnizer.recognize_image()
+    rec_numb = recognize_image(_model, _files)
     resp = json.dumps(rec_numb)
     
     return resp
@@ -96,7 +92,9 @@ def get_host_and_port():
   return (host_nm, port_nm)
 
 if __name__ == "__main__":
-    
+  
+  global _model
+  _model = mnist_model()
   # Retrieves host and port from arguments
   (host_nm, port_nm) = get_host_and_port()
   # Binds server on host and port

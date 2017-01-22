@@ -151,8 +151,8 @@ def load_and_align_data(image_paths, image_size, margin, gpu_memory_fraction):
   factor = 0.709  # scale factor
   
   print('Creating networks and loading parameters')
-  with tf.Graph().as_default():
-    sess = tf.Session(config=tf.ConfigProto(log_device_placement=False))
+  with tf.Graph().as_default() as g:
+    sess = tf.Session(graph=g, config=tf.ConfigProto(log_device_placement=False))
     with sess.as_default():
         pnet, rnet, onet = detect_face.create_mtcnn(sess, _files.model_dir)
 
