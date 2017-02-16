@@ -12,7 +12,7 @@ from __future__ import print_function
 import argparse
 import traceback
 
-from flask import Flask, request
+from flask import Flask, request, json
 
 from cnn.faces import dlib_faces as comparator 
 
@@ -79,7 +79,7 @@ def _run_comparator(request):
   image2 = _read_file(request, 'image2')
   if image1 and image2:
     face_dists = comparator.compare_files(image1, image2, _network, verbose=_verbose)
-    comparator.print_faces(face_dists)
+    json.dumps(face_dists)
     
 def _check_and_compare(request):
   """Face comparator service
