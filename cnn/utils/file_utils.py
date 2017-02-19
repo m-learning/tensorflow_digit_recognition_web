@@ -166,3 +166,12 @@ class cnn_file_utils(files_and_path_utils):
     with open(test_img_path, 'wb') as out_file:
       shutil.copyfileobj(response.raw, out_file)
     del response
+  
+  @property
+  def model_dir(self):
+    """Gets or creates directory for trained parameters
+      Returns:
+        current_dir - directory for trained parameters
+    """
+    
+    return self.init_files_directory()
