@@ -16,7 +16,6 @@ from io import BytesIO
 import math
 
 from cnn.faces.cnn_files import training_file
-from cnn.faces.dlib_comparator import _verbose
 import dlib
 import numpy as np
 
@@ -73,7 +72,7 @@ def calculate_embeddings(img, _network, dets):
   
   return face_descriptors
   
-def calculate_embedding(img, _network):
+def calculate_embedding(img, _network, verbose=False):
   """Calculates embedding from image
     Args:
       img - face image
@@ -88,13 +87,13 @@ def calculate_embedding(img, _network):
   dets = detector(img, 1)
   if dets and len(dets) > 0:
     _detecteds = len(dets)
-    if _verbose:
+    if verbose:
       print("Number of faces detected: {}".format(_detecteds))
     # Now process each face we found.
     for (k, d) in enumerate(dets):
       
       detected = (k, d.left(), d.top(), d.right(), d.bottom())  
-      if _verbose:
+      if verbose:
         print("Detection {}: Left: {} Top: {} Right: {} Bottom: {}".format(
             k, d.left(), d.top(), d.right(), d.bottom()))
       # Get the landmarks/parts for the face in box d.
@@ -142,8 +141,8 @@ def compare_files(_img1, _img2, _network, verbose=False):
   img2_buff = Image.open(BytesIO(_img2))
   img1 = np.array(img1_buff)
   img2 = np.array(img2_buff)
-  descs1 = calculate_embedding(img1, _network)
-  descs2 = calculate_embedding(img2, _network)
+  descs1 = calculate_embedding(img1, _network, verbose=verbose)
+  descs2 = calculate_embedding(img2, _network, verbose=verbose)
 
   for desc1 in descs1:
     (emb1, det1) = (desc1.emb, desc1.det)

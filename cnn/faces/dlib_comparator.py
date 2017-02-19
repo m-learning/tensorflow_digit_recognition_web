@@ -15,13 +15,11 @@ import traceback
 from flask import Flask, request, json, render_template
 
 from cnn.faces import dlib_faces as comparator 
+from cnn.faces import dlib_flags as flags
 
 
 TEMPLATE_NAME = 'upload.html'
 PERSON_IMAGE = 'person_image'
-
-_network = None
-_verbose = None
 
 app = Flask(__name__)
 
@@ -83,7 +81,7 @@ def _compare_faces(person_image, request):
   for (name, img_data) in request.files.to_dict().iteritems():
     if name != PERSON_IMAGE:
       img = img_data.read()
-      face_dists = comparator.compare_files(person_image, img, _network, verbose=_verbose)
+      face_dists = comparator.compare_files(person_image, img, flags.network, verbose=flags.verbose)
       comp_result[name] = face_dists
   
   return comp_result
@@ -140,7 +138,6 @@ if __name__ == '__main__':
   
   args = _parse_arguments()
   comparator.threshold = args.threshold
-  global _network, _verbose
-  _verbose = args.verbose
-  _network = comparator.load_model()
+  flags.verbose = args.verbose
+  flags.network = comparator.load_model()
   app.run(host=args.host, port=args.port, threaded=True)
