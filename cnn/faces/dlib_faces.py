@@ -20,6 +20,7 @@ from skimage import io
 from cnn.faces.cnn_files import training_file
 import dlib
 import numpy as np
+from cnn.faces.dlib_comparator import _verbose
 
 
 LANDMARKS_WEIGHTS = 'shape_predictor_68_face_landmarks.dat'
@@ -89,13 +90,15 @@ def calculate_embedding(img, _network):
   dets = detector(img, 1)
   if dets and len(dets) > 0:
     _detecteds = len(dets)
-    print("Number of faces detected: {}".format(_detecteds))
+    if _verbose:
+      print("Number of faces detected: {}".format(_detecteds))
     # Now process each face we found.
     for (k, d) in enumerate(dets):
       
       detected = (k, d.left(), d.top(), d.right(), d.bottom())  
-      print("Detection {}: Left: {} Top: {} Right: {} Bottom: {}".format(
-          k, d.left(), d.top(), d.right(), d.bottom()))
+      if _verbose:
+        print("Detection {}: Left: {} Top: {} Right: {} Bottom: {}".format(
+            k, d.left(), d.top(), d.right(), d.bottom()))
       # Get the landmarks/parts for the face in box d.
       shape = sp(img, d)
       
