@@ -15,12 +15,10 @@ import collections
 from io import BytesIO
 import math
 
-from skimage import io
-
 from cnn.faces.cnn_files import training_file
+from cnn.faces.dlib_comparator import _verbose
 import dlib
 import numpy as np
-from cnn.faces.dlib_comparator import _verbose
 
 
 LANDMARKS_WEIGHTS = 'shape_predictor_68_face_landmarks.dat'
