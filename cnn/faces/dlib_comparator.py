@@ -20,7 +20,8 @@ from cnn.faces import dlib_faces as comparator
 _network = None
 _verbose = None
 
-template_name = "upload.html"
+template_name = 'upload.html'
+person_image = 'person_image'
 
 app = Flask(__name__)
 
@@ -79,10 +80,11 @@ def _compare_faces(person_image, request):
   """
   comp_result = {}
   
-  for name, img_data in request.files.to_dict().iteritems():
-    img = img_data.read()
-    face_dists = comparator.compare_files(person_image, img, _network, verbose=_verbose)
-    comp_result[name] = face_dists
+  for (name, img_data) in request.files.to_dict().iteritems():
+    if name != person_image:
+      img = img_data.read()
+      face_dists = comparator.compare_files(person_image, img, _network, verbose=_verbose)
+      comp_result[name] = face_dists
   
   return comp_result
 
@@ -94,7 +96,7 @@ def _run_comparator(request):
      _response - recognition response
   """
   
-  person_image = _read_file(request, 'person_image')
+  person_image = _read_file(request, person_image)
   if person_image:
     comp_result = _compare_faces(person_image, request)
     result_json = json.dumps(comp_result)
