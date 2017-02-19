@@ -17,7 +17,7 @@ class training_file(cnn_file_utils):
      training, validation and test parameters"""
   
   def __init__(self, image_resizer=None):
-    super(training_file, self).__init__('faces', image_resizer=image_resizer)
+    super(training_file, self).__init__('faces')
     
   @property
   def pairs_file(self):
