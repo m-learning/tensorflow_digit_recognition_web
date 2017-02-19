@@ -9,8 +9,10 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
+import Image
 import argparse
 import collections
+from io import BytesIO
 import math
 
 from skimage import io
@@ -18,8 +20,6 @@ from skimage import io
 from cnn.faces.cnn_files import training_file
 import dlib
 import numpy as np
-import io
-import Image
 
 
 LANDMARKS_WEIGHTS = 'shape_predictor_68_face_landmarks.dat'
@@ -137,8 +137,10 @@ def compare_files(_img1, _img2, _network, verbose=False):
   
   face_dsts = []
   
-  img1 = io.BytesIO(_img1)  # np.fromstring(_img1, np.uint8)
-  img2 = io.BytesIO(_img2)  # np.fromstring(_img2, np.uint8)
+  img1_buff = Image.open(BytesIO(_img1))  
+  img2_buff = Image.open(BytesIO(_img2))
+  img1 = np.array(img1_buff)
+  img2 = np.array(img2_buff)
   descs1 = calculate_embedding(img1, _network)
   descs2 = calculate_embedding(img2, _network)
 
