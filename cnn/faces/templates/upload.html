@@ -13,11 +13,21 @@ body {
 </head>
 <body>
 	<table style="width: 80%; margin: auto;">
-		<forms id="file-uploader-form" action="/files" method="post"
+		<forms id="file-uploader-form" action="/" method="post"
 			enctype="multipart/form-data">
 		<tr>
-			<td style="text-align: right; width: 100px;">Image File:</td>
-			<td><input type="file" name="image-rec" id="input-file"
+			<td style="text-align: right; width: 100px;">Person Image:</td>
+			<td><input type="file" name="person_image" id="person_image"
+				style="width: 100%" /></td>
+		</tr>
+		<tr>
+			<td style="text-align: right; width: 100px;">Image File1:</td>
+			<td><input type="file" name="image1" id="image1"
+				style="width: 100%" /></td>
+		</tr>
+		<tr>
+			<td style="text-align: right; width: 100px;">Image File2:</td>
+			<td><input type="file" name="image2" id="image2"
 				style="width: 100%" /></td>
 		</tr>
 		<tr>
@@ -121,7 +131,7 @@ body {
             var fileUploader = function() {
 
                 previewDiv.innerHTML = ''
-                
+
                 var files = input.files
                 var formData = new FormData()
                 for (var i = 0; i < files.length; i++) {
