@@ -175,3 +175,12 @@ class cnn_file_utils(files_and_path_utils):
     """
     
     return self.init_files_directory()
+
+  def model_file(self, _file_path):
+    """Joins models directory path to passed file path
+      Args:
+        _file_path - model file path
+      Returns:
+        joined models directory and model file path
+    """
+    return self.join_path(self.model_dir, _file_path)
