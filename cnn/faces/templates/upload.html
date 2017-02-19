@@ -170,7 +170,13 @@ body {
                     img.src = URL.createObjectURL(file)
 
                     // Add the file to the request.
-                    formData.append('image1', file, file.name);
+                    file_name = ''
+                    if(i == 0){
+                        file_name = 'person_image'
+                    }else{
+                        file_name = 'image' + i 
+                    }
+                    formData.append(file_name, file, file.name);
                 }
                 recognizeImage(formData)
             }
