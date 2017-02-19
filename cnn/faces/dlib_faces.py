@@ -135,7 +135,7 @@ def compare_embeddings(emb1, emb2):
   
   return (dist, match_faces)
 # Now process all the images
-def compare_files(_image1, _image2, _network, verbose=False):
+def compare_files(img1, img2, _network, verbose=False):
   """Compares two faces from images
     Args:
       _image1 - first image
@@ -147,11 +147,6 @@ def compare_files(_image1, _image2, _network, verbose=False):
   
   face_dsts = []
   
-  if verbose:
-    print("Processing files: {} {}".format(_image1, _image2))
-  img1 = io.imread(_image1)
-  img2 = io.imread(_image2)
-
   descs1 = calculate_embedding(img1, _network)
   descs2 = calculate_embedding(img2, _network)
 
