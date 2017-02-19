@@ -17,6 +17,7 @@ from skimage import io
 
 from cnn.faces.cnn_files import training_file
 import dlib
+import numpy as np
 
 
 LANDMARKS_WEIGHTS = 'shape_predictor_68_face_landmarks.dat'
@@ -135,7 +136,7 @@ def compare_embeddings(emb1, emb2):
   
   return (dist, match_faces)
 # Now process all the images
-def compare_files(img1, img2, _network, verbose=False):
+def compare_files(_img1, _img2, _network, verbose=False):
   """Compares two faces from images
     Args:
       _image1 - first image
@@ -147,6 +148,8 @@ def compare_files(img1, img2, _network, verbose=False):
   
   face_dsts = []
   
+  img1 = np.fromstring(_img1, np.uint8)
+  img2 = np.fromstring(_img2, np.uint8)
   descs1 = calculate_embedding(img1, _network)
   descs2 = calculate_embedding(img2, _network)
 
