@@ -67,6 +67,23 @@ def _read_file(request, name):
   
   return image_data
 
+def _compare_faces(person_image, request):
+  """Compares person images
+    Args:
+      person_image - image for compare
+      request - HTTP request with images to compare
+    Returns:
+      comp_result - result on each image
+  """
+  comp_result = {}
+  
+  for name, img_data in request.files:
+    img = img_data.read()
+    face_dists = comparator.compare_files(person_image, img, _network, verbose=_verbose)
+    comp_result[name] = face_dists
+  
+  return comp_result
+
 def _run_comparator(request):
   """Face comparator service
     Args:
@@ -75,11 +92,15 @@ def _run_comparator(request):
      _response - recognition response
   """
   
-  image1 = _read_file(request, 'image1')
-  image2 = _read_file(request, 'image2')
-  if image1 and image2:
-    face_dists = comparator.compare_files(image1, image2, _network, verbose=_verbose)
-    json.dumps(face_dists)
+  person_image = _read_file(request, 'person_image')
+  if person_image:
+    comp_result = _compare_faces(person_image, request)
+    result_json = json.dumps(comp_result)
+  else:
+    result_json = json.dumps()
+  
+  return result_json
+  
     
 def _check_and_compare(request):
   """Face comparator service
