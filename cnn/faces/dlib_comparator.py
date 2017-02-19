@@ -12,13 +12,15 @@ from __future__ import print_function
 import argparse
 import traceback
 
-from flask import Flask, request, json
+from flask import Flask, request, json, render_template
 
 from cnn.faces import dlib_faces as comparator 
 
 
 _network = None
 _verbose = None
+
+template_name = "upload.html"
 
 app = Flask(__name__)
 
@@ -124,7 +126,11 @@ def cnn_recognize():
       _response - recognition response
   """
   
-  _response = _check_and_compare(request)
+  if request.method == 'POST':
+    _response = _check_and_compare(request)
+  elif request.method == 'GET':
+    _response = render_template(template_name)
+  
   return _response
 
 if __name__ == '__main__':
