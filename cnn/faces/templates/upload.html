@@ -134,11 +134,22 @@ body {
 
                 previewDiv.innerHTML = ''
 
-                var files = input.files
+                var person = input.files
                 var images1 = image_imp1.files
                 var images2 = image_imp1.files
-                files = files.concat(images1)
-                files = files.concat(images2)
+                var files = []
+                for (var i = 0; i < person.length; i++) {
+                    var file = files[i]
+                    files.puhs(file)
+                }
+                for (var i = 0; i < images1.length; i++) {
+                    var file = files[i]
+                    files.puhs(file)
+                }
+                for (var i = 0; i < images2.length; i++) {
+                    var file = files[i]
+                    files.puhs(file)
+                }
                 var formData = new FormData()
                 for (var i = 0; i < files.length; i++) {
                     var file = files[i];
