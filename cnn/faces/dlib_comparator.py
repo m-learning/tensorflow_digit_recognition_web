@@ -79,7 +79,8 @@ def _compare_faces(person_image, request):
   """
   comp_result = {}
   
-  for name, img_data in request.files:
+  print(request.files)
+  for name, img_data in request.files.iteritems:
     img = img_data.read()
     face_dists = comparator.compare_files(person_image, img, _network, verbose=_verbose)
     comp_result[name] = face_dists
