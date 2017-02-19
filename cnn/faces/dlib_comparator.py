@@ -17,11 +17,11 @@ from flask import Flask, request, json, render_template
 from cnn.faces import dlib_faces as comparator 
 
 
+TEMPLATE_NAME = 'upload.html'
+PERSON_IMAGE = 'person_image'
+
 _network = None
 _verbose = None
-
-template_name = 'upload.html'
-person_image = 'person_image'
 
 app = Flask(__name__)
 
@@ -81,7 +81,7 @@ def _compare_faces(person_image, request):
   comp_result = {}
   
   for (name, img_data) in request.files.to_dict().iteritems():
-    if name != person_image:
+    if name != PERSON_IMAGE:
       img = img_data.read()
       face_dists = comparator.compare_files(person_image, img, _network, verbose=_verbose)
       comp_result[name] = face_dists
@@ -96,7 +96,7 @@ def _run_comparator(request):
      _response - recognition response
   """
   
-  person_image = _read_file(request, person_image)
+  person_image = _read_file(request, PERSON_IMAGE)
   if person_image:
     comp_result = _compare_faces(person_image, request)
     result_json = json.dumps(comp_result)
@@ -131,7 +131,7 @@ def cnn_recognize():
   if request.method == 'POST':
     _response = _check_and_compare(request)
   elif request.method == 'GET':
-    _response = render_template(template_name)
+    _response = render_template(TEMPLATE_NAME)
   
   return _response
 
