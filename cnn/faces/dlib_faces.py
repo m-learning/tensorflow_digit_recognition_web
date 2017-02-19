@@ -18,6 +18,8 @@ from skimage import io
 from cnn.faces.cnn_files import training_file
 import dlib
 import numpy as np
+import io
+import Image
 
 
 LANDMARKS_WEIGHTS = 'shape_predictor_68_face_landmarks.dat'
@@ -67,17 +69,11 @@ def calculate_embeddings(img, _network, dets):
       # Get the landmarks/parts for the face in box d.
       shape = sp(img, d)
       
-      # Compute the 128D vector that describes the face in img identified by
-      # shape.  In general, if two face descriptor vectors have a Euclidean
-      # distance between them less than 0.6 then they are from the same
-      # person, otherwise they are from different people.  He we just print
-      # the vector to the screen.
       face_descriptor = facerec.compute_face_descriptor(img, shape)
       face_descriptors.append(face_descriptor)
   
   return face_descriptors
   
-
 def calculate_embedding(img, _network):
   """Calculates embedding from image
     Args:
@@ -89,9 +85,7 @@ def calculate_embedding(img, _network):
   
   face_descriptors = []
   (detector, sp, facerec) = _network
-  # Ask the detector to find the bounding boxes of each face. The 1 in the
-  # second argument indicates that we should upsample the image 1 time. This
-  # will make everything bigger and allow us to detect more faces.
+  
   dets = detector(img, 1)
   if dets and len(dets) > 0:
     _detecteds = len(dets)
@@ -105,11 +99,6 @@ def calculate_embedding(img, _network):
       # Get the landmarks/parts for the face in box d.
       shape = sp(img, d)
       
-      # Compute the 128D vector that describes the face in img identified by
-      # shape.  In general, if two face descriptor vectors have a Euclidean
-      # distance between them less than 0.6 then they are from the same
-      # person, otherwise they are from different people.  He we just print
-      # the vector to the screen.
       face_embedding = facerec.compute_face_descriptor(img, shape)
       face_descriptor = face_desc(emb=face_embedding, det=detected)
       face_descriptors.append(face_descriptor)
@@ -148,8 +137,8 @@ def compare_files(_img1, _img2, _network, verbose=False):
   
   face_dsts = []
   
-  img1 = np.fromstring(_img1, np.uint8)
-  img2 = np.fromstring(_img2, np.uint8)
+  img1 = Image.open(io.BytesIO(_img1))  # np.fromstring(_img1, np.uint8)
+  img2 = Image.open(io.BytesIO(_img2))  # np.fromstring(_img2, np.uint8)
   descs1 = calculate_embedding(img1, _network)
   descs2 = calculate_embedding(img2, _network)
 
