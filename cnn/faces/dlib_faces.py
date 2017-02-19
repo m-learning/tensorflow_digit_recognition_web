@@ -137,8 +137,8 @@ def compare_files(_img1, _img2, _network, verbose=False):
   
   face_dsts = []
   
-  img1 = Image.open(io.BytesIO(_img1))  # np.fromstring(_img1, np.uint8)
-  img2 = Image.open(io.BytesIO(_img2))  # np.fromstring(_img2, np.uint8)
+  img1 = io.BytesIO(_img1)  # np.fromstring(_img1, np.uint8)
+  img2 = io.BytesIO(_img2)  # np.fromstring(_img2, np.uint8)
   descs1 = calculate_embedding(img1, _network)
   descs2 = calculate_embedding(img2, _network)
 
