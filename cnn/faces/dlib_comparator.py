@@ -135,4 +135,4 @@ if __name__ == '__main__':
   global _network, _verbose
   _verbose = args.verbose
   _network = comparator.load_model()
-  app.run(host=args.host_nm, port=args.port_nm, threaded=True)
+  app.run(host=args.host, port=args.port, threaded=True)
