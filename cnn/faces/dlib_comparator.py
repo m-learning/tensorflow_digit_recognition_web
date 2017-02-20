@@ -22,9 +22,41 @@ TEMPLATE_NAME = 'upload.html'
 PERSON_IMAGE = 'person_image'
 FILE_NAME = 'fileName'
 COMP_DATA = 'comp_result'
-NO_RESULT = {FILE_NAME: '', COMP_DATA: {}}
+COMP_STATUS = 'status'
+STATUS_CODE = 'code'
+STATUS_MESSAGE = 'message'
+# Error messages
+OK_CODE = 0
+ERROR_CODE = -1
+NO_IMAGE_ERROR = 'Person image is not uploaded'
+NO_FACE_IN_PERSON_IMAGE = 'Could not find face in person image'
+NO_FACE_IN_IMAGE = 'Could not find face in image'
+
+NO_RESULT = {COMP_STATUS: {STATUS_CODE:ERROR_CODE,
+                           STATUS_MESSAGE:NO_IMAGE_ERROR},
+             FILE_NAME: '',
+             COMP_DATA: {}}
+
+NO_MAIN_RESULT = {COMP_STATUS: {STATUS_CODE:ERROR_CODE,
+                           STATUS_MESSAGE:NO_FACE_IN_PERSON_IMAGE},
+             FILE_NAME: '',
+             COMP_DATA: {}}
 
 app = Flask(__name__)
+
+def _init_ok_status():
+  """Initializes OK status
+    Returns:
+      OK status object
+  """
+  return {STATUS_CODE:OK_CODE, STATUS_MESSAGE:''}
+
+def _init_no_face_status():
+  """Initializes OK status
+    Returns:
+      OK status object
+  """
+  return {STATUS_CODE:ERROR_CODE, STATUS_MESSAGE:NO_FACE_IN_IMAGE}
 
 def _parse_arguments():
   """Parses command line arguments
@@ -85,24 +117,57 @@ def _read_file(_files, name):
   
   return image_data
 
-def _compare_faces(person_image, _files):
+def _add_compared_distances(img_data, face_dists):
+  """Validates and adds compared distances
+    Args:
+      img_data - image to compare
+      face_dists - compared vectors
+    Returns:
+      comp_result - result for image
+  """
+  
+  comp_result = {}
+  comp_result[FILE_NAME] = img_data.filename
+  comp_result[COMP_DATA] = face_dists
+  if len(face_dists) > 0:
+    comp_result[COMP_STATUS] = _init_ok_status()
+  else:
+    comp_result[COMP_STATUS] = _init_no_face_status()
+  
+  return comp_result
+
+def _compare_all_images(person_embs, _files):
   """Compares person images
     Args:
-      person_image - image for compare
+      person_embs - face vectors for compare
       request - HTTP request with images to compare
     Returns:
-      comp_result - result on each image
+      comp_results - result for each image
   """
   comp_results = {}
   
   for (name, img_data) in _files.iteritems():
     if name != PERSON_IMAGE:
       img = img_data.read()
-      face_dists = comparator.compare_files(person_image, img, flags.network, verbose=flags.verbose)
-      comp_result = {}
-      comp_result[FILE_NAME] = img_data.filename
-      comp_result[COMP_DATA] = face_dists
+      face_dists = comparator.compare_faces(person_embs, img, flags.network, verbose=flags.verbose)
+      comp_result = _add_compared_distances(img_data, face_dists)
       comp_results[name] = comp_result
+  
+  return comp_results
+
+def _compare_faces(person_image, _files):
+  """Compares person images
+    Args:
+      person_image - person image
+      request - HTTP request with images to compare
+    Returns:
+      comp_results - result for each image
+  """
+  person_embs = comparator.calculate_buffer_embedding(person_image, flags.network, verbose=flags.verbose)
+  if len(person_embs) > 0:
+    comp_results = _compare_all_images(person_embs, _files)
+  else:
+    comp_results = NO_MAIN_RESULT
   
   return comp_results
 

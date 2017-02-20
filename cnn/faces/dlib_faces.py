@@ -124,6 +124,43 @@ def compare_embeddings(emb1, emb2):
   match_faces = dist < threshold
   
   return (dist, match_faces)
+
+def calculate_buffer_embedding(_img, _network, verbose=False):
+  """Calculates embedding from image buffer
+    Args:
+      _img - image buffer
+      _network - loaded network weights
+      verbose - debug mode
+    Returns:
+      descs - embeddings for detected faces
+  """
+  img_buff = Image.open(BytesIO(_img))
+  img = np.array(img_buff)
+  descs = calculate_embedding(img, _network, verbose=verbose)
+  
+  return descs
+
+def compare_faces(descs1, _img2, _network, verbose=False):
+  """Compares detected faces and faces from image
+    Args:
+      descs1 - embeddings
+      _img - image buffer
+      _network - loaded network weights
+      verbose - debug mode
+    Returns:
+      face_dsts - distances between embeddings       
+  """
+  face_dsts = []
+  
+  descs2 = calculate_buffer_embedding(_img2, _network, verbose=verbose)
+  for desc1 in descs1:
+    (emb1, det1) = (desc1.emb, desc1.det)
+    for desc2 in descs2:
+      (emb2, det2) = (desc2.emb, desc2.det)
+      (dist, match_faces) = compare_embeddings(emb1, emb2)
+      face_dsts.append((dist, match_faces, det1, det2))
+  
+  return face_dsts
 # Now process all the images
 def compare_files(_img1, _img2, _network, verbose=False):
   """Compares two faces from images
@@ -137,12 +174,8 @@ def compare_files(_img1, _img2, _network, verbose=False):
   
   face_dsts = []
   
-  img1_buff = Image.open(BytesIO(_img1))  
-  img2_buff = Image.open(BytesIO(_img2))
-  img1 = np.array(img1_buff)
-  img2 = np.array(img2_buff)
-  descs1 = calculate_embedding(img1, _network, verbose=verbose)
-  descs2 = calculate_embedding(img2, _network, verbose=verbose)
+  descs1 = calculate_buffer_embedding(_img1, _network, verbose=verbose)
+  descs2 = calculate_buffer_embedding(_img2, _network, verbose=verbose)
 
   for desc1 in descs1:
     (emb1, det1) = (desc1.emb, desc1.det)

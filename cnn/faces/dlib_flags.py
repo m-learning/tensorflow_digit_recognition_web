@@ -1,7 +1,7 @@
 """
 Created on Feb 20, 2017
 
-Flags for faces modules
+Flags for faces service
 
 @author: Levan Tsinadze
 """
