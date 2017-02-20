@@ -84,7 +84,7 @@ body {
                             if (answerText) {
                                 answerObj = {}
                                 answerObj['type'] = prop
-                                answerObj['score'] = parseFloat(answerText)
+                                answerObj['score'] = parseFloat(answerText.comp_result)
                                 answerObj['full'] = answerText
                                 answerOrd.push(answerObj)
                             }
@@ -116,9 +116,9 @@ body {
                             ansTxt += ':  '
                             ansTxt += '</b></td>'
                             ansTxt += '<td><b> (dist = '
-                            ansTxt += elm.comp.score
+                            ansTxt += elm.comp_result.score
                             ansTxt += ')</b></td>'
-                            ansTxt += '<td><div style="width:' + (elm.score * 600)
+                            ansTxt += '<td><div style="width:' + (elm.comp_result.score * 600)
                                     + 'px; background-color:#444; height: 20px;"></div></td>'
                             ansTxt += '<td><b> (full = '
                             ansTxt += JSON.stringify(elm.full)

@@ -21,7 +21,7 @@ from cnn.faces import dlib_flags as flags
 TEMPLATE_NAME = 'upload.html'
 PERSON_IMAGE = 'person_image'
 FILE_NAME = 'fileName'
-COMP_DATA = 'comp'
+COMP_DATA = 'comp_result'
 NO_RESULT = {FILE_NAME: '', COMP_DATA: {}}
 
 app = Flask(__name__)
