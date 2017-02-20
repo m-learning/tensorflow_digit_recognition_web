@@ -20,6 +20,8 @@ from cnn.faces import dlib_flags as flags
 
 TEMPLATE_NAME = 'upload.html'
 PERSON_IMAGE = 'person_image'
+FILE_NAME = 'fileName'
+COMP_DATA = 'comp'
 
 app = Flask(__name__)
 
@@ -76,15 +78,18 @@ def _compare_faces(person_image, request):
     Returns:
       comp_result - result on each image
   """
-  comp_result = {}
+  comp_results = {}
   
   for (name, img_data) in request.files.to_dict().iteritems():
     if name != PERSON_IMAGE:
       img = img_data.read()
       face_dists = comparator.compare_files(person_image, img, flags.network, verbose=flags.verbose)
-      comp_result[name] = face_dists
+      comp_result = {}
+      comp_result[FILE_NAME] = img_data.filename
+      comp_result[COMP_DATA] = face_dists
+      comp_results[name] = comp_result
   
-  return comp_result
+  return comp_results
 
 def _run_comparator(request):
   """Face comparator service
