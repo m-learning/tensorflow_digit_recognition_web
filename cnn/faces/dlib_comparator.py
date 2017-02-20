@@ -56,14 +56,14 @@ def _parse_arguments():
   
   return args
 
-def _read_file(request, name):
+def _read_valid_file(_files, name):
   """Reads file from HTTP request
     Args:
-      request - HTTP request
+      request - files from HTTP request
       name - file name
   """
-  
-  upload_file = request.files[name]
+
+  upload_file = _files[name]
   if upload_file.filename:
     image_data = upload_file.read()
   else:
@@ -71,7 +71,21 @@ def _read_file(request, name):
   
   return image_data
 
-def _compare_faces(person_image, request):
+def _read_file(_files, name):
+  """Reads file from HTTP request
+    Args:
+      _files - files from HTTP request
+      name - file name
+  """
+  
+  if name in _files:
+    image_data = _read_valid_file(_files, name)
+  else:
+    image_data = None
+  
+  return image_data
+
+def _compare_faces(person_image, _files):
   """Compares person images
     Args:
       person_image - image for compare
@@ -81,7 +95,7 @@ def _compare_faces(person_image, request):
   """
   comp_results = {}
   
-  for (name, img_data) in request.files.to_dict().iteritems():
+  for (name, img_data) in _files.iteritems():
     if name != PERSON_IMAGE:
       img = img_data.read()
       face_dists = comparator.compare_files(person_image, img, flags.network, verbose=flags.verbose)
@@ -92,18 +106,18 @@ def _compare_faces(person_image, request):
   
   return comp_results
 
-def _log_request_files(request):
+def _log_request_files(request, _files):
   """Logs request and files
     Args:
       request - HTTP request
   """
   
-  print(request)
   if flags.verbose:
-    for (name, img_data) in request.files.to_dict().iteritems():
+    print(request)
+    for (name, img_data) in _files.iteritems():
       print(name, img_data)
 
-def _run_comparator(request):
+def _run_comparator(_files):
   """Face comparator service
     Args:
       _verbose - command line argument for debugging
@@ -111,9 +125,9 @@ def _run_comparator(request):
      _response - recognition response
   """
   
-  person_image = _read_file(request, PERSON_IMAGE)
+  person_image = _read_file(_files, PERSON_IMAGE)
   if person_image:
-    comp_result = _compare_faces(person_image, request)
+    comp_result = _compare_faces(person_image, _files)
     result_json = json.dumps(comp_result)
   else:
     result_json = json.dumps(NO_RESULT)
@@ -129,8 +143,9 @@ def _check_and_compare(request):
      _response - recognition response
   """
   try:
-    _log_request_files(request)
-    _response = _run_comparator(request)
+    _files = request.files.to_dict()
+    _log_request_files(request, _files)
+    _response = _run_comparator(_files)
   except:
     traceback.print_exc()
     _response = None
