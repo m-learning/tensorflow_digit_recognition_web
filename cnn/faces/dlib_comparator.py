@@ -129,6 +129,7 @@ def _check_and_compare(request):
      _response - recognition response
   """
   try:
+    _log_request_files(request)
     _response = _run_comparator(request)
   except:
     traceback.print_exc()
