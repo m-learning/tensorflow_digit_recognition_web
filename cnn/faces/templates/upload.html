@@ -116,12 +116,12 @@ body {
                             ansTxt += ':  '
                             ansTxt += '</b></td>'
                             ansTxt += '<td><b> (dist = '
-                            ansTxt += elm.score
+                            ansTxt += elm.comp.score
                             ansTxt += ')</b></td>'
                             ansTxt += '<td><div style="width:' + (elm.score * 600)
                                     + 'px; background-color:#444; height: 20px;"></div></td>'
                             ansTxt += '<td><b> (full = '
-                            ansTxt += elm.full
+                            ansTxt += JSON.stringify(elm.full)
                             ansTxt += ')</b></td>'
                             ansTxt += '</tr>'
                         })
@@ -175,10 +175,10 @@ body {
 
                     // Add the file to the request.
                     file_name = ''
-                    if(i == 0){
+                    if (i == 0) {
                         file_name = 'person_image'
-                    }else{
-                        file_name = 'image' + i 
+                    } else {
+                        file_name = 'image' + i
                     }
                     formData.append(file_name, file, file.name);
                 }

@@ -22,6 +22,7 @@ TEMPLATE_NAME = 'upload.html'
 PERSON_IMAGE = 'person_image'
 FILE_NAME = 'fileName'
 COMP_DATA = 'comp'
+NO_RESULT = {FILE_NAME: '', COMP_DATA: {}}
 
 app = Flask(__name__)
 
@@ -104,7 +105,7 @@ def _run_comparator(request):
     comp_result = _compare_faces(person_image, request)
     result_json = json.dumps(comp_result)
   else:
-    result_json = json.dumps()
+    result_json = json.dumps(NO_RESULT)
   
   return result_json
   
