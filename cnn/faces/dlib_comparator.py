@@ -98,7 +98,7 @@ def _log_request_files(request):
       request - HTTP request
   """
   
-  print(request.body)
+  print(request)
   if flags.verbose:
     for (name, img_data) in request.files.to_dict().iteritems():
       print(name, img_data)
