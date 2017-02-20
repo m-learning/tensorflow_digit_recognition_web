@@ -92,6 +92,17 @@ def _compare_faces(person_image, request):
   
   return comp_results
 
+def _log_request_files(request):
+  """Logs request and files
+    Args:
+      request - HTTP request
+  """
+  
+  print(request.body)
+  if flags.verbose:
+    for (name, img_data) in request.files.to_dict().iteritems():
+      print(name, img_data)
+
 def _run_comparator(request):
   """Face comparator service
     Args:
