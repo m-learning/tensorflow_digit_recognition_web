@@ -124,6 +124,22 @@ def compare_embeddings(emb1, emb2):
   
   return (dist, match_faces)
 
+def _reshape_image(img):
+  """Improves image shape
+    Args:
+      img - image as tensor
+    Returns:
+      _reshaped - reshaped image tensor
+  """
+  
+  shp = img.shape
+  if len(shp) == 3 and shp[2] > 3:
+    _reshaped = img[:, :, :3].copy()
+  else:
+    _reshaped = img
+  
+  return _reshaped
+
 def calculate_embeddings_from_buffer(_img, _network, verbose=False):
   """Calculates embedding from image buffer
     Args:
@@ -134,12 +150,7 @@ def calculate_embeddings_from_buffer(_img, _network, verbose=False):
       descs - embeddings for detected faces
   """
   img_buff = Image.open(BytesIO(_img))
-  img = np.array(img_buff)
-  shp = img.shape
-  print(shp)
-  print(shp[2])
-  if len(shp) == 3 and shp[2] > 3:
-    img = img[:, :, :3].copy()
+  img = _reshape_image(np.array(img_buff))
   descs = calculate_embedding(img, _network, verbose=verbose)
   img_buff.close()
   
