@@ -135,6 +135,11 @@ def calculate_embeddings_from_buffer(_img, _network, verbose=False):
   """
   img_buff = Image.open(BytesIO(_img))
   img = np.array(img_buff)
+  shp = img.shape
+  print(shp)
+  print(shp[2])
+  if len(shp) == 3 and shp[2] > 3:
+    img = img[:, :, :3].copy()
   descs = calculate_embedding(img, _network, verbose=verbose)
   img_buff.close()
   
