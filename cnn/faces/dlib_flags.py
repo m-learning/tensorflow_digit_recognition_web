@@ -11,8 +11,9 @@ from __future__ import print_function
 
 import argparse
 
-network = None
-verbose = None
+# Service flags
+network = None  # Network weighs
+verbose = None  # Debug mode
 
 def parse_arguments():
   """Parses command line arguments

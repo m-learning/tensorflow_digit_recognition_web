@@ -98,7 +98,7 @@ def _read_valid_file(_files, name):
 
   upload_file = _files[name]
   if upload_file.filename:
-    image_data = upload_file.read()
+    image_data = (upload_file.filename, upload_file.read())
   else:
     image_data = None
   
@@ -164,12 +164,14 @@ def _compare_faces(person_image, _files):
     Returns:
       comp_results - result for each image
   """
-  person_embs = comparator.calculate_buffer_embedding(person_image, flags.network, verbose=flags.verbose)
+  
+  (filename, img_buff) = person_image
+  person_embs = comparator.calculate_embeddings_from_buffer(img_buff, flags.network, verbose=flags.verbose)
   if len(person_embs) > 0:
     comp_results = _compare_all_images(person_embs, _files)
   else:
     comp_results = _init_no_face_main_status()
-    comp_results[FILE_NAME] = person_image.filename
+    comp_results[FILE_NAME] = filename
   
   return comp_results
 

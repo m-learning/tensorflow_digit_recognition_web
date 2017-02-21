@@ -124,7 +124,7 @@ def compare_embeddings(emb1, emb2):
   
   return (dist, match_faces)
 
-def calculate_buffer_embedding(_img, _network, verbose=False):
+def calculate_embeddings_from_buffer(_img, _network, verbose=False):
   """Calculates embedding from image buffer
     Args:
       _img - image buffer
@@ -152,7 +152,7 @@ def compare_faces(descs1, _img2, _network, verbose=False):
   """
   face_dsts = []
   
-  descs2 = calculate_buffer_embedding(_img2, _network, verbose=verbose)
+  descs2 = calculate_embeddings_from_buffer(_img2, _network, verbose=verbose)
   for desc1 in descs1:
     (emb1, det1) = (desc1.emb, desc1.det)
     for desc2 in descs2:
@@ -174,8 +174,8 @@ def compare_files(_img1, _img2, _network, verbose=False):
   
   face_dsts = []
   
-  descs1 = calculate_buffer_embedding(_img1, _network, verbose=verbose)
-  descs2 = calculate_buffer_embedding(_img2, _network, verbose=verbose)
+  descs1 = calculate_embeddings_from_buffer(_img1, _network, verbose=verbose)
+  descs2 = calculate_embeddings_from_buffer(_img2, _network, verbose=verbose)
 
   for desc1 in descs1:
     (emb1, det1) = (desc1.emb, desc1.det)
