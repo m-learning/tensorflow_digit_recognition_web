@@ -46,6 +46,10 @@ def _init_ok_status():
   return {STATUS_CODE:OK_CODE, STATUS_MESSAGE:''}
 
 def _init_no_face_main_status():
+  """Person face not found status
+    Returns:
+      error status
+  """
 
   return {COMP_STATUS: {STATUS_CODE:ERROR_CODE,
                        STATUS_MESSAGE:NO_FACE_IN_PERSON_IMAGE},

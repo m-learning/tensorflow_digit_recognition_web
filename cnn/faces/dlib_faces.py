@@ -146,6 +146,7 @@ def calculate_embeddings_from_buffer(_img, _network, verbose=False):
     Returns:
       descs - embeddings for detected faces
   """
+  
   img_buff = Image.open(BytesIO(_img))
   img = _reshape_image(np.array(img_buff))
   descs = calculate_embedding(img, _network, verbose=verbose)
@@ -163,6 +164,7 @@ def compare_faces(descs1, _img2, _network, verbose=False):
     Returns:
       face_dsts - distances between embeddings       
   """
+  
   face_dsts = []
   
   descs2 = calculate_embeddings_from_buffer(_img2, _network, verbose=verbose)

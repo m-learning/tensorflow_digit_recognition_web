@@ -44,7 +44,7 @@ def parse_arguments():
   return args
 
 def parse_service_arguments():
-  """Parses command line arguments
+  """Parses command line arguments for HTTP server
     Returns:
       args - parsed command line arguments
   """
