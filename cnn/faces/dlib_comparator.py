@@ -9,7 +9,6 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
-import argparse
 import traceback
 
 from flask import Flask, request, json, render_template
@@ -58,36 +57,6 @@ def _init_no_face_status():
       OK status object
   """
   return {STATUS_CODE:ERROR_CODE, STATUS_MESSAGE:NO_FACE_IN_IMAGE}
-
-def _parse_arguments():
-  """Parses command line arguments
-    Returns:
-      args - parsed command line arguments
-  """
-  parser = argparse.ArgumentParser()
-  parser.add_argument('--threshold',
-                      type=float,
-                      default=0.6,
-                      help='Threshold for Euclidean distance between face embedding vectors')
-  parser.add_argument('--include_gui',
-                      dest='include_gui',
-                      action='store_true',
-                      help='Include top layers')
-  parser.add_argument('--verbose',
-                      dest='verbose',
-                      action='store_true',
-                      help='Print additional information')
-  parser.add_argument('--host',
-                      type=str,
-                      default='0.0.0.0',
-                      help='Host name for service.')
-  parser.add_argument('--port',
-                      type=int,
-                      default=50050,
-                      help='Port number for service.')
-  (args, _) = parser.parse_known_args()
-  
-  return args
 
 def _read_valid_file(_files, name):
   """Reads file from HTTP request
@@ -186,6 +155,10 @@ def _log_request_files(request, _files):
     for (name, img_data) in _files.iteritems():
       print(name, img_data)
 
+def _log_response_event():
+  """Logs HTTP response event"""
+  print('Response sent')
+
 def _run_comparator(_files):
   """Face comparator service
     Args:
@@ -230,6 +203,7 @@ def cnn_recognize():
   
   if request.method == 'POST':
     _response = _check_and_compare(request)
+    _log_response_event()
   elif request.method == 'GET':
     _response = render_template(TEMPLATE_NAME)
   
@@ -238,7 +212,7 @@ def cnn_recognize():
 if __name__ == '__main__':
   """Starts face comparator service"""
   
-  args = _parse_arguments()
+  args = flags.parse_service_arguments()
   comparator.threshold = args.threshold
   flags.verbose = args.verbose
   flags.network = comparator.load_model()
