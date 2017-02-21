@@ -37,11 +37,6 @@ NO_RESULT = {COMP_STATUS: {STATUS_CODE:ERROR_CODE,
              FILE_NAME: '',
              COMP_DATA: {}}
 
-NO_MAIN_RESULT = {COMP_STATUS: {STATUS_CODE:ERROR_CODE,
-                           STATUS_MESSAGE:NO_FACE_IN_PERSON_IMAGE},
-             FILE_NAME: '',
-             COMP_DATA: {}}
-
 app = Flask(__name__)
 
 def _init_ok_status():
@@ -50,6 +45,12 @@ def _init_ok_status():
       OK status object
   """
   return {STATUS_CODE:OK_CODE, STATUS_MESSAGE:''}
+
+def _init_no_face_main_status():
+
+  return {COMP_STATUS: {STATUS_CODE:ERROR_CODE,
+                       STATUS_MESSAGE:NO_FACE_IN_PERSON_IMAGE},
+          COMP_DATA: {}}
 
 def _init_no_face_status():
   """Initializes OK status
@@ -167,7 +168,8 @@ def _compare_faces(person_image, _files):
   if len(person_embs) > 0:
     comp_results = _compare_all_images(person_embs, _files)
   else:
-    comp_results = NO_MAIN_RESULT
+    comp_results = _init_no_face_main_status()
+    comp_results[FILE_NAME] = person_image.filename
   
   return comp_results
 

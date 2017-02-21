@@ -10,7 +10,6 @@ from __future__ import division
 from __future__ import print_function
 
 import Image
-import argparse
 import collections
 from io import BytesIO
 import math
@@ -137,6 +136,7 @@ def calculate_buffer_embedding(_img, _network, verbose=False):
   img_buff = Image.open(BytesIO(_img))
   img = np.array(img_buff)
   descs = calculate_embedding(img, _network, verbose=verbose)
+  img_buff.close()
   
   return descs
 
@@ -185,53 +185,3 @@ def compare_files(_img1, _img2, _network, verbose=False):
       face_dsts.append((dist, match_faces, det1, det2))
   
   return face_dsts
-  
-def _parse_arguments():
-  """Parses command line arguments
-    Returns:
-      args - parsed command line arguments
-  """
-  parser = argparse.ArgumentParser()
-  parser.add_argument('--image1',
-                      type=str,
-                      help='Path to first image')
-  parser.add_argument('--image2',
-                      type=str,
-                      help='Path to second image')
-  parser.add_argument('--threshold',
-                      type=float,
-                      default=0.6,
-                      help='Threshold for Euclidean distance between face embedding vectors')
-  parser.add_argument('--include_gui',
-                      dest='include_gui',
-                      action='store_true',
-                      help='Include top layers')
-  parser.add_argument('--verbose',
-                      dest='verbose',
-                      action='store_true',
-                      help='Print additional information')
-  (args, _) = parser.parse_known_args()
-  
-  return args
-
-def print_faces(face_dists):
-  """Prints compared results
-    Args:
-      face_dists - face distances and detections
-  """
-  
-  for (dist, match_faces, det1, det2) in face_dists:
-      print(dist, match_faces, det1, det2)
-  
-if __name__ == '__main__':
-  """Compare face images"""
-  
-  args = _parse_arguments()
-  if args.image1 and args.image2:
-    global threshold
-    threshold = args.threshold
-    _network = load_model()
-    face_dists = compare_files(args.image1, args.image2, _network, args.verbose)
-    print_faces(face_dists)
-  else:
-    print('No images to be compared')
