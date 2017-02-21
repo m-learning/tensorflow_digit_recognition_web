@@ -97,6 +97,7 @@ def _read_valid_file(_files, name):
   """
 
   upload_file = _files[name]
+  print(upload_file)
   if upload_file.filename:
     image_data = (upload_file.filename, upload_file.read())
   else:
