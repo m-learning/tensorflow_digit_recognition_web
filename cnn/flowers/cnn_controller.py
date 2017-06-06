@@ -22,7 +22,7 @@ app = Flask(__name__)
 @app.route('/files', methods=['GET', 'POST'])
 def cnn_recognizeby_file():
   """Web method for recognition
-    Return:
+    Returns:
       resp - recognition response
   """
 
@@ -32,7 +32,7 @@ def cnn_recognizeby_file():
 @app.route('/', methods=['GET', 'POST'])
 def cnn_recognize():
   """Web method for recognition
-    Return:
+    Returns:
       resp - recognition response
   """
   
